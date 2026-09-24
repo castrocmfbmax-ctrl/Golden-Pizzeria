@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GOLDEN PIZZERIA</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ENCABEZADO -->
+    <header class="header">
+
+        <div class="logo">
+            <div class="logo-icon">🔥</div>
+
+            <div>
+                <h1>GOLDEN</h1>
+                <span>PIZZERIA</span>
+            </div>
+        </div>
+
+        <div class="header-buttons">
+            <button onclick="mostrarCarrito()">
+                🛒 Carrito
+                <span id="contador-carrito">0</span>
+            </button>
+        </div>
+
+    </header>
+
+
+    <!-- PRESENTACIÓN -->
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <p class="small-title">PIZZERÍA ARTESANAL</p>
+
+            <h2>
+                El sabor que<br>
+                <span>merece tu momento</span>
+            </h2>
+
+            <p>
+                Pizzas, frappés y bebidas preparadas
+                para disfrutar cada momento.
+            </p>
+
+            <button class="btn-principal" onclick="irAlMenu()">
+                VER MENÚ
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- MENÚ -->
+    <main id="menu">
+
+        <div class="titulo-seccion">
+
+            <p>GOLDEN PIZZERIA</p>
+
+            <h2>NUESTRO MENÚ</h2>
+
+            <span>
+                Elige tus favoritos y agrégalos a tu pedido
+            </span>
+
+        </div>
+
+
+        <!-- CATEGORÍAS -->
+        <div class="categorias">
+
+            <button onclick="filtrarProductos('todos')">
+                TODOS
+            </button>
+
+            <button onclick="filtrarProductos('pizza')">
+                🍕 PIZZAS
+            </button>
+
+            <button onclick="filtrarProductos('frappe')">
+                🥤 FRAPPÉS
+            </button>
+
+            <button onclick="filtrarProductos('caliente')">
+                ☕ BEBIDAS CALIENTES
+            </button>
+
+            <button onclick="filtrarProductos('fria')">
+                🧊 BEBIDAS FRÍAS
+            </button>
+
+        </div>
+
+
+        <!-- PRODUCTOS -->
+        <div id="productos" class="productos">
+
+            <!-- Los productos aparecerán aquí mediante JavaScript -->
+
+        </div>
+
+    </main>
+
+
+    <!-- CARRITO -->
+    <div id="carrito-panel" class="carrito-panel">
+
+        <div class="carrito-header">
+
+            <h2>🛒 Tu pedido</h2>
+
+            <button onclick="cerrarCarrito()">✕</button>
+
+        </div>
+
+        <div id="carrito-productos">
+
+            <p class="carrito-vacio">
+                Tu carrito está vacío.
+            </p>
+
+        </div>
+
+        <div class="carrito-total">
+
+            <span>Total</span>
+
+            <strong id="total">
+                S/ 0.00
+            </strong>
+
+        </div>
+
+        <button class="btn-confirmar" onclick="irAlPago()">
+            CONTINUAR AL PAGO
+        </button>
+
+    </div>
+
+
+    <!-- FONDO OSCURO DEL CARRITO -->
+    <div
+        id="overlay"
+        class="overlay"
+        onclick="cerrarCarrito()">
+    </div>
+
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+
+        <h2>GOLDEN PIZZERIA</h2>
+
+        <p>
+            El sabor que merece tu momento
+        </p>
+
+        <p class="copyright">
+            © 2026 GOLDEN PIZZERIA
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
