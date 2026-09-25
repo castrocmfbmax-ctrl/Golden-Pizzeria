@@ -15,143 +15,526 @@
         <div class="hero-badge">🔥 HORNO ARTESANAL</div>
         <h1>GOLDEN<br><span>PIZZERIA</span></h1>
         <p class="hero-subtitle">ARTESANAL A LEÑA</p>
-
-        <!-- BOTÓN OCURTO LOBBY PERSONAL -->
-        <a href="staff.html" style="color:#666; font-size:0.75rem; text-decoration:none; display:inline-block; margin-top:5px;">Acceso Personal 🔒</a>
-
-        <div>
-          <a href="#menu" class="btn-main">VER NUESTRO MENÚ 🍕</a>
-        </div>
+        <p>Te invitamos a una experiencia única en sabores</p>
+        <a href="#menu" class="btn-main">VER NUESTRO MENÚ 🍕</a>
       </div>
     </div>
   </header>
 
-  <!-- BUSCADOR DE PEDIDOS PARA CLIENTES -->
-  <section class="tracking-search-section">
-    <h3>🔍 ¿Ya realizaste un pedido?</h3>
-    <p style="font-size:0.85rem; color:#ccc;">Ingresa tu código de pedido (Ejemplo: GP-260925-001) para ver el estado en vivo y el tiempo estimado:</p>
-    <div class="search-box-group">
-      <input type="text" id="input-search-code" placeholder="CÓDIGO GP-XXXXXX-XXX">
-      <button type="button" class="btn-search-order" onclick="consultarPedidoCliente()">CONSULTAR</button>
+  <!-- BANNER PROMO -->
+  <section class="promo-banner">
+    <div>
+      🔥 <strong>SABOR ARTESANAL</strong> <span>Preparado al momento en horno a leña</span>
+    </div>
+  </section>
+
+  <!-- CONSULTA DE PEDIDO -->
+  <section class="tracking-search" style="max-width: 600px; margin: 20px auto; padding: 20px; background: rgba(16,20,17,0.9); border: 1px solid #D4AF37; border-radius: 15px; text-align: center;">
+    <h3 style="color:#D4AF37; margin-bottom:10px;">🔍 ¿YA REALIZASTE UN PEDIDO?</h3>
+    <p style="font-size: 0.85rem; color:#ccc; margin-bottom: 15px;">Ingresa tu código de pedido (Ejemplo: GP-260925-001) para ver el estado en vivo y el tiempo estimado:</p>
+    <div style="display:flex; gap:10px; justify-content:center;">
+      <input type="text" id="input-tracking-code" placeholder="CÓDIGO GP-XXXXXX-XXX" style="padding: 10px; border-radius: 8px; border: 1px solid #444; background: #191e1b; color: white; flex:1; max-width:300px;">
+      <button type="button" onclick="consultarEstadoCodigo()" style="background:#D4AF37; color:black; border:none; padding:10px 20px; font-weight:bold; border-radius:8px; cursor:pointer;">CONSULTAR</button>
     </div>
   </section>
 
   <!-- MENÚ -->
   <main id="menu" class="menu-container">
     <div class="section-title">
-      <span class="subtitle">GOLDEN PIZZERIA</span>
-      <h2 class="title">NUESTRO MENÚ</h2>
+      <span>GOLDEN PIZZERIA</span>
+      <h2>NUESTRO MENÚ</h2>
+      <p>Elige tus favoritos y arma tu pedido</p>
     </div>
 
-    <!-- TARJETAS DEL MENÚ -->
+    <!-- FILTROS -->
+    <div class="menu-filters">
+      <button type="button" class="filter-btn active" onclick="filterCategory('todas')">TODAS LAS PIZZAS</button>
+      <button type="button" class="filter-btn" onclick="filterCategory('clasicas')">PIZZAS CLÁSICAS</button>
+      <button type="button" class="filter-btn" onclick="filterCategory('unicas')">SABORES ÚNICOS</button>
+      <button type="button" class="filter-btn" onclick="filterCategory('casa')">PIZZAS DE CASA</button>
+      <button type="button" class="filter-btn" onclick="filterCategory('especiales')">ESPECIALES / MIXTAS</button>
+      <button type="button" class="filter-btn" onclick="filterCategory('pan')">PAN AL AJO</button>
+      <button type="button" class="filter-btn" onclick="filterCategory('bebidas')">BEBIDAS</button>
+      <button type="button" class="filter-btn" onclick="filterCategory('frappes')">FRAPPÉS Y CALIENTES</button>
+    </div>
+
+    <!-- GRID DE PRODUCTOS -->
     <section class="product-grid">
+
+      <!-- PIZZAS CLÁSICAS -->
       <article class="card clasicas">
-        <h3>Americana</h3>
-        <p>Queso mozzarella, jamón inglés, salchicha ahumada y chorizo.</p>
-        <div class="price">Personal S/16 · Mediana S/23 · Familiar S/32</div>
-        <button type="button" onclick="abrirModalPizza('Americana',16,23,32)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        <div class="card-content">
+          <span class="category-tag">CLÁSICA</span>
+          <h3>AMERICANA</h3>
+          <p>Queso mozzarella, jamón inglés, salchicha ahumada y chorizo.</p>
+          <div class="price">Personal S/16 · Mediana S/23 · Familiar S/32</div>
+          <button type="button" onclick="abrirModalPizza('Americana',16,23,32)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
       </article>
 
       <article class="card clasicas">
-        <h3>Hawaiana</h3>
-        <p>Queso mozzarella, jamón inglés y piña Golden.</p>
-        <div class="price">Personal S/18 · Mediana S/25 · Familiar S/36</div>
-        <button type="button" onclick="abrirModalPizza('Hawaiana',18,25,36)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        <div class="card-content">
+          <span class="category-tag">CLÁSICA</span>
+          <h3>HAWAIANA</h3>
+          <p>Queso mozzarella, jamón inglés y piña Golden.</p>
+          <div class="price">Personal S/18 · Mediana S/25 · Familiar S/36</div>
+          <button type="button" onclick="abrirModalPizza('Hawaiana',18,25,36)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
       </article>
 
       <article class="card clasicas">
-        <h3>Pepperoni</h3>
-        <p>Queso mozzarella y abundante pepperoni.</p>
-        <div class="price">Personal S/18 · Mediana S/28 · Familiar S/38</div>
-        <button type="button" onclick="abrirModalPizza('Pepperoni',18,28,38)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        <div class="card-content">
+          <span class="category-tag">CLÁSICA</span>
+          <h3>PEPPERONI</h3>
+          <p>Queso mozzarella y abundante pepperoni.</p>
+          <div class="price">Personal S/18 · Mediana S/28 · Familiar S/38</div>
+          <button type="button" onclick="abrirModalPizza('Pepperoni',18,28,38)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
+      </article>
+
+      <article class="card clasicas">
+        <div class="card-content">
+          <span class="category-tag">CLÁSICA</span>
+          <h3>ITALIANA</h3>
+          <p>Queso mozzarella, jamón inglés, champiñones y rodajas de tomate.</p>
+          <div class="price">Personal S/18 · Mediana S/25 · Familiar S/35</div>
+          <button type="button" onclick="abrirModalPizza('Italiana',18,25,35)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
+      </article>
+
+      <article class="card clasicas">
+        <div class="card-content">
+          <span class="category-tag">CLÁSICA</span>
+          <h3>MARGARITA</h3>
+          <p>Queso mozzarella, espinaca, albahaca y pimentón.</p>
+          <div class="price">Personal S/17 · Mediana S/24 · Familiar S/32</div>
+          <button type="button" onclick="abrirModalPizza('Margarita',17,24,32)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
+      </article>
+
+      <article class="card clasicas">
+        <div class="card-content">
+          <span class="category-tag">CLÁSICA</span>
+          <h3>SICILIANA</h3>
+          <p>Queso mozzarella, champiñones, aceitunas y cebolla rosada soasada.</p>
+          <div class="price">Personal S/18 · Mediana S/25 · Familiar S/34</div>
+          <button type="button" onclick="abrirModalPizza('Siciliana',18,25,34)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
+      </article>
+
+      <article class="card clasicas">
+        <div class="card-content">
+          <span class="category-tag">CLÁSICA</span>
+          <h3>VEGETARIANA</h3>
+          <p>Queso mozzarella, espinaca, champiñones, pimentón y aceituna verde.</p>
+          <div class="price">Personal S/18 · Mediana S/25 · Familiar S/34</div>
+          <button type="button" onclick="abrirModalPizza('Vegetariana',18,25,34)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
+      </article>
+
+      <article class="card clasicas">
+        <div class="card-content">
+          <span class="category-tag">CLÁSICA</span>
+          <h3>MIXTA COMPARTIDA</h3>
+          <p>Queso mozzarella, mitad Americana y mitad Hawaiana.</p>
+          <div class="price">Personal S/18 · Mediana S/26 · Familiar S/35</div>
+          <button type="button" onclick="abrirModalPizza('Mixta Compartida',18,26,35)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
+      </article>
+
+      <article class="card clasicas">
+        <div class="card-content">
+          <span class="category-tag">CLÁSICA</span>
+          <h3>KARIBEÑA</h3>
+          <p>Queso mozzarella, jamón inglés, durazno y piña.</p>
+          <div class="price">Personal S/22 · Mediana S/28 · Familiar S/40</div>
+          <button type="button" onclick="abrirModalPizza('Karibeña',22,28,40)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
+      </article>
+
+      <article class="card clasicas">
+        <div class="card-content">
+          <span class="category-tag">CLÁSICA</span>
+          <h3>LA RUSTIKA</h3>
+          <p>Queso mozzarella, jamón inglés, tocino, chorizo ahumado y cavanosi.</p>
+          <div class="price">Personal S/20 · Mediana S/28 · Familiar S/36</div>
+          <button type="button" onclick="abrirModalPizza('La Rustika',20,28,36)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
+      </article>
+
+      <!-- SABORES ÚNICOS -->
+      <article class="card unicas">
+        <div class="card-content">
+          <span class="category-tag">SABOR ÚNICO</span>
+          <h3>NAPOLITANA</h3>
+          <p>Queso mozzarella y rodajas de tomate.</p>
+          <div class="price">Personal S/16 · Mediana S/24 · Familiar S/32</div>
+          <button type="button" onclick="abrirModalPizza('Napolitana',16,24,32)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
+      </article>
+
+      <article class="card unicas">
+        <div class="card-content">
+          <span class="category-tag">SABOR ÚNICO</span>
+          <h3>CHAMPIÑONES</h3>
+          <p>Queso mozzarella y champiñones salteados.</p>
+          <div class="price">Personal S/20 · Mediana S/26 · Familiar S/34</div>
+          <button type="button" onclick="abrirModalPizza('Champiñones',20,26,34)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
+      </article>
+
+      <article class="card unicas">
+        <div class="card-content">
+          <span class="category-tag">SABOR ÚNICO</span>
+          <h3>DE SALCHICHA / ACEITUNA / SALAME / CHORIZO / JAMÓN</h3>
+          <p>Queso mozzarella con ingrediente a tu elección.</p>
+          <div class="price">Personal S/16 · Mediana S/25 · Familiar S/33</div>
+          <button type="button" onclick="abrirModalPizza('Sabor Único a Elección',16,25,33)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
+      </article>
+
+      <!-- PIZZAS DE CASA -->
+      <article class="card casa">
+        <div class="card-content">
+          <span class="category-tag">DE CASA</span>
+          <h3>GOLDEN DE LA CASA</h3>
+          <p>Mozzarella, jamón, champiñones, tocino, salame, chorizo, cavanosi y aceituna.</p>
+          <div class="price">Personal S/20 · Mediana S/30 · Familiar S/40</div>
+          <button type="button" onclick="abrirModalPizza('Golden de la Casa',20,30,40)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
       </article>
 
       <article class="card casa">
-        <h3>La Volcánica</h3>
-        <p>Chorizo ahumado, pepperoni, piña, cavanosi, maíz y embutidos AQP.</p>
-        <div class="price">Personal S/26 · Mediana S/35 · Familiar S/45</div>
-        <button type="button" onclick="abrirModalPizza('La Volcánica',26,35,45)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        <div class="card-content">
+          <span class="category-tag">DE CASA</span>
+          <h3>LA SUPREMA DE CASA</h3>
+          <p>Mozzarella, jamón, pepperoni, tocino, salame, chorizo, cavanosi y pimentón.</p>
+          <div class="price">Personal S/22 · Mediana S/32 · Familiar S/42</div>
+          <button type="button" onclick="abrirModalPizza('La Suprema de Casa',22,32,42)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
       </article>
+
+      <article class="card casa">
+        <div class="card-content">
+          <span class="category-tag">DE CASA</span>
+          <h3>LA VOLCÁNICA</h3>
+          <p>Chorizo ahumado, pepperoni, piña, cavanosi, maíz y embutidos AQP.</p>
+          <div class="price">Personal S/26 · Mediana S/35 · Familiar S/45</div>
+          <button type="button" onclick="abrirModalPizza('La Volcánica',26,35,45)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
+      </article>
+
+      <article class="card casa">
+        <div class="card-content">
+          <span class="category-tag">DE CASA</span>
+          <h3>BOLOÑESA (CARNÍVORA)</h3>
+          <p>Queso mozzarella, carne picada, jamón inglés, salame y cavanosi.</p>
+          <div class="price">Personal S/25 · Mediana S/35 · Familiar S/45</div>
+          <button type="button" onclick="abrirModalPizza('Boloñesa Carnívora',25,35,45)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
+      </article>
+
+      <article class="card casa">
+        <div class="card-content">
+          <span class="category-tag">DE CASA</span>
+          <h3>TRIKA TRES SABORES</h3>
+          <p>Carne+Cavanosi | Pollo+Jamón | Tocino+Chorizo ahumado.</p>
+          <div class="price">Mediana S/36 · Familiar S/46</div>
+          <button type="button" onclick="abrirModalPizza('Trika Tres Sabores',null,36,46)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
+      </article>
+
+      <article class="card casa">
+        <div class="card-content">
+          <span class="category-tag">DE CASA</span>
+          <h3>3 CARNES</h3>
+          <p>Queso mozzarella y combinación de Carne + Pollo + Tocino.</p>
+          <div class="price">Personal S/25 · Mediana S/35 · Familiar S/45</div>
+          <button type="button" onclick="abrirModalPizza('3 Carnes',25,35,45)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
+      </article>
+
+      <article class="card casa">
+        <div class="card-content">
+          <span class="category-tag">DE CASA</span>
+          <h3>TRADICIÓN AREQUIPEÑA</h3>
+          <p>Queso mozzarella, chorizo arequipeño, salchicha arequipeña y jamón.</p>
+          <div class="price">Personal S/24 · Mediana S/32 · Familiar S/42</div>
+          <button type="button" onclick="abrirModalPizza('Tradición Arequipeña',24,32,42)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
+      </article>
+
+      <article class="card casa">
+        <div class="card-content">
+          <span class="category-tag">DE CASA</span>
+          <h3>PICANTE CAÚSTICO</h3>
+          <p>Mozzarella, carne, rocoto, salchicha y chorizo ahumado.</p>
+          <div class="price">Personal S/25 · Mediana S/36 · Familiar S/46</div>
+          <button type="button" onclick="abrirModalPizza('Picante Caústico',25,36,46)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
+      </article>
+
+      <!-- ESPECIALES / MIXTAS -->
+      <article class="card especiales">
+        <div class="card-content">
+          <span class="category-tag">ESPECIAL</span>
+          <h3>POLLO ESPECIAL</h3>
+          <p>Queso mozzarella, jamón inglés, pollo y tocino ahumado.</p>
+          <div class="price">Personal S/25 · Mediana S/35 · Familiar S/45</div>
+          <button type="button" onclick="abrirModalPizza('Pollo Especial',25,35,45)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
+      </article>
+
+      <article class="card especiales">
+        <div class="card-content">
+          <span class="category-tag">ESPECIAL</span>
+          <h3>ORIENTAL</h3>
+          <p>Queso mozzarella, pollo, jamón inglés y piña.</p>
+          <div class="price">Personal S/25 · Mediana S/34 · Familiar S/44</div>
+          <button type="button" onclick="abrirModalPizza('Oriental',25,34,44)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
+      </article>
+
+      <article class="card especiales">
+        <div class="card-content">
+          <span class="category-tag">ESPECIAL</span>
+          <h3>TROPICAL DULCE</h3>
+          <p>Mozzarella, leche condensada, fudge, plátano, manzana, durazno, piña y fresa.</p>
+          <div class="price">Personal S/24 · Mediana S/32 · Familiar S/42</div>
+          <button type="button" onclick="abrirModalPizza('Tropical Dulce',24,32,42)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
+      </article>
+
+      <article class="card especiales">
+        <div class="card-content">
+          <span class="category-tag">ESPECIAL</span>
+          <h3>CUATRO ESTACIONES</h3>
+          <p>Primavera (Tomate), Verano (Piña), Invierno (Pepperoni), Otoño (Jamón).</p>
+          <div class="price">Mediana S/36 · Familiar S/46</div>
+          <button type="button" onclick="abrirModalPizza('Cuatro Estaciones',null,36,46)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
+      </article>
+
+      <article class="card especiales">
+        <div class="card-content">
+          <span class="category-tag">ESPECIAL</span>
+          <h3>LA ESPAÑOLA</h3>
+          <p>Base crema de ajo, mozzarella, chorizo pizzero, aceitunas y champiñones.</p>
+          <div class="price">Personal S/22 · Mediana S/31 · Familiar S/41</div>
+          <button type="button" onclick="abrirModalPizza('La Española',22,31,41)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
+      </article>
+
+      <article class="card especiales">
+        <div class="card-content">
+          <span class="category-tag">ESPECIAL</span>
+          <h3>MEXICANA</h3>
+          <p>Queso mozzarella, jalapeños, cebolla rosada y carne.</p>
+          <div class="price">Personal S/25 · Mediana S/33 · Familiar S/43</div>
+          <button type="button" onclick="abrirModalPizza('Mexicana',25,33,43)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+        </div>
+      </article>
+
+      <!-- PAN AL AJO -->
+      <article class="card pan">
+        <div class="card-content">
+          <span class="category-tag">ENTRADA</span>
+          <h3>PAN AL AJO SIMPLE</h3>
+          <p>Crujientes panes tostados al ajo y especias.</p>
+          <div class="price">S/ 6.00</div>
+          <button type="button" onclick="agregarPedido('Pan al Ajo Simple', 6)" class="btn-add">AGREGAR 🥖</button>
+        </div>
+      </article>
+
+      <article class="card pan">
+        <div class="card-content">
+          <span class="category-tag">ENTRADA</span>
+          <h3>PAN AL AJO ESPECIAL</h3>
+          <p>Panes al ajo gratinados con queso mozzarella derretido.</p>
+          <div class="price">S/ 8.00</div>
+          <button type="button" onclick="agregarPedido('Pan al Ajo Especial', 8)" class="btn-add">AGREGAR 🥖</button>
+        </div>
+      </article>
+
+      <!-- BEBIDAS -->
+      <article class="card bebidas">
+        <div class="card-content">
+          <span class="category-tag">REFRESCO</span>
+          <h3>LIMONADA / CHICHA MORADA</h3>
+          <p>Preparadas al momento en versión Al Tiempo o Frozen.</p>
+          <div class="price">Al Tiempo (1/2L S/6 - 1L S/10) | Frozen (1/2L S/8 - 1L S/12)</div>
+          <button type="button" onclick="agregarPedido('Limonada/Chicha 1/2L Al Tiempo', 6)" class="btn-add">1/2L Tiempo S/6 🥤</button>
+          <button type="button" onclick="agregarPedido('Limonada/Chicha 1L Al Tiempo', 10)" class="btn-add" style="margin-top:5px;">1L Tiempo S/10 🥤</button>
+          <button type="button" onclick="agregarPedido('Limonada/Chicha 1/2L Frozen', 8)" class="btn-add" style="margin-top:5px;">1/2L Frozen S/8 🧊</button>
+          <button type="button" onclick="agregarPedido('Limonada/Chicha 1L Frozen', 12)" class="btn-add" style="margin-top:5px;">1L Frozen S/12 🧊</button>
+        </div>
+      </article>
+
+      <article class="card bebidas">
+        <div class="card-content">
+          <span class="category-tag">GASEOSA</span>
+          <h3>COCA COLA / INKA KOLA / PEPSI / KOLA ESCOCESA</h3>
+          <p>Gaseosas heladas en distintas presentaciones.</p>
+          <div class="price">500ml S/5.00 · 1L S/8.00 · 2L S/13.00</div>
+          <button type="button" onclick="agregarPedido('Gaseosa 500ml', 5)" class="btn-add">500 ml S/5 🍾</button>
+          <button type="button" onclick="agregarPedido('Gaseosa 1 Litro', 8)" class="btn-add" style="margin-top:5px;">1 Litro S/8 🍾</button>
+          <button type="button" onclick="agregarPedido('Gaseosa 2 Litros', 13)" class="btn-add" style="margin-top:5px;">2 Litros S/13 🍾</button>
+        </div>
+      </article>
+
+      <!-- FRAPPÉS Y CALIENTES -->
+      <article class="card frappes">
+        <div class="card-content">
+          <span class="category-tag">FRAPPÉ</span>
+          <h3>FRAPPÉ DE FRUTA</h3>
+          <p>Maracuyá, Fresa, Mango o Lúcuma natural.</p>
+          <div class="price">S/ 10.00</div>
+          <button type="button" onclick="agregarPedido('Frappé de Fruta', 10)" class="btn-add">AGREGAR S/10 🍧</button>
+        </div>
+      </article>
+
+      <article class="card frappes">
+        <div class="card-content">
+          <span class="category-tag">FRAPPÉ</span>
+          <h3>FRAPPÉ CAPPUCCINO / OREO</h3>
+          <p>Cremoso e intenso sabor a café espresso o galleta Oreo.</p>
+          <div class="price">S/ 9.00</div>
+          <button type="button" onclick="agregarPedido('Frappé Cappuccino/Oreo', 9)" class="btn-add">AGREGAR S/9 ☕</button>
+        </div>
+      </article>
+
+      <article class="card frappes">
+        <div class="card-content">
+          <span class="category-tag">CALIENTES</span>
+          <h3>CAFÉ / CAPUCCINO / INFUSIONES</h3>
+          <p>Bebidas calientes preparadas al instante.</p>
+          <div class="price">Infusiones S/2 · Café S/4 · Capuccino S/6</div>
+          <button type="button" onclick="agregarPedido('Mate / Infusión', 2)" class="btn-add">Infusión S/2 ☕</button>
+          <button type="button" onclick="agregarPedido('Café Artesanal', 4)" class="btn-add" style="margin-top:5px;">Café S/4 ☕</button>
+          <button type="button" onclick="agregarPedido('Café Capuccino', 6)" class="btn-add" style="margin-top:5px;">Capuccino S/6 ☕</button>
+        </div>
+      </article>
+
     </section>
   </main>
 
   <!-- CARRITO FLOTANTE -->
   <div id="cart-bar" class="cart-bar hidden">
-    <div>
-      <span style="color:#aaa;">Ítems:</span> <b id="cart-count">0</b> | 
-      <span style="color:#aaa;">Total:</span> <b id="cart-total" style="color:#2ecc71;">S/ 0.00</b>
+    <div class="cart-info">
+      <span>🛒 Ítems: <b id="cart-count">0</b> | Total: <b id="cart-total">S/ 0.00</b></span>
     </div>
-    <button type="button" onclick="abrirPago(event)" class="btn-whatsapp">Ir a Pagar 💳</button>
+    <div class="cart-actions">
+      <button type="button" onclick="vaciarPedido()" class="btn-clean">Limpiar</button>
+      <button type="button" onclick="abrirPago(event)" class="btn-whatsapp">Ir a Pagar 💳</button>
+    </div>
   </div>
 
-  <!-- MODAL ELEGIR TAMAÑO PIZZA -->
+  <!-- MODAL PIZZA -->
   <div id="pizza-modal" class="payment-overlay hidden">
     <div class="payment-box" style="max-width: 400px; text-align: center;">
       <h2 id="pizza-modal-title">Elegir Tamaño</h2>
-      <p style="color:#aaa; margin-bottom:15px;">Selecciona la presentación que deseas:</p>
+      <p class="payment-subtitle">Selecciona el tamaño de tu pizza:</p>
       <div id="pizza-modal-sizes" style="display: flex; flex-direction: column; gap: 10px; margin: 20px 0;"></div>
-      <button type="button" class="btn-search-order" style="background:#444; color:#fff;" onclick="cerrarModalPizza()">Cancelar</button>
+      <button type="button" class="btn-close-payment" onclick="cerrarModalPizza()">Cancelar</button>
     </div>
   </div>
 
-  <!-- PANTALLA PAGO -->
+  <!-- PAGO OVERLAY -->
   <div id="payment-overlay" class="payment-overlay hidden">
     <div class="payment-box">
-      <h2>Confirmar Pago</h2>
-      <div id="payment-summary-list" style="margin-top:15px;"></div>
-      <div id="payment-total" style="font-size:22px; color:#D4AF37; text-align:right; margin:10px 0;">S/ 0.00</div>
-
-      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:15px 0;">
-        <button type="button" id="payment-yape" class="btn-size" onclick="seleccionarPago('yape')">📱 Yape/Plin</button>
-        <button type="button" id="payment-tarjeta" class="btn-size" onclick="seleccionarPago('tarjeta')">💳 Tarjeta</button>
-        <button type="button" id="payment-efectivo" class="btn-size" onclick="seleccionarPago('efectivo')">💵 Efectivo</button>
+      <h2>Pagar Pedido</h2>
+      <p class="payment-subtitle">Confirma tu pedido y elige tu medio de pago</p>
+      
+      <div class="payment-summary">
+        <div id="payment-summary-list"></div>
+        <div class="payment-total" id="payment-total">S/ 0.00</div>
       </div>
 
-      <div id="section-yape" class="payment-section" style="display:none; text-align:center;">
-        <p>Yapea al <b>979 707 173</b></p>
-        <label style="display:block; margin-top:10px; cursor:pointer; background:#222; padding:10px; border-radius:8px;">
-          📎 Adjuntar Comprobante
-          <input type="file" id="receipt-file" accept="image/*" style="display:none;">
-        </label>
-        <div id="receipt-name" style="color:#2ecc71; font-size:12px; margin-top:5px;"></div>
+      <div class="payment-methods">
+        <div id="payment-yape" class="payment-method" onclick="seleccionarPago('yape')">
+          <span>📱</span> Yape / Plin
+        </div>
+        <div id="payment-tarjeta" class="payment-method" onclick="seleccionarPago('tarjeta')">
+          <span>💳</span> Tarjeta (POS)
+        </div>
+        <div id="payment-efectivo" class="payment-method" onclick="seleccionarPago('efectivo')">
+          <span>💵</span> Efectivo
+        </div>
       </div>
 
-      <div style="display:flex; gap:10px; margin-top:20px;">
-        <button type="button" onclick="cerrarPago()" style="flex:1; padding:12px; background:#333; color:#fff; border:none; border-radius:8px; cursor:pointer;">Atrás</button>
-        <button type="button" onclick="confirmarPedido()" style="flex:1; padding:12px; background:#18A558; color:#fff; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Confirmar Pedido</button>
+      <div id="section-yape" class="payment-section">
+        <div class="yape-card">
+          <h3>Escanea y Paga por Yape / Plin</h3>
+          <p class="yape-number">979 707 173</p>
+          <p style="font-size:12px; color:#aaa;">Golden Pizzeria Artesanal</p>
+          <div class="qr-placeholder">CÓDIGO QR YAPE</div>
+          <label class="receipt-label">
+            📎 Adjuntar Comprobante de Pago
+            <input type="file" id="receipt-file" accept="image/*">
+          </label>
+          <div id="receipt-name" class="receipt-name"></div>
+        </div>
+      </div>
+
+      <div id="section-tarjeta" class="payment-section">
+        <p style="text-align:center;">El repartidor llevará el POS de tarjeta al momento de la entrega.</p>
+      </div>
+
+      <div id="section-efectivo" class="payment-section">
+        <p style="text-align:center;">Pagas en efectivo al momento de recibir tu pedido.</p>
+      </div>
+
+      <div class="payment-buttons">
+        <button type="button" class="btn-close-payment" onclick="cerrarPago()">Atrás</button>
+        <button type="button" class="btn-confirm-payment" onclick="confirmarPedido()">Confirmar y Enviar Pedido</button>
       </div>
     </div>
   </div>
 
-  <!-- PANTALLA SEGUIMIENTO DETALLADO -->
+  <!-- TRACKING OVERLAY -->
   <div id="tracking-overlay" class="tracking-overlay hidden">
     <div class="tracking-box">
-      <h2>Estado de tu Pedido</h2>
-      <div id="order-code" class="order-code" style="font-size:22px; color:#D4AF37; margin:10px 0;">GP-000</div>
-
-      <!-- DETALLE DE PRODUCTOS DEL PEDIDO -->
-      <div id="tracking-order-details" style="background:#191e1b; border-radius:10px; padding:12px; text-align:left; font-size:0.85rem; margin-bottom:15px;"></div>
+      <h2>¡Pedido Confirmado! 🎉</h2>
+      <p>Tu código de pedido es:</p>
+      <div id="order-code" class="order-code">GP-000</div>
 
       <div id="tracking-recibido" class="tracking-step active">
         <span class="tracking-icon">📥</span>
-        <div class="tracking-info"><strong>Pedido Registrado</strong><small>Esperando confirmación en cocina</small></div>
+        <div class="tracking-info">
+          <strong>Pedido Recibido</strong>
+          <small>Estamos registrando tu orden</small>
+        </div>
       </div>
 
       <div id="tracking-preparando" class="tracking-step">
         <span class="tracking-icon">🔥</span>
-        <div class="tracking-info"><strong>En Horno a Leña</strong><small>Tu pizza se está horneando</small></div>
+        <div class="tracking-info">
+          <strong>En el Horno a Leña</strong>
+          <small>Preparando con ingredientes frescos</small>
+        </div>
       </div>
 
-      <div id="preparation-timer" style="font-size:1.4rem; color:#D4AF37; font-weight:bold; margin:10px 0; display:none;">
-        ⏱️ Tiempo restante: <span id="timer-value">10:00</span>
+      <div id="preparation-timer" class="timer" style="display:none;">
+        Tiempo estimado: <span id="timer-value">10:00</span>
       </div>
 
       <div id="tracking-listo" class="tracking-step">
         <span class="tracking-icon">🛵</span>
-        <div class="tracking-info"><strong>Listo / En Camino</strong><small>¡Llegando a tu mesa o casa!</small></div>
+        <div class="tracking-info">
+          <strong>Listo / En Camino</strong>
+          <small>Tu pedido va en camino a tu mesa o domicilio</small>
+        </div>
       </div>
 
-      <button type="button" class="btn-search-order" style="width:100%; margin-top:15px; background:#333; color:#fff;" onclick="cerrarTracking()">Cerrar</button>
+      <div id="tracking-cancelado" class="tracking-step">
+        <span class="tracking-icon">❌</span>
+        <div class="tracking-info">
+          <strong>Pedido Cancelado</strong>
+          <small>Ponte en contacto con la pizzería</small>
+        </div>
+      </div>
+
+      <button type="button" class="tracking-close" onclick="cerrarTracking()">Cerrar</button>
     </div>
   </div>
 
