@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Golden Pizzeria | El sabor que merece tu momento</title>
@@ -9,36 +12,61 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* =========================
+
+        /* =====================================================
            PAGO
-        ========================= */
+        ===================================================== */
 
         .payment-overlay {
             position: fixed;
             inset: 0;
+            width: 100%;
+            height: 100%;
             background: rgba(0,0,0,.82);
-            z-index: 9999;
+            z-index: 99999;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             padding: 20px;
             overflow-y: auto;
+
+            visibility: visible;
+            opacity: 1;
         }
 
+        /*
+           MUY IMPORTANTE:
+           Cuando tiene hidden desaparece.
+        */
+
         .payment-overlay.hidden {
-            display: none;
+            display: none !important;
+            visibility: hidden;
+            opacity: 0;
         }
 
         .payment-box {
             width: 100%;
             max-width: 600px;
+
             background: #101411;
+
             border: 1px solid #D4AF37;
             border-radius: 18px;
+
             padding: 25px;
+
             color: white;
-            box-shadow: 0 20px 60px rgba(0,0,0,.6);
+
+            box-shadow:
+                0 20px 60px rgba(0,0,0,.6);
+
             position: relative;
+
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .payment-box h2 {
@@ -78,10 +106,14 @@
             border: 1px solid #444;
             background: #171b18;
             color: white;
+
             padding: 14px 8px;
+
             border-radius: 10px;
+
             cursor: pointer;
             text-align: center;
+
             transition: .2s;
         }
 
@@ -92,6 +124,9 @@
         .payment-method.selected {
             border-color: #D4AF37;
             background: rgba(212,175,55,.15);
+
+            box-shadow:
+                0 0 15px rgba(212,175,55,.15);
         }
 
         .payment-method span {
@@ -102,9 +137,13 @@
 
         .payment-section {
             display: none;
+
             background: #191e1b;
+
             padding: 18px;
+
             border-radius: 12px;
+
             margin-bottom: 18px;
         }
 
@@ -129,26 +168,44 @@
         .qr-placeholder {
             width: 170px;
             height: 170px;
+
             margin: 15px auto;
+
             background: white;
             color: #111;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             border-radius: 10px;
+
             font-weight: bold;
             text-align: center;
         }
 
         .receipt-label {
             display: block;
+
             background: #252b27;
+
             padding: 14px;
+
             border-radius: 10px;
+
             border: 1px dashed #D4AF37;
+
             cursor: pointer;
+
             text-align: center;
+
             margin-top: 15px;
+
+            transition: .2s;
+        }
+
+        .receipt-label:hover {
+            background: #303832;
         }
 
         .receipt-label input {
@@ -157,8 +214,11 @@
 
         .receipt-name {
             color: #9be7b1;
+
             margin-top: 8px;
+
             text-align: center;
+
             font-size: 14px;
         }
 
@@ -169,10 +229,15 @@
 
         .payment-buttons button {
             flex: 1;
+
             padding: 14px;
+
             border: none;
+
             border-radius: 10px;
+
             cursor: pointer;
+
             font-weight: bold;
         }
 
@@ -181,39 +246,71 @@
             color: white;
         }
 
+        .btn-confirm-payment:hover {
+            background: #14934d;
+        }
+
         .btn-close-payment {
             background: #333;
             color: white;
         }
 
-        /* =========================
+        .btn-close-payment:hover {
+            background: #444;
+        }
+
+
+        /* =====================================================
            SEGUIMIENTO
-        ========================= */
+        ===================================================== */
 
         .tracking-overlay {
             position: fixed;
             inset: 0;
+
+            width: 100%;
+            height: 100%;
+
             background: rgba(0,0,0,.85);
-            z-index: 10000;
+
+            z-index: 100000;
+
             display: flex;
+
             align-items: center;
             justify-content: center;
+
             padding: 20px;
+
+            visibility: visible;
+            opacity: 1;
         }
 
         .tracking-overlay.hidden {
-            display: none;
+            display: none !important;
+
+            visibility: hidden;
+            opacity: 0;
         }
 
         .tracking-box {
             width: 100%;
             max-width: 520px;
+
             background: #101411;
+
             border: 1px solid #D4AF37;
+
             border-radius: 18px;
+
             padding: 28px;
+
             color: white;
+
             text-align: center;
+
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .tracking-box h2 {
@@ -222,35 +319,53 @@
 
         .order-code {
             font-size: 26px;
+
             font-weight: bold;
+
             color: white;
+
             background: #191e1b;
+
             padding: 12px;
+
             border-radius: 10px;
+
             margin: 15px 0 25px;
         }
 
         .tracking-step {
             display: flex;
+
             align-items: center;
+
             gap: 15px;
+
             padding: 13px;
+
             margin: 8px 0;
+
             border-radius: 10px;
+
             background: #191e1b;
+
             text-align: left;
+
             opacity: .45;
+
             transition: .3s;
         }
 
         .tracking-step.active {
             opacity: 1;
+
             border: 1px solid #D4AF37;
         }
 
         .tracking-icon {
             font-size: 25px;
+
             width: 35px;
+
             text-align: center;
         }
 
@@ -264,27 +379,48 @@
 
         .timer {
             margin: 20px 0;
+
             font-size: 20px;
+
             color: #D4AF37;
+
             font-weight: bold;
         }
 
         .tracking-close {
             width: 100%;
+
             border: none;
+
             padding: 14px;
+
             border-radius: 10px;
+
             background: #333;
+
             color: white;
+
             cursor: pointer;
+
             margin-top: 15px;
         }
 
-        /* =========================
+
+        /* =====================================================
+           MODAL PIZZA
+        ===================================================== */
+
+        #pizza-modal {
+            z-index: 99998;
+        }
+
+
+        /* =====================================================
            RESPONSIVE
-        ========================= */
+        ===================================================== */
 
         @media (max-width: 600px) {
+
             .payment-methods {
                 grid-template-columns: 1fr;
             }
@@ -297,11 +433,20 @@
             .tracking-box {
                 padding: 20px;
             }
+
+            .yape-number {
+                font-size: 21px;
+            }
+
         }
+
     </style>
+
 </head>
 
+
 <body>
+
 
 <!-- =====================================================
      HERO
@@ -330,8 +475,12 @@
                 Te invitamos a una experiencia única en sabores
             </p>
 
-            <a href="#menu" class="btn-main">
+            <a
+                href="#menu"
+                class="btn-main">
+
                 VER NUESTRO MENÚ 🍕
+
             </a>
 
         </div>
@@ -348,8 +497,17 @@
 <section class="promo-banner">
 
     <div>
-        🔥 <strong>SABOR ARTESANAL</strong>
-        <span>Preparado al momento en horno a leña</span>
+
+        🔥
+
+        <strong>
+            SABOR ARTESANAL
+        </strong>
+
+        <span>
+            Preparado al momento en horno a leña
+        </span>
+
     </div>
 
 </section>
@@ -359,13 +517,20 @@
      MENÚ
 ===================================================== -->
 
-<main id="menu" class="menu-container">
+<main
+    id="menu"
+    class="menu-container">
+
 
     <div class="section-title">
 
-        <span>GOLDEN PIZZERIA</span>
+        <span>
+            GOLDEN PIZZERIA
+        </span>
 
-        <h2>NUESTRO MENÚ</h2>
+        <h2>
+            NUESTRO MENÚ
+        </h2>
 
         <p>
             Elige tus favoritos y arma tu pedido
@@ -374,62 +539,99 @@
     </div>
 
 
-    <!-- FILTROS -->
+    <!-- =================================================
+         FILTROS
+    ================================================== -->
 
     <div class="menu-filters">
 
         <button
+            type="button"
             class="filter-btn active"
             onclick="filterCategory('todas')">
+
             TODAS LAS PIZZAS
+
         </button>
 
+
         <button
+            type="button"
             class="filter-btn"
             onclick="filterCategory('clasicas')">
+
             PIZZAS CLÁSICAS
+
         </button>
 
+
         <button
+            type="button"
             class="filter-btn"
             onclick="filterCategory('unicas')">
+
             SABORES ÚNICOS
+
         </button>
 
+
         <button
+            type="button"
             class="filter-btn"
             onclick="filterCategory('casa')">
+
             PIZZAS DE CASA
+
         </button>
 
+
         <button
+            type="button"
             class="filter-btn"
             onclick="filterCategory('especiales')">
+
             ESPECIALES / MIXTAS
+
         </button>
 
+
         <button
+            type="button"
             class="filter-btn"
             onclick="filterCategory('pan')">
+
             PAN AL AJO
+
         </button>
 
+
         <button
+            type="button"
             class="filter-btn"
             onclick="filterCategory('bebidas')">
+
             BEBIDAS
+
         </button>
 
+
         <button
+            type="button"
             class="filter-btn"
             onclick="filterCategory('frappes')">
+
             FRAPPÉS
+
         </button>
 
+
         <button
+            type="button"
             class="filter-btn"
             onclick="filterCategory('calientes')">
+
             CALIENTES
+
         </button>
 
     </div>
@@ -450,18 +652,25 @@
                     CLÁSICA
                 </span>
 
-                <h3>Americana</h3>
+                <h3>
+                    Americana
+                </h3>
 
-                <p>Clásica combinación de sabores.</p>
+                <p>
+                    Clásica combinación de sabores.
+                </p>
 
                 <div class="price">
                     Personal S/16 · Mediana S/23 · Familiar S/32
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('Americana',16,23,32)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -477,18 +686,25 @@
                     CLÁSICA
                 </span>
 
-                <h3>Hawaiana</h3>
+                <h3>
+                    Hawaiana
+                </h3>
 
-                <p>Jamón y piña.</p>
+                <p>
+                    Jamón y piña.
+                </p>
 
                 <div class="price">
                     Personal S/18 · Mediana S/25 · Familiar S/36
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('Hawaiana',18,25,36)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -504,18 +720,25 @@
                     CLÁSICA
                 </span>
 
-                <h3>Pepperoni</h3>
+                <h3>
+                    Pepperoni
+                </h3>
 
-                <p>Abundante pepperoni y queso.</p>
+                <p>
+                    Abundante pepperoni y queso.
+                </p>
 
                 <div class="price">
                     Personal S/18 · Mediana S/28 · Familiar S/38
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('Pepperoni',18,28,38)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -527,18 +750,25 @@
 
             <div class="card-content">
 
-                <h3>Italiana</h3>
+                <h3>
+                    Italiana
+                </h3>
 
-                <p>Inspiración italiana.</p>
+                <p>
+                    Inspiración italiana.
+                </p>
 
                 <div class="price">
                     Personal S/18 · Mediana S/25 · Familiar S/35
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('Italiana',18,25,35)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -550,18 +780,25 @@
 
             <div class="card-content">
 
-                <h3>Margarita</h3>
+                <h3>
+                    Margarita
+                </h3>
 
-                <p>Simple, clásica y deliciosa.</p>
+                <p>
+                    Simple, clásica y deliciosa.
+                </p>
 
                 <div class="price">
                     Personal S/17 · Mediana S/24 · Familiar S/32
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('Margarita',17,24,32)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -573,18 +810,25 @@
 
             <div class="card-content">
 
-                <h3>Siciliana</h3>
+                <h3>
+                    Siciliana
+                </h3>
 
-                <p>Inspirada en la tradición siciliana.</p>
+                <p>
+                    Inspirada en la tradición siciliana.
+                </p>
 
                 <div class="price">
                     Personal S/18 · Mediana S/25 · Familiar S/34
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('Siciliana',18,25,34)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -596,18 +840,25 @@
 
             <div class="card-content">
 
-                <h3>Vegetariana</h3>
+                <h3>
+                    Vegetariana
+                </h3>
 
-                <p>Variedad de vegetales y queso.</p>
+                <p>
+                    Variedad de vegetales y queso.
+                </p>
 
                 <div class="price">
                     Personal S/18 · Mediana S/25 · Familiar S/34
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('Vegetariana',18,25,34)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -619,18 +870,25 @@
 
             <div class="card-content">
 
-                <h3>Mixta Compartida</h3>
+                <h3>
+                    Mixta Compartida
+                </h3>
 
-                <p>Una combinación para compartir.</p>
+                <p>
+                    Una combinación para compartir.
+                </p>
 
                 <div class="price">
                     Personal S/18 · Mediana S/26 · Familiar S/35
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('Mixta Compartida',18,26,35)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -642,18 +900,25 @@
 
             <div class="card-content">
 
-                <h3>Karibeña</h3>
+                <h3>
+                    Karibeña
+                </h3>
 
-                <p>Una combinación de sabor tropical.</p>
+                <p>
+                    Una combinación de sabor tropical.
+                </p>
 
                 <div class="price">
                     Personal S/22 · Mediana S/28 · Familiar S/40
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('Karibeña',22,28,40)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -665,18 +930,25 @@
 
             <div class="card-content">
 
-                <h3>La Rustika</h3>
+                <h3>
+                    La Rustika
+                </h3>
 
-                <p>Especial simple de la casa.</p>
+                <p>
+                    Especial simple de la casa.
+                </p>
 
                 <div class="price">
                     Personal S/20 · Mediana S/28 · Familiar S/36
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('La Rustika',20,28,36)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -701,18 +973,25 @@
                     DE CASA
                 </span>
 
-                <h3>Golden de la Casa</h3>
+                <h3>
+                    Golden de la Casa
+                </h3>
 
-                <p>Especialidad Golden.</p>
+                <p>
+                    Especialidad Golden.
+                </p>
 
                 <div class="price">
                     Personal S/20 · Mediana S/30 · Familiar S/40
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('Golden de la Casa',20,30,40)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -724,16 +1003,21 @@
 
             <div class="card-content">
 
-                <h3>La Suprema de la Casa</h3>
+                <h3>
+                    La Suprema de la Casa
+                </h3>
 
                 <div class="price">
                     Personal S/22 · Mediana S/32 · Familiar S/42
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('La Suprema de la Casa',22,32,42)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -745,16 +1029,21 @@
 
             <div class="card-content">
 
-                <h3>La Volcánica</h3>
+                <h3>
+                    La Volcánica
+                </h3>
 
                 <div class="price">
                     Personal S/26 · Mediana S/35 · Familiar S/45
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('La Volcánica',26,35,45)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -766,16 +1055,21 @@
 
             <div class="card-content">
 
-                <h3>La Boloñesa</h3>
+                <h3>
+                    La Boloñesa
+                </h3>
 
                 <div class="price">
                     Personal S/25 · Mediana S/35 · Familiar S/45
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('La Boloñesa',25,35,45)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -787,16 +1081,21 @@
 
             <div class="card-content">
 
-                <h3>Trika</h3>
+                <h3>
+                    Trika
+                </h3>
 
                 <div class="price">
                     Mediana S/36 · Familiar S/46
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('Trika',null,36,46)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -808,16 +1107,21 @@
 
             <div class="card-content">
 
-                <h3>3 Carnes</h3>
+                <h3>
+                    3 Carnes
+                </h3>
 
                 <div class="price">
                     Personal S/25 · Mediana S/35 · Familiar S/45
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('3 Carnes',25,35,45)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -829,16 +1133,21 @@
 
             <div class="card-content">
 
-                <h3>Tradición Arequipeña</h3>
+                <h3>
+                    Tradición Arequipeña
+                </h3>
 
                 <div class="price">
                     Personal S/24 · Mediana S/32 · Familiar S/42
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('Tradición Arequipeña',24,32,42)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -850,16 +1159,21 @@
 
             <div class="card-content">
 
-                <h3>Picante Caústico</h3>
+                <h3>
+                    Picante Caústico
+                </h3>
 
                 <div class="price">
                     Personal S/25 · Mediana S/36 · Familiar S/46
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('Picante Caústico',25,36,46)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -884,16 +1198,21 @@
                     SABORES ÚNICOS
                 </span>
 
-                <h3>Napolitana</h3>
+                <h3>
+                    Napolitana
+                </h3>
 
                 <div class="price">
                     Personal S/16 · Mediana S/24 · Familiar S/32
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('Napolitana',16,24,32)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -905,16 +1224,21 @@
 
             <div class="card-content">
 
-                <h3>Champiñones</h3>
+                <h3>
+                    Champiñones
+                </h3>
 
                 <div class="price">
                     Personal S/20 · Mediana S/24 · Familiar S/34
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('Champiñones',20,24,34)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -926,16 +1250,21 @@
 
             <div class="card-content">
 
-                <h3>De Salchicha</h3>
+                <h3>
+                    De Salchicha
+                </h3>
 
                 <div class="price">
                     Personal S/16 · Mediana S/25 · Familiar S/33
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('De Salchicha',16,25,33)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -947,16 +1276,21 @@
 
             <div class="card-content">
 
-                <h3>De Aceituna</h3>
+                <h3>
+                    De Aceituna
+                </h3>
 
                 <div class="price">
                     Personal S/16 · Mediana S/25 · Familiar S/33
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('De Aceituna',16,25,33)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -968,16 +1302,21 @@
 
             <div class="card-content">
 
-                <h3>De Salame</h3>
+                <h3>
+                    De Salame
+                </h3>
 
                 <div class="price">
                     Personal S/16 · Mediana S/25 · Familiar S/33
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('De Salame',16,25,33)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -989,16 +1328,21 @@
 
             <div class="card-content">
 
-                <h3>De Chorizo</h3>
+                <h3>
+                    De Chorizo
+                </h3>
 
                 <div class="price">
                     Personal S/16 · Mediana S/25 · Familiar S/33
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('De Chorizo',16,25,33)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -1010,16 +1354,21 @@
 
             <div class="card-content">
 
-                <h3>De Jamón</h3>
+                <h3>
+                    De Jamón
+                </h3>
 
                 <div class="price">
                     Personal S/16 · Mediana S/25 · Familiar S/33
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('De Jamón',16,25,33)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -1044,16 +1393,21 @@
                     ESPECIAL
                 </span>
 
-                <h3>Pollo</h3>
+                <h3>
+                    Pollo
+                </h3>
 
                 <div class="price">
                     Personal S/25 · Mediana S/35 · Familiar S/45
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('Pollo',25,35,45)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -1065,16 +1419,21 @@
 
             <div class="card-content">
 
-                <h3>Oriental</h3>
+                <h3>
+                    Oriental
+                </h3>
 
                 <div class="price">
                     Personal S/25 · Mediana S/34 · Familiar S/44
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('Oriental',25,34,44)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -1086,16 +1445,21 @@
 
             <div class="card-content">
 
-                <h3>Tropical</h3>
+                <h3>
+                    Tropical
+                </h3>
 
                 <div class="price">
                     Personal S/24 · Mediana S/32 · Familiar S/42
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('Tropical',24,32,42)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -1107,16 +1471,21 @@
 
             <div class="card-content">
 
-                <h3>Cuatro Estaciones</h3>
+                <h3>
+                    Cuatro Estaciones
+                </h3>
 
                 <div class="price">
                     Mediana S/36 · Familiar S/46
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('Cuatro Estaciones',null,36,46)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -1128,16 +1497,21 @@
 
             <div class="card-content">
 
-                <h3>La Española</h3>
+                <h3>
+                    La Española
+                </h3>
 
                 <div class="price">
                     Personal S/22 · Mediana S/31 · Familiar S/41
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('La Española',22,31,41)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -1149,16 +1523,21 @@
 
             <div class="card-content">
 
-                <h3>Mexicana</h3>
+                <h3>
+                    Mexicana
+                </h3>
 
                 <div class="price">
                     Personal S/25 · Mediana S/33 · Familiar S/43
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('Mexicana',25,33,43)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -1170,16 +1549,21 @@
 
             <div class="card-content">
 
-                <h3>Mixtas Especiales</h3>
+                <h3>
+                    Mixtas Especiales
+                </h3>
 
                 <div class="price">
                     Personal S/25 · Mediana S/35 · Familiar S/45
                 </div>
 
                 <button
+                    type="button"
                     onclick="abrirModalPizza('Mixtas Especiales',25,35,45)"
                     class="btn-add">
+
                     ELEGIR 🍕
+
                 </button>
 
             </div>
@@ -1196,39 +1580,80 @@
     <section class="product-grid">
 
         <article class="card clasicas">
+
             <div class="card-content">
-                <h3>Pizzeta Americana</h3>
-                <div class="price">S/5</div>
+
+                <h3>
+                    Pizzeta Americana
+                </h3>
+
+                <div class="price">
+                    S/5
+                </div>
+
                 <button
+                    type="button"
                     onclick="agregarPedido('Pizzeta Americana',5)"
                     class="btn-add">
+
                     AÑADIR
+
                 </button>
+
             </div>
+
         </article>
 
+
         <article class="card clasicas">
+
             <div class="card-content">
-                <h3>Pizzeta Hawaiana</h3>
-                <div class="price">S/6</div>
+
+                <h3>
+                    Pizzeta Hawaiana
+                </h3>
+
+                <div class="price">
+                    S/6
+                </div>
+
                 <button
+                    type="button"
                     onclick="agregarPedido('Pizzeta Hawaiana',6)"
                     class="btn-add">
+
                     AÑADIR
+
                 </button>
+
             </div>
+
         </article>
 
+
         <article class="card clasicas">
+
             <div class="card-content">
-                <h3>Pizzeta Pepperoni</h3>
-                <div class="price">S/7</div>
+
+                <h3>
+                    Pizzeta Pepperoni
+                </h3>
+
+                <div class="price">
+                    S/7
+                </div>
+
                 <button
+                    type="button"
                     onclick="agregarPedido('Pizzeta Pepperoni',7)"
                     class="btn-add">
+
                     AÑADIR
+
                 </button>
+
             </div>
+
         </article>
 
     </section>
@@ -1248,16 +1673,21 @@
                     ACOMPAÑAMIENTO
                 </span>
 
-                <h3>Pan al Ajo Simple</h3>
+                <h3>
+                    Pan al Ajo Simple
+                </h3>
 
                 <div class="price">
                     S/6
                 </div>
 
                 <button
+                    type="button"
                     onclick="agregarPedido('Pan al Ajo Simple',6)"
                     class="btn-add">
+
                     AÑADIR
+
                 </button>
 
             </div>
@@ -1269,16 +1699,21 @@
 
             <div class="card-content">
 
-                <h3>Pan al Ajo Especial</h3>
+                <h3>
+                    Pan al Ajo Especial
+                </h3>
 
                 <div class="price">
                     S/8
                 </div>
 
                 <button
+                    type="button"
                     onclick="agregarPedido('Pan al Ajo Especial',8)"
                     class="btn-add">
+
                     AÑADIR
+
                 </button>
 
             </div>
@@ -1295,51 +1730,158 @@
     <section class="product-grid">
 
         <article class="card frappes">
+
             <div class="card-content">
-                <h3>Frappé de Fresa</h3>
-                <div class="price">S/10</div>
-                <button onclick="agregarPedido('Frappé de Fresa',10)" class="btn-add">AÑADIR</button>
+
+                <h3>
+                    Frappé de Fresa
+                </h3>
+
+                <div class="price">
+                    S/10
+                </div>
+
+                <button
+                    type="button"
+                    onclick="agregarPedido('Frappé de Fresa',10)"
+                    class="btn-add">
+
+                    AÑADIR
+
+                </button>
+
             </div>
+
         </article>
 
-        <article class="card frappes">
-            <div class="card-content">
-                <h3>Frappé de Mango</h3>
-                <div class="price">S/10</div>
-                <button onclick="agregarPedido('Frappé de Mango',10)" class="btn-add">AÑADIR</button>
-            </div>
-        </article>
 
         <article class="card frappes">
+
             <div class="card-content">
-                <h3>Frappé de Maracuyá</h3>
-                <div class="price">S/10</div>
-                <button onclick="agregarPedido('Frappé de Maracuyá',10)" class="btn-add">AÑADIR</button>
+
+                <h3>
+                    Frappé de Mango
+                </h3>
+
+                <div class="price">
+                    S/10
+                </div>
+
+                <button
+                    type="button"
+                    onclick="agregarPedido('Frappé de Mango',10)"
+                    class="btn-add">
+
+                    AÑADIR
+
+                </button>
+
             </div>
+
         </article>
 
-        <article class="card frappes">
-            <div class="card-content">
-                <h3>Frappé de Lúcuma</h3>
-                <div class="price">S/10</div>
-                <button onclick="agregarPedido('Frappé de Lúcuma',10)" class="btn-add">AÑADIR</button>
-            </div>
-        </article>
 
         <article class="card frappes">
+
             <div class="card-content">
-                <h3>Frappé de Oreo</h3>
-                <div class="price">S/9</div>
-                <button onclick="agregarPedido('Frappé de Oreo',9)" class="btn-add">AÑADIR</button>
+
+                <h3>
+                    Frappé de Maracuyá
+                </h3>
+
+                <div class="price">
+                    S/10
+                </div>
+
+                <button
+                    type="button"
+                    onclick="agregarPedido('Frappé de Maracuyá',10)"
+                    class="btn-add">
+
+                    AÑADIR
+
+                </button>
+
             </div>
+
         </article>
 
+
         <article class="card frappes">
+
             <div class="card-content">
-                <h3>Frappé Capuccino</h3>
-                <div class="price">S/9</div>
-                <button onclick="agregarPedido('Frappé Capuccino',9)" class="btn-add">AÑADIR</button>
+
+                <h3>
+                    Frappé de Lúcuma
+                </h3>
+
+                <div class="price">
+                    S/10
+                </div>
+
+                <button
+                    type="button"
+                    onclick="agregarPedido('Frappé de Lúcuma',10)"
+                    class="btn-add">
+
+                    AÑADIR
+
+                </button>
+
             </div>
+
+        </article>
+
+
+        <article class="card frappes">
+
+            <div class="card-content">
+
+                <h3>
+                    Frappé de Oreo
+                </h3>
+
+                <div class="price">
+                    S/9
+                </div>
+
+                <button
+                    type="button"
+                    onclick="agregarPedido('Frappé de Oreo',9)"
+                    class="btn-add">
+
+                    AÑADIR
+
+                </button>
+
+            </div>
+
+        </article>
+
+
+        <article class="card frappes">
+
+            <div class="card-content">
+
+                <h3>
+                    Frappé Capuccino
+                </h3>
+
+                <div class="price">
+                    S/9
+                </div>
+
+                <button
+                    type="button"
+                    onclick="agregarPedido('Frappé Capuccino',9)"
+                    class="btn-add">
+
+                    AÑADIR
+
+                </button>
+
+            </div>
+
         </article>
 
     </section>
@@ -1352,35 +1894,106 @@
     <section class="product-grid">
 
         <article class="card bebidas">
+
             <div class="card-content">
-                <h3>Limonada 1/2 L al tiempo</h3>
-                <div class="price">S/7</div>
-                <button onclick="agregarPedido('Limonada 1/2 L al tiempo',7)" class="btn-add">AÑADIR</button>
+
+                <h3>
+                    Limonada 1/2 L al tiempo
+                </h3>
+
+                <div class="price">
+                    S/7
+                </div>
+
+                <button
+                    type="button"
+                    onclick="agregarPedido('Limonada 1/2 L al tiempo',7)"
+                    class="btn-add">
+
+                    AÑADIR
+
+                </button>
+
             </div>
+
         </article>
 
-        <article class="card bebidas">
-            <div class="card-content">
-                <h3>Limonada 1/2 L Frozen</h3>
-                <div class="price">S/9</div>
-                <button onclick="agregarPedido('Limonada 1/2 L Frozen',9)" class="btn-add">AÑADIR</button>
-            </div>
-        </article>
 
         <article class="card bebidas">
+
             <div class="card-content">
-                <h3>Limonada 1 L al tiempo</h3>
-                <div class="price">S/12</div>
-                <button onclick="agregarPedido('Limonada 1 L al tiempo',12)" class="btn-add">AÑADIR</button>
+
+                <h3>
+                    Limonada 1/2 L Frozen
+                </h3>
+
+                <div class="price">
+                    S/9
+                </div>
+
+                <button
+                    type="button"
+                    onclick="agregarPedido('Limonada 1/2 L Frozen',9)"
+                    class="btn-add">
+
+                    AÑADIR
+
+                </button>
+
             </div>
+
         </article>
 
+
         <article class="card bebidas">
+
             <div class="card-content">
-                <h3>Limonada 1 L Frozen</h3>
-                <div class="price">S/14</div>
-                <button onclick="agregarPedido('Limonada 1 L Frozen',14)" class="btn-add">AÑADIR</button>
+
+                <h3>
+                    Limonada 1 L al tiempo
+                </h3>
+
+                <div class="price">
+                    S/12
+                </div>
+
+                <button
+                    type="button"
+                    onclick="agregarPedido('Limonada 1 L al tiempo',12)"
+                    class="btn-add">
+
+                    AÑADIR
+
+                </button>
+
             </div>
+
+        </article>
+
+
+        <article class="card bebidas">
+
+            <div class="card-content">
+
+                <h3>
+                    Limonada 1 L Frozen
+                </h3>
+
+                <div class="price">
+                    S/14
+                </div>
+
+                <button
+                    type="button"
+                    onclick="agregarPedido('Limonada 1 L Frozen',14)"
+                    class="btn-add">
+
+                    AÑADIR
+
+                </button>
+
+            </div>
+
         </article>
 
     </section>
@@ -1393,35 +2006,106 @@
     <section class="product-grid">
 
         <article class="card bebidas">
+
             <div class="card-content">
-                <h3>Chicha Morada 1/2 L al tiempo</h3>
-                <div class="price">S/6</div>
-                <button onclick="agregarPedido('Chicha Morada 1/2 L al tiempo',6)" class="btn-add">AÑADIR</button>
+
+                <h3>
+                    Chicha Morada 1/2 L al tiempo
+                </h3>
+
+                <div class="price">
+                    S/6
+                </div>
+
+                <button
+                    type="button"
+                    onclick="agregarPedido('Chicha Morada 1/2 L al tiempo',6)"
+                    class="btn-add">
+
+                    AÑADIR
+
+                </button>
+
             </div>
+
         </article>
 
-        <article class="card bebidas">
-            <div class="card-content">
-                <h3>Chicha Morada 1/2 L Frozen</h3>
-                <div class="price">S/8</div>
-                <button onclick="agregarPedido('Chicha Morada 1/2 L Frozen',8)" class="btn-add">AÑADIR</button>
-            </div>
-        </article>
 
         <article class="card bebidas">
+
             <div class="card-content">
-                <h3>Chicha Morada 1 L al tiempo</h3>
-                <div class="price">S/10</div>
-                <button onclick="agregarPedido('Chicha Morada 1 L al tiempo',10)" class="btn-add">AÑADIR</button>
+
+                <h3>
+                    Chicha Morada 1/2 L Frozen
+                </h3>
+
+                <div class="price">
+                    S/8
+                </div>
+
+                <button
+                    type="button"
+                    onclick="agregarPedido('Chicha Morada 1/2 L Frozen',8)"
+                    class="btn-add">
+
+                    AÑADIR
+
+                </button>
+
             </div>
+
         </article>
 
+
         <article class="card bebidas">
+
             <div class="card-content">
-                <h3>Chicha Morada 1 L Frozen</h3>
-                <div class="price">S/12</div>
-                <button onclick="agregarPedido('Chicha Morada 1 L Frozen',12)" class="btn-add">AÑADIR</button>
+
+                <h3>
+                    Chicha Morada 1 L al tiempo
+                </h3>
+
+                <div class="price">
+                    S/10
+                </div>
+
+                <button
+                    type="button"
+                    onclick="agregarPedido('Chicha Morada 1 L al tiempo',10)"
+                    class="btn-add">
+
+                    AÑADIR
+
+                </button>
+
             </div>
+
+        </article>
+
+
+        <article class="card bebidas">
+
+            <div class="card-content">
+
+                <h3>
+                    Chicha Morada 1 L Frozen
+                </h3>
+
+                <div class="price">
+                    S/12
+                </div>
+
+                <button
+                    type="button"
+                    onclick="agregarPedido('Chicha Morada 1 L Frozen',12)"
+                    class="btn-add">
+
+                    AÑADIR
+
+                </button>
+
+            </div>
+
         </article>
 
     </section>
@@ -1434,38 +2118,110 @@
     <section class="product-grid">
 
         <article class="card calientes">
+
             <div class="card-content">
-                <h3>Café Artesanal</h3>
-                <div class="price">S/4</div>
-                <button onclick="agregarPedido('Café Artesanal',4)" class="btn-add">AÑADIR</button>
+
+                <h3>
+                    Café Artesanal
+                </h3>
+
+                <div class="price">
+                    S/4
+                </div>
+
+                <button
+                    type="button"
+                    onclick="agregarPedido('Café Artesanal',4)"
+                    class="btn-add">
+
+                    AÑADIR
+
+                </button>
+
             </div>
+
         </article>
 
-        <article class="card calientes">
-            <div class="card-content">
-                <h3>Café Capuccino</h3>
-                <div class="price">S/6</div>
-                <button onclick="agregarPedido('Café Capuccino',6)" class="btn-add">AÑADIR</button>
-            </div>
-        </article>
 
         <article class="card calientes">
+
             <div class="card-content">
-                <h3>Té filtrantes</h3>
-                <div class="price">S/2</div>
-                <button onclick="agregarPedido('Té filtrantes',2)" class="btn-add">AÑADIR</button>
+
+                <h3>
+                    Café Capuccino
+                </h3>
+
+                <div class="price">
+                    S/6
+                </div>
+
+                <button
+                    type="button"
+                    onclick="agregarPedido('Café Capuccino',6)"
+                    class="btn-add">
+
+                    AÑADIR
+
+                </button>
+
             </div>
+
         </article>
 
+
         <article class="card calientes">
+
             <div class="card-content">
-                <h3>Infusiones</h3>
-                <div class="price">S/2</div>
-                <button onclick="agregarPedido('Infusiones',2)" class="btn-add">AÑADIR</button>
+
+                <h3>
+                    Té filtrantes
+                </h3>
+
+                <div class="price">
+                    S/2
+                </div>
+
+                <button
+                    type="button"
+                    onclick="agregarPedido('Té filtrantes',2)"
+                    class="btn-add">
+
+                    AÑADIR
+
+                </button>
+
             </div>
+
+        </article>
+
+
+        <article class="card calientes">
+
+            <div class="card-content">
+
+                <h3>
+                    Infusiones
+                </h3>
+
+                <div class="price">
+                    S/2
+                </div>
+
+                <button
+                    type="button"
+                    onclick="agregarPedido('Infusiones',2)"
+                    class="btn-add">
+
+                    AÑADIR
+
+                </button>
+
+            </div>
+
         </article>
 
     </section>
+
 
 </main>
 
@@ -1474,22 +2230,38 @@
      CARRITO
 ===================================================== -->
 
-<div id="cart-bar" class="cart-bar hidden">
+<div
+    id="cart-bar"
+    class="cart-bar hidden">
+
 
     <div class="cart-info">
 
-        <span class="cart-icon">🛒</span>
+        <span class="cart-icon">
+            🛒
+        </span>
 
         <div>
 
             <div class="cart-title">
-                <b id="cart-count">0</b>
+
+                <b id="cart-count">
+                    0
+                </b>
+
                 Ítem(s) en tu pedido
+
             </div>
 
+
             <div class="cart-price">
+
                 Total:
-                <b id="cart-total">S/ 0.00</b>
+
+                <b id="cart-total">
+                    S/ 0.00
+                </b>
+
             </div>
 
         </div>
@@ -1499,17 +2271,30 @@
 
     <div class="cart-actions">
 
-        <button
-            onclick="vaciarPedido()"
-            class="btn-clean">
-            Limpiar
-        </button>
 
         <button
-            onclick="abrirPago()"
-            class="btn-whatsapp">
-            CONTINUAR AL PAGO 💳
+            type="button"
+            onclick="vaciarPedido()"
+            class="btn-clean">
+
+            Limpiar
+
         </button>
+
+
+        <!-- =================================================
+             BOTÓN CORREGIDO
+        ================================================== -->
+
+        <button
+            type="button"
+            onclick="return abrirPago(event)"
+            class="btn-whatsapp">
+
+            CONTINUAR AL PAGO 💳
+
+        </button>
+
 
     </div>
 
@@ -1524,11 +2309,14 @@
     id="pizza-modal"
     class="payment-overlay hidden">
 
+
     <div class="payment-box">
+
 
         <h2 id="pizza-modal-title">
             Elegir pizza
         </h2>
+
 
         <p class="payment-subtitle">
             Selecciona el tamaño y extras
@@ -1537,9 +2325,15 @@
 
         <div class="payment-section active">
 
+
             <label>
-                <strong>Tamaño</strong>
+
+                <strong>
+                    Tamaño
+                </strong>
+
             </label>
+
 
             <select
                 id="pizza-size"
@@ -1550,12 +2344,18 @@
                     margin-bottom:15px;
                     border-radius:8px;
                 ">
+
             </select>
 
 
             <label>
-                <strong>Extra queso</strong>
+
+                <strong>
+                    Extra queso
+                </strong>
+
             </label>
+
 
             <select
                 id="pizza-extra"
@@ -1589,17 +2389,26 @@
 
         <div class="payment-buttons">
 
-            <button
-                onclick="cerrarModalPizza()"
-                class="btn-close-payment">
-                CANCELAR
-            </button>
 
             <button
+                type="button"
+                onclick="cerrarModalPizza()"
+                class="btn-close-payment">
+
+                CANCELAR
+
+            </button>
+
+
+            <button
+                type="button"
                 onclick="confirmarPizza()"
                 class="btn-confirm-payment">
+
                 AÑADIR 🍕
+
             </button>
+
 
         </div>
 
@@ -1616,26 +2425,38 @@
     id="payment-overlay"
     class="payment-overlay hidden">
 
+
     <div class="payment-box">
 
-        <h2>💳 Finalizar pedido</h2>
+
+        <h2>
+            💳 Finalizar pedido
+        </h2>
+
 
         <p class="payment-subtitle">
             Revisa tu pedido y selecciona tu método de pago
         </p>
 
 
-        <!-- RESUMEN -->
+        <!-- =================================================
+             RESUMEN
+        ================================================== -->
 
         <div class="payment-summary">
 
+
             <div id="payment-summary-list">
+
                 Tu pedido aparecerá aquí.
+
             </div>
+
 
             <div class="payment-total">
 
                 Total:
+
                 <strong id="payment-total">
                     S/ 0.00
                 </strong>
@@ -1645,16 +2466,22 @@
         </div>
 
 
-        <!-- MÉTODOS -->
+        <!-- =================================================
+             MÉTODOS DE PAGO
+        ================================================== -->
 
         <div class="payment-methods">
 
+
             <button
+                type="button"
                 class="payment-method"
                 onclick="seleccionarPago('yape')"
                 id="payment-yape">
 
-                <span>📱</span>
+                <span>
+                    📱
+                </span>
 
                 Yape
 
@@ -1662,11 +2489,14 @@
 
 
             <button
+                type="button"
                 class="payment-method"
                 onclick="seleccionarPago('tarjeta')"
                 id="payment-tarjeta">
 
-                <span>💳</span>
+                <span>
+                    💳
+                </span>
 
                 Tarjeta
 
@@ -1674,57 +2504,80 @@
 
 
             <button
+                type="button"
                 class="payment-method"
                 onclick="seleccionarPago('efectivo')"
                 id="payment-efectivo">
 
-                <span>💵</span>
+                <span>
+                    💵
+                </span>
 
                 Efectivo
 
             </button>
 
+
         </div>
 
 
-        <!-- YAPE -->
+        <!-- =================================================
+             YAPE
+        ================================================== -->
 
         <div
             id="section-yape"
             class="payment-section">
 
+
             <div class="yape-card">
 
-                <h3>📱 Pago por Yape</h3>
+
+                <h3>
+                    📱 Pago por Yape
+                </h3>
+
 
                 <p>
                     Envía el monto exacto al número:
                 </p>
 
+
                 <div class="yape-number">
                     979 707 173
                 </div>
 
+
                 <div class="qr-placeholder">
-                    QR DE YAPE<br>
+
+                    QR DE YAPE
+                    <br>
                     GOLDEN PIZZERIA
+
                 </div>
 
+
                 <p>
+
                     Después de realizar el pago,
                     adjunta tu comprobante.
+
                 </p>
 
 
                 <label class="receipt-label">
 
+
                     📸
+
                     SELECCIONAR COMPROBANTE
+
 
                     <input
                         type="file"
                         id="receipt-file"
                         accept="image/*">
+
 
                 </label>
 
@@ -1732,59 +2585,89 @@
                 <div
                     id="receipt-name"
                     class="receipt-name">
+
                 </div>
+
 
             </div>
 
         </div>
 
 
-        <!-- TARJETA -->
+        <!-- =================================================
+             TARJETA
+        ================================================== -->
 
         <div
             id="section-tarjeta"
             class="payment-section">
 
-            <h3>💳 Pago con tarjeta</h3>
+
+            <h3>
+                💳 Pago con tarjeta
+            </h3>
+
 
             <p>
+
                 El pago con tarjeta se coordinará
                 con Golden Pizzeria.
+
             </p>
 
+
             <p>
+
                 Al confirmar, recibirás las
                 instrucciones correspondientes.
+
             </p>
+
 
         </div>
 
 
-        <!-- EFECTIVO -->
+        <!-- =================================================
+             EFECTIVO
+        ================================================== -->
 
         <div
             id="section-efectivo"
             class="payment-section">
 
-            <h3>💵 Pago en efectivo</h3>
+
+            <h3>
+                💵 Pago en efectivo
+            </h3>
+
 
             <p>
+
                 Seleccionaste pagar en efectivo.
+
             </p>
 
+
             <p>
+
                 Ten preparado el monto de tu pedido
                 al momento de recibirlo.
+
             </p>
+
 
         </div>
 
 
-        <!-- BOTONES -->
+        <!-- =================================================
+             BOTONES DE PAGO
+        ================================================== -->
 
         <div class="payment-buttons">
 
+
             <button
+                type="button"
                 onclick="cerrarPago()"
                 class="btn-close-payment">
 
@@ -1794,6 +2677,7 @@
 
 
             <button
+                type="button"
                 onclick="confirmarPedido()"
                 class="btn-confirm-payment">
 
@@ -1801,7 +2685,9 @@
 
             </button>
 
+
         </div>
+
 
     </div>
 
@@ -1809,25 +2695,33 @@
 
 
 <!-- =====================================================
-     SEGUIMIENTO DEL PEDIDO
+     SEGUIMIENTO
 ===================================================== -->
 
 <div
     id="tracking-overlay"
     class="tracking-overlay hidden">
 
+
     <div class="tracking-box">
 
-        <h2>🍕 Tu pedido</h2>
+
+        <h2>
+            🍕 Tu pedido
+        </h2>
+
 
         <p>
             Código de pedido
         </p>
 
+
         <div
             id="order-code"
             class="order-code">
+
             GP-000000-000
+
         </div>
 
 
@@ -1837,9 +2731,11 @@
             id="tracking-recibido"
             class="tracking-step active">
 
+
             <div class="tracking-icon">
                 🟡
             </div>
+
 
             <div class="tracking-info">
 
@@ -1853,6 +2749,7 @@
 
             </div>
 
+
         </div>
 
 
@@ -1862,9 +2759,11 @@
             id="tracking-preparando"
             class="tracking-step">
 
+
             <div class="tracking-icon">
                 🔵
             </div>
+
 
             <div class="tracking-info">
 
@@ -1878,6 +2777,7 @@
 
             </div>
 
+
         </div>
 
 
@@ -1887,9 +2787,11 @@
             id="tracking-listo"
             class="tracking-step">
 
+
             <div class="tracking-icon">
                 🟢
             </div>
+
 
             <div class="tracking-info">
 
@@ -1903,6 +2805,7 @@
 
             </div>
 
+
         </div>
 
 
@@ -1912,9 +2815,11 @@
             id="tracking-cancelado"
             class="tracking-step">
 
+
             <div class="tracking-icon">
                 🔴
             </div>
+
 
             <div class="tracking-info">
 
@@ -1928,29 +2833,37 @@
 
             </div>
 
+
         </div>
 
+
+        <!-- TEMPORIZADOR -->
 
         <div
             id="preparation-timer"
             class="timer"
             style="display:none;">
 
+
             ⏱️ Tiempo estimado:
+
             <span id="timer-value">
-                10 min
+                10:00
             </span>
+
 
         </div>
 
 
         <button
+            type="button"
             onclick="cerrarTracking()"
             class="tracking-close">
 
             CERRAR
 
         </button>
+
 
     </div>
 
@@ -1963,21 +2876,27 @@
 
 <footer>
 
+
     <div class="footer-content">
+
 
         <h2>
             GOLDEN PIZZERIA
         </h2>
 
+
         <p>
             El sabor que merece tu momento 🍕
         </p>
+
 
         <p>
             🔥 Hecho artesanalmente a leña
         </p>
 
+
     </div>
+
 
     <div class="footer-bottom">
 
@@ -1986,46 +2905,83 @@
 
     </div>
 
+
 </footer>
 
 
 <!-- =====================================================
-     JAVASCRIPT
+     SCRIPT PRINCIPAL
 ===================================================== -->
 
 <script src="script.js"></script>
 
 
+<!-- =====================================================
+     FUNCIONES DEL MODAL DE PIZZAS
+===================================================== -->
+
 <script>
 
-/* =====================================================
-   MODAL DE PIZZAS
-===================================================== */
 
 let pizzaSeleccionada = null;
 
+
 let preciosPizza = {
+
     personal: null,
+
     mediana: null,
+
     familiar: null
+
 };
 
 
-function abrirModalPizza(nombre, personal, mediana, familiar) {
+/* =====================================================
+   ABRIR MODAL DE PIZZA
+===================================================== */
+
+function abrirModalPizza(
+    nombre,
+    personal,
+    mediana,
+    familiar
+) {
+
 
     pizzaSeleccionada = nombre;
 
+
     preciosPizza.personal = personal;
+
     preciosPizza.mediana = mediana;
+
     preciosPizza.familiar = familiar;
 
 
-    document.getElementById("pizza-modal-title").innerText =
-        nombre;
+    const titulo =
+        document.getElementById(
+            "pizza-modal-title"
+        );
+
+
+    if (titulo) {
+
+        titulo.innerText = nombre;
+
+    }
 
 
     const select =
-        document.getElementById("pizza-size");
+        document.getElementById(
+            "pizza-size"
+        );
+
+
+    if (!select) {
+        return;
+    }
+
 
     select.innerHTML = "";
 
@@ -2033,9 +2989,13 @@ function abrirModalPizza(nombre, personal, mediana, familiar) {
     if (personal !== null) {
 
         select.innerHTML += `
+
             <option value="${personal}">
+
                 Personal - S/${personal}
+
             </option>
+
         `;
 
     }
@@ -2044,9 +3004,13 @@ function abrirModalPizza(nombre, personal, mediana, familiar) {
     if (mediana !== null) {
 
         select.innerHTML += `
+
             <option value="${mediana}">
+
                 Mediana - S/${mediana}
+
             </option>
+
         `;
 
     }
@@ -2055,62 +3019,149 @@ function abrirModalPizza(nombre, personal, mediana, familiar) {
     if (familiar !== null) {
 
         select.innerHTML += `
+
             <option value="${familiar}">
+
                 Familiar - S/${familiar}
+
             </option>
+
         `;
 
     }
 
 
-    document.getElementById("pizza-extra").value = "0";
+    const extra =
+        document.getElementById(
+            "pizza-extra"
+        );
 
-    document
-        .getElementById("pizza-modal")
-        .classList.remove("hidden");
+
+    if (extra) {
+
+        extra.value = "0";
+
+    }
+
+
+    const modal =
+        document.getElementById(
+            "pizza-modal"
+        );
+
+
+    if (modal) {
+
+        modal.classList.remove("hidden");
+
+        modal.style.display = "flex";
+
+        modal.style.visibility = "visible";
+
+        modal.style.opacity = "1";
+
+        modal.style.zIndex = "99998";
+
+    }
 
 }
 
+
+/* =====================================================
+   CERRAR MODAL DE PIZZA
+===================================================== */
 
 function cerrarModalPizza() {
 
-    document
-        .getElementById("pizza-modal")
-        .classList.add("hidden");
+
+    const modal =
+        document.getElementById(
+            "pizza-modal"
+        );
+
+
+    if (modal) {
+
+        modal.classList.add("hidden");
+
+        modal.style.display = "";
+
+        modal.style.visibility = "";
+
+        modal.style.opacity = "";
+
+    }
 
 }
 
 
+/* =====================================================
+   CONFIRMAR PIZZA
+===================================================== */
+
 function confirmarPizza() {
 
-    if (!pizzaSeleccionada) return;
+
+    if (!pizzaSeleccionada) {
+
+        return;
+
+    }
 
 
     const select =
-        document.getElementById("pizza-size");
+        document.getElementById(
+            "pizza-size"
+        );
+
+
+    if (!select || !select.value) {
+
+        alert(
+            "⚠️ Selecciona un tamaño."
+        );
+
+        return;
+
+    }
+
 
     const precioBase =
         Number(select.value);
 
 
-    const nombreTamano =
+    const opcionSeleccionada =
         select.options[
             select.selectedIndex
-        ].text.split(" - ")[0];
+        ];
 
 
-    const extra =
-        Number(
-            document.getElementById("pizza-extra").value
+    const nombreTamano =
+        opcionSeleccionada.text
+            .split(" - ")[0];
+
+
+    const extraSelect =
+        document.getElementById(
+            "pizza-extra"
         );
 
 
-    let precioFinal =
+    const extra =
+        extraSelect
+            ? Number(extraSelect.value)
+            : 0;
+
+
+    const precioFinal =
         precioBase + extra;
 
 
     let nombreProducto =
-        `${pizzaSeleccionada} (${nombreTamano})`;
+        pizzaSeleccionada +
+        " (" +
+        nombreTamano +
+        ")";
 
 
     if (extra > 0) {
@@ -2132,17 +3183,34 @@ function confirmarPizza() {
 }
 
 
+/* =====================================================
+   COMPROBANTE
+===================================================== */
+
 document.addEventListener(
     "change",
-    function(event) {
+    function(evento) {
 
-        if (event.target.id === "receipt-file") {
+
+        if (
+            evento.target &&
+            evento.target.id === "receipt-file"
+        ) {
+
 
             const file =
-                event.target.files[0];
+                evento.target.files[0];
+
 
             const name =
-                document.getElementById("receipt-name");
+                document.getElementById(
+                    "receipt-name"
+                );
+
+
+            if (!name) {
+                return;
+            }
 
 
             if (file) {
@@ -2150,6 +3218,9 @@ document.addEventListener(
                 name.innerText =
                     "✓ Comprobante seleccionado: " +
                     file.name;
+
+                name.style.color =
+                    "#9be7b1";
 
             } else {
 
@@ -2162,7 +3233,10 @@ document.addEventListener(
     }
 );
 
+
 </script>
 
+
 </body>
+
 </html>
