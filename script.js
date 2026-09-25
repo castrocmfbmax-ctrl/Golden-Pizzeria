@@ -1,11 +1,12 @@
 /* =========================================================
    GOLDEN PIZZERIA
-   SISTEMA DE PEDIDOS + PAGO + SEGUIMIENTO
+   SISTEMA COMPLETO DE PEDIDOS
+   PAGO + SEGUIMIENTO + WHATSAPP
 ========================================================= */
 
 
 /* =========================================================
-   VARIABLES PRINCIPALES
+   VARIABLES
 ========================================================= */
 
 let pedido = [];
@@ -13,6 +14,7 @@ let total = 0;
 
 let metodoPagoSeleccionado = null;
 let codigoPedidoActual = null;
+
 let temporizador = null;
 
 const NUMERO_WHATSAPP = "51979707173";
@@ -27,26 +29,21 @@ function filterCategory(cat) {
     const cards = document.querySelectorAll(".card");
     const buttons = document.querySelectorAll(".filter-btn");
 
-    /* Quitar activo de todos */
     buttons.forEach(btn => {
         btn.classList.remove("active");
     });
 
-    /* Detectar botón que se pulsó */
-    const botonActual = window.event?.currentTarget;
+    /*
+       Intentamos detectar el botón presionado
+    */
 
-    if (botonActual) {
-        botonActual.classList.add("active");
+    if (typeof event !== "undefined" && event && event.currentTarget) {
+        event.currentTarget.classList.add("active");
     }
 
     cards.forEach(card => {
 
         if (cat === "todas") {
-
-            /*
-                TODAS LAS PIZZAS:
-                mostramos únicamente las categorías de pizza
-            */
 
             if (
                 card.classList.contains("clasicas") ||
@@ -83,20 +80,29 @@ function filterCategory(cat) {
 
 
 /* =========================================================
-   AGREGAR PRODUCTO AL PEDIDO
+   AGREGAR PRODUCTO
 ========================================================= */
 
 function agregarPedido(producto, precio) {
 
+    precio = Number(precio);
+
     pedido.push({
         producto: producto,
-        precio: Number(precio)
+        precio: precio
     });
 
-    total += Number(precio);
+    total += precio;
 
-    /* Animación del botón */
-    const boton = window.event?.currentTarget;
+    /*
+       Animación del botón
+    */
+
+    let boton = null;
+
+    if (typeof event !== "undefined" && event && event.currentTarget) {
+        boton = event.currentTarget;
+    }
 
     if (boton) {
 
@@ -131,7 +137,9 @@ function actualizarBarra() {
     const count = document.getElementById("cart-count");
     const totalElem = document.getElementById("cart-total");
 
-    if (!bar || !count || !totalElem) return;
+    if (!bar || !count || !totalElem) {
+        return;
+    }
 
     if (pedido.length > 0) {
 
@@ -140,7 +148,7 @@ function actualizarBarra() {
         count.innerText = pedido.length;
 
         totalElem.innerText =
-            `S/ ${total.toFixed(2)}`;
+            "S/ " + total.toFixed(2);
 
     } else {
 
@@ -157,8 +165,6 @@ function actualizarBarra() {
 
 function vaciarPedido() {
 
-    if (pedido.length === 0) return;
-
     pedido = [];
     total = 0;
 
@@ -171,64 +177,152 @@ function vaciarPedido() {
    ABRIR PANTALLA DE PAGO
 ========================================================= */
 
-function abrirPago() {
+function abrirPago(evento) {
+
+    /*
+       Evitar que el botón envíe un formulario
+    */
+
+    if (evento) {
+        evento.preventDefault();
+        evento.stopPropagation();
+    }
+
+    console.log("GOLDEN PIZZERIA: abriendo pantalla de pago");
+
+
+    /*
+       Verificar carrito
+    */
 
     if (pedido.length === 0) {
 
         alert("🛒 Tu pedido está vacío.");
 
-        return;
+        return false;
 
     }
+
+
+    /*
+       Buscar ventana de pago
+    */
 
     const overlay =
         document.getElementById("payment-overlay");
 
+
     if (!overlay) {
 
-        alert("No se encontró la pantalla de pago.");
+        alert(
+            "❌ No se encontró la pantalla de pago.\n\n" +
+            "Verifica que exista id=\"payment-overlay\" en index.html."
+        );
 
-        return;
+        console.error(
+            "ERROR GOLDEN PIZZERIA: No existe #payment-overlay"
+        );
+
+        return false;
 
     }
 
-    /* Reiniciar método de pago */
-    metodoPagoSeleccionado = null;
 
-    /* Quitar selección */
-    document.querySelectorAll(".payment-method").forEach(btn => {
+    /*
+       Mostrar resumen
+    */
 
-        btn.classList.remove("selected");
-
-    });
-
-    /* Ocultar secciones */
-    document.querySelectorAll(".payment-section").forEach(section => {
-
-        section.classList.remove("active");
-
-    });
-
-    /* Crear resumen */
     mostrarResumenPago();
 
-    /* Reiniciar comprobante */
+
+    /*
+       Reiniciar método
+    */
+
+    metodoPagoSeleccionado = null;
+
+
+    /*
+       Quitar selección de botones
+    */
+
+    document
+        .querySelectorAll(".payment-method")
+        .forEach(btn => {
+
+            btn.classList.remove("selected");
+
+        });
+
+
+    /*
+       Ocultar secciones
+    */
+
+    document
+        .querySelectorAll(".payment-section")
+        .forEach(section => {
+
+            section.classList.remove("active");
+
+        });
+
+
+    /*
+       Limpiar comprobante anterior
+    */
+
     const archivo =
         document.getElementById("receipt-file");
 
     const nombre =
         document.getElementById("receipt-name");
 
+
     if (archivo) {
+
         archivo.value = "";
+
     }
+
 
     if (nombre) {
+
         nombre.innerText = "";
+
+        nombre.style.color = "";
+
     }
 
-    /* Mostrar pantalla */
+
+    /*
+       =====================================================
+       ABRIR LA VENTANA
+       =====================================================
+    */
+
     overlay.classList.remove("hidden");
+
+    /*
+       Forzar visibilidad.
+       Esto evita problemas con CSS.
+    */
+
+    overlay.style.display = "flex";
+
+    overlay.style.visibility = "visible";
+
+    overlay.style.opacity = "1";
+
+    overlay.style.zIndex = "99999";
+
+
+    console.log(
+        "GOLDEN PIZZERIA: pantalla de pago abierta"
+    );
+
+
+    return false;
 
 }
 
@@ -242,11 +336,22 @@ function cerrarPago() {
     const overlay =
         document.getElementById("payment-overlay");
 
-    if (overlay) {
-
-        overlay.classList.add("hidden");
-
+    if (!overlay) {
+        return;
     }
+
+    overlay.classList.add("hidden");
+
+    /*
+       Restauramos el estado visual
+       para la próxima apertura.
+    */
+
+    overlay.style.display = "";
+
+    overlay.style.visibility = "";
+
+    overlay.style.opacity = "";
 
 }
 
@@ -263,12 +368,22 @@ function mostrarResumenPago() {
     const totalPago =
         document.getElementById("payment-total");
 
-    if (!lista || !totalPago) return;
+
+    if (!lista || !totalPago) {
+
+        console.error(
+            "No se encontró el resumen de pago."
+        );
+
+        return;
+
+    }
+
 
     if (pedido.length === 0) {
 
         lista.innerHTML =
-            "Tu pedido está vacío.";
+            "<p>Tu pedido está vacío.</p>";
 
         totalPago.innerText =
             "S/ 0.00";
@@ -277,18 +392,22 @@ function mostrarResumenPago() {
 
     }
 
+
     let html = "";
+
 
     pedido.forEach((item, index) => {
 
         html += `
+
             <div style="
                 display:flex;
                 justify-content:space-between;
-                gap:10px;
-                margin-bottom:8px;
-                padding-bottom:8px;
-                border-bottom:1px solid rgba(255,255,255,.08);
+                align-items:center;
+                gap:12px;
+                margin-bottom:10px;
+                padding-bottom:10px;
+                border-bottom:1px solid rgba(255,255,255,.10);
             ">
 
                 <span>
@@ -300,14 +419,17 @@ function mostrarResumenPago() {
                 </strong>
 
             </div>
+
         `;
 
     });
 
+
     lista.innerHTML = html;
 
+
     totalPago.innerText =
-        `S/ ${total.toFixed(2)}`;
+        "S/ " + total.toFixed(2);
 
 }
 
@@ -320,22 +442,37 @@ function seleccionarPago(metodo) {
 
     metodoPagoSeleccionado = metodo;
 
-    /* Quitar selección */
-    document.querySelectorAll(".payment-method").forEach(btn => {
 
-        btn.classList.remove("selected");
+    /*
+       Quitar selección anterior
+    */
 
-    });
+    document
+        .querySelectorAll(".payment-method")
+        .forEach(btn => {
 
-    /* Ocultar todas las secciones */
-    document.querySelectorAll(".payment-section").forEach(section => {
+            btn.classList.remove("selected");
 
-        section.classList.remove("active");
-
-    });
+        });
 
 
-    /* YAPE */
+    /*
+       Ocultar todas las secciones
+    */
+
+    document
+        .querySelectorAll(".payment-section")
+        .forEach(section => {
+
+            section.classList.remove("active");
+
+        });
+
+
+    /*
+       YAPE
+    */
+
     if (metodo === "yape") {
 
         const boton =
@@ -344,18 +481,27 @@ function seleccionarPago(metodo) {
         const seccion =
             document.getElementById("section-yape");
 
+
         if (boton) {
+
             boton.classList.add("selected");
+
         }
 
+
         if (seccion) {
+
             seccion.classList.add("active");
+
         }
 
     }
 
 
-    /* TARJETA */
+    /*
+       TARJETA
+    */
+
     if (metodo === "tarjeta") {
 
         const boton =
@@ -364,18 +510,27 @@ function seleccionarPago(metodo) {
         const seccion =
             document.getElementById("section-tarjeta");
 
+
         if (boton) {
+
             boton.classList.add("selected");
+
         }
 
+
         if (seccion) {
+
             seccion.classList.add("active");
+
         }
 
     }
 
 
-    /* EFECTIVO */
+    /*
+       EFECTIVO
+    */
+
     if (metodo === "efectivo") {
 
         const boton =
@@ -384,12 +539,18 @@ function seleccionarPago(metodo) {
         const seccion =
             document.getElementById("section-efectivo");
 
+
         if (boton) {
+
             boton.classList.add("selected");
+
         }
 
+
         if (seccion) {
+
             seccion.classList.add("active");
+
         }
 
     }
@@ -413,7 +574,10 @@ function comprobarReciboYape() {
         document.querySelector(".receipt-label");
 
 
-    /* No existe */
+    /*
+       No existe el input
+    */
+
     if (!archivo) {
 
         return false;
@@ -421,7 +585,10 @@ function comprobarReciboYape() {
     }
 
 
-    /* No se seleccionó archivo */
+    /*
+       No hay archivo
+    */
+
     if (
         !archivo.files ||
         archivo.files.length === 0
@@ -432,9 +599,11 @@ function comprobarReciboYape() {
             nombre.innerText =
                 "⚠️ Debes seleccionar tu comprobante.";
 
-            nombre.style.color = "#ff6b6b";
+            nombre.style.color =
+                "#ff6b6b";
 
         }
+
 
         if (etiqueta) {
 
@@ -442,6 +611,7 @@ function comprobarReciboYape() {
                 "#D62828";
 
         }
+
 
         return false;
 
@@ -452,7 +622,10 @@ function comprobarReciboYape() {
         archivo.files[0];
 
 
-    /* Verificar que sea imagen */
+    /*
+       Verificar que sea imagen
+    */
+
     if (
         !archivoSeleccionado.type ||
         !archivoSeleccionado.type.startsWith("image/")
@@ -463,25 +636,32 @@ function comprobarReciboYape() {
             nombre.innerText =
                 "⚠️ El comprobante debe ser una imagen.";
 
-            nombre.style.color = "#ff6b6b";
+            nombre.style.color =
+                "#ff6b6b";
 
         }
+
 
         return false;
 
     }
 
 
-    /* Correcto */
+    /*
+       Comprobante correcto
+    */
+
     if (nombre) {
 
         nombre.innerText =
             "✓ Comprobante seleccionado: " +
             archivoSeleccionado.name;
 
-        nombre.style.color = "#9be7b1";
+        nombre.style.color =
+            "#9be7b1";
 
     }
+
 
     if (etiqueta) {
 
@@ -489,6 +669,7 @@ function comprobarReciboYape() {
             "#18A558";
 
     }
+
 
     return true;
 
@@ -501,7 +682,10 @@ function comprobarReciboYape() {
 
 function confirmarPedido() {
 
-    /* Verificar que haya productos */
+    /*
+       Verificar productos
+    */
+
     if (pedido.length === 0) {
 
         alert("🛒 Tu pedido está vacío.");
@@ -511,7 +695,10 @@ function confirmarPedido() {
     }
 
 
-    /* Verificar método */
+    /*
+       Verificar método de pago
+    */
+
     if (!metodoPagoSeleccionado) {
 
         alert(
@@ -523,17 +710,17 @@ function confirmarPedido() {
     }
 
 
-    /* =====================================================
-       REGLA IMPORTANTE:
-       YAPE = COMPROBANTE OBLIGATORIO
-    ===================================================== */
+    /*
+       YAPE NECESITA COMPROBANTE
+    */
 
     if (metodoPagoSeleccionado === "yape") {
 
-        const comprobanteValido =
+        const comprobante =
             comprobarReciboYape();
 
-        if (!comprobanteValido) {
+
+        if (!comprobante) {
 
             alert(
                 "⚠️ Para pagar con Yape debes adjuntar tu comprobante de pago."
@@ -546,20 +733,32 @@ function confirmarPedido() {
     }
 
 
-    /* Generar código */
+    /*
+       Generar código
+    */
+
     codigoPedidoActual =
         generarCodigoPedido();
 
 
-    /* Cerrar pago */
+    /*
+       Cerrar pago
+    */
+
     cerrarPago();
 
 
-    /* Abrir seguimiento */
+    /*
+       Mostrar seguimiento
+    */
+
     mostrarSeguimiento();
 
 
-    /* Enviar información a WhatsApp */
+    /*
+       Enviar pedido a WhatsApp
+    */
+
     enviarWhatsAppConfirmado();
 
 }
@@ -567,35 +766,48 @@ function confirmarPedido() {
 
 /* =========================================================
    GENERAR CÓDIGO DEL PEDIDO
-   FORMATO:
-   GP-YYMMDD-001
 ========================================================= */
 
 function generarCodigoPedido() {
 
-    const ahora = new Date();
+    const ahora =
+        new Date();
+
 
     const año =
-        String(ahora.getFullYear()).slice(-2);
+        String(
+            ahora.getFullYear()
+        ).slice(-2);
+
 
     const mes =
-        String(ahora.getMonth() + 1).padStart(2, "0");
+        String(
+            ahora.getMonth() + 1
+        ).padStart(2, "0");
+
 
     const dia =
-        String(ahora.getDate()).padStart(2, "0");
+        String(
+            ahora.getDate()
+        ).padStart(2, "0");
 
 
     const fecha =
-        `${año}${mes}${dia}`;
+        año + mes + dia;
 
 
-    /* Contador diario guardado en el navegador */
+    /*
+       Contador diario
+    */
+
     const clave =
-        `golden_pizzeria_pedidos_${fecha}`;
+        "golden_pizzeria_pedidos_" + fecha;
 
 
     let numero =
-        Number(localStorage.getItem(clave) || 0);
+        Number(
+            localStorage.getItem(clave) || 0
+        );
 
 
     numero++;
@@ -611,34 +823,46 @@ function generarCodigoPedido() {
         String(numero).padStart(3, "0");
 
 
-    return `GP-${fecha}-${consecutivo}`;
+    return "GP-" +
+        fecha +
+        "-" +
+        consecutivo;
 
 }
 
 
 /* =========================================================
-   OBTENER NOMBRE DEL MÉTODO DE PAGO
+   NOMBRE DEL MÉTODO DE PAGO
 ========================================================= */
 
 function obtenerNombrePago() {
 
-    if (metodoPagoSeleccionado === "yape") {
+    if (
+        metodoPagoSeleccionado === "yape"
+    ) {
 
         return "Yape";
 
     }
 
-    if (metodoPagoSeleccionado === "tarjeta") {
+
+    if (
+        metodoPagoSeleccionado === "tarjeta"
+    ) {
 
         return "Tarjeta";
 
     }
 
-    if (metodoPagoSeleccionado === "efectivo") {
+
+    if (
+        metodoPagoSeleccionado === "efectivo"
+    ) {
 
         return "Efectivo";
 
     }
+
 
     return "No especificado";
 
@@ -652,11 +876,9 @@ function obtenerNombrePago() {
    Pizza solamente:
    10 minutos
 
-   Pizza + bebida/frappé:
+   Pizza + bebida:
    12 minutos
 
-   La bebida agrega solamente +2 minutos
-   una vez por pedido.
 ========================================================= */
 
 function calcularTiempoPedido() {
@@ -667,19 +889,29 @@ function calcularTiempoPedido() {
     pedido.forEach(item => {
 
         const nombre =
-            item.producto.toLowerCase();
+            String(item.producto).toLowerCase();
 
 
         if (
+
             nombre.includes("frappé") ||
+
             nombre.includes("frappe") ||
+
             nombre.includes("limonada") ||
+
             nombre.includes("chicha") ||
+
             nombre.includes("café") ||
+
             nombre.includes("cafe") ||
+
             nombre.includes("té") ||
+
             nombre.includes("te filtrante") ||
+
             nombre.includes("infusiones")
+
         ) {
 
             tieneBebida = true;
@@ -714,10 +946,17 @@ function mostrarSeguimiento() {
         document.getElementById("order-code");
 
 
-    if (!overlay) return;
+    if (!overlay) {
+
+        console.error(
+            "No existe #tracking-overlay"
+        );
+
+        return;
+
+    }
 
 
-    /* Código */
     if (codigo) {
 
         codigo.innerText =
@@ -726,12 +965,18 @@ function mostrarSeguimiento() {
     }
 
 
-    /* Estado inicial */
     resetearSeguimiento();
 
 
-    /* Mostrar */
     overlay.classList.remove("hidden");
+
+    overlay.style.display = "flex";
+
+    overlay.style.visibility = "visible";
+
+    overlay.style.opacity = "1";
+
+    overlay.style.zIndex = "99998";
 
 }
 
@@ -764,11 +1009,13 @@ function resetearSeguimiento() {
 
     }
 
+
     if (preparando) {
 
         preparando.classList.remove("active");
 
     }
+
 
     if (listo) {
 
@@ -776,11 +1023,13 @@ function resetearSeguimiento() {
 
     }
 
+
     if (cancelado) {
 
         cancelado.classList.remove("active");
 
     }
+
 
     if (timer) {
 
@@ -789,7 +1038,10 @@ function resetearSeguimiento() {
     }
 
 
-    /* Detener temporizador anterior */
+    /*
+       Detener temporizador
+    */
+
     if (temporizador) {
 
         clearInterval(temporizador);
@@ -810,26 +1062,25 @@ function cerrarTracking() {
     const overlay =
         document.getElementById("tracking-overlay");
 
-    if (overlay) {
 
-        overlay.classList.add("hidden");
-
+    if (!overlay) {
+        return;
     }
+
+
+    overlay.classList.add("hidden");
+
+    overlay.style.display = "";
+
+    overlay.style.visibility = "";
+
+    overlay.style.opacity = "";
 
 }
 
 
 /* =========================================================
-   MOSTRAR ESTADO PREPARANDO
-=========================================================
-
-   Esta función queda preparada para el futuro
-   panel del personal.
-
-   Cuando el personal cambie el pedido a
-   PREPARANDO, se podrá llamar:
-
-   mostrarEstadoPreparando();
+   ESTADO: PREPARANDO
 ========================================================= */
 
 function mostrarEstadoPreparando() {
@@ -859,17 +1110,20 @@ function mostrarEstadoPreparando() {
 
     }
 
+
     if (preparando) {
 
         preparando.classList.add("active");
 
     }
 
+
     if (listo) {
 
         listo.classList.remove("active");
 
     }
+
 
     if (cancelado) {
 
@@ -906,7 +1160,9 @@ function iniciarTemporizador(
     elemento
 ) {
 
-    if (!elemento) return;
+    if (!elemento) {
+        return;
+    }
 
 
     if (temporizador) {
@@ -967,20 +1223,27 @@ function actualizarTextoTemporizador(
 ) {
 
     const minutos =
-        Math.floor(segundos / 60);
+        Math.floor(
+            segundos / 60
+        );
+
 
     const segundosRestantes =
         segundos % 60;
 
 
     elemento.innerText =
-        `${minutos}:${String(segundosRestantes).padStart(2, "0")}`;
+        minutos +
+        ":" +
+        String(
+            segundosRestantes
+        ).padStart(2, "0");
 
 }
 
 
 /* =========================================================
-   MOSTRAR PEDIDO LISTO
+   ESTADO: LISTO
 ========================================================= */
 
 function mostrarEstadoListo() {
@@ -1007,17 +1270,20 @@ function mostrarEstadoListo() {
 
     }
 
+
     if (preparando) {
 
         preparando.classList.remove("active");
 
     }
 
+
     if (listo) {
 
         listo.classList.add("active");
 
     }
+
 
     if (cancelado) {
 
@@ -1045,7 +1311,7 @@ function mostrarEstadoListo() {
 
 
 /* =========================================================
-   MOSTRAR PEDIDO CANCELADO
+   ESTADO: CANCELADO
 ========================================================= */
 
 function mostrarEstadoCancelado() {
@@ -1072,17 +1338,20 @@ function mostrarEstadoCancelado() {
 
     }
 
+
     if (preparando) {
 
         preparando.classList.remove("active");
 
     }
 
+
     if (listo) {
 
         listo.classList.remove("active");
 
     }
+
 
     if (cancelado) {
 
@@ -1110,56 +1379,78 @@ function mostrarEstadoCancelado() {
 
 
 /* =========================================================
-   ENVIAR PEDIDO POR WHATSAPP
+   ENVIAR PEDIDO A WHATSAPP
 ========================================================= */
 
 function enviarWhatsAppConfirmado() {
 
-    if (pedido.length === 0) return;
+    if (pedido.length === 0) {
+        return;
+    }
 
 
     let mensaje =
-        "🍕 *NUEVO PEDIDO - GOLDEN PIZZERIA*%0A%0A";
+        "🍕 *NUEVO PEDIDO - GOLDEN PIZZERIA*\n\n";
 
 
     mensaje +=
-        `📋 *Código:* ${codigoPedidoActual}%0A`;
+        "📋 *Código:* " +
+        codigoPedidoActual +
+        "\n";
 
 
     mensaje +=
-        `💳 *Método de pago:* ${obtenerNombrePago()}%0A%0A`;
+        "💳 *Método de pago:* " +
+        obtenerNombrePago() +
+        "\n\n";
 
 
     mensaje +=
-        "🛒 *DETALLE DEL PEDIDO*%0A";
+        "🛒 *DETALLE DEL PEDIDO*\n";
 
 
     pedido.forEach((item, index) => {
 
         mensaje +=
-            `${index + 1}. ${item.producto} - S/ ${item.precio.toFixed(2)}%0A`;
+            (index + 1) +
+            ". " +
+            item.producto +
+            " - S/ " +
+            item.precio.toFixed(2) +
+            "\n";
 
     });
 
 
     mensaje +=
-        `%0A💰 *TOTAL: S/ ${total.toFixed(2)}*%0A`;
+        "\n💰 *TOTAL: S/ " +
+        total.toFixed(2) +
+        "*\n";
 
 
-    if (metodoPagoSeleccionado === "yape") {
+    if (
+        metodoPagoSeleccionado === "yape"
+    ) {
 
         mensaje +=
-            "%0A📸 El cliente indica que adjuntó su comprobante de Yape.";
+            "\n📸 *Comprobante de Yape seleccionado por el cliente.*\n";
 
     }
 
 
     mensaje +=
-        "%0A%0A🟡 *PEDIDO RECIBIDO*";
+        "\n🟡 *PEDIDO RECIBIDO*";
 
+
+    /*
+       Abrir WhatsApp
+    */
 
     const url =
-        `https://wa.me/${NUMERO_WHATSAPP}?text=${mensaje}`;
+        "https://wa.me/" +
+        NUMERO_WHATSAPP +
+        "?text=" +
+        encodeURIComponent(mensaje);
 
 
     window.open(
@@ -1178,7 +1469,9 @@ function enviarWhatsApp() {
 
     if (pedido.length === 0) {
 
-        alert("🛒 Tu pedido está vacío.");
+        alert(
+            "🛒 Tu pedido está vacío."
+        );
 
         return;
 
@@ -1196,11 +1489,11 @@ function enviarWhatsApp() {
 
 document.addEventListener(
     "change",
-    function(event) {
+    function(evento) {
 
         if (
-            event.target &&
-            event.target.id === "receipt-file"
+            evento.target &&
+            evento.target.id === "receipt-file"
         ) {
 
             comprobarReciboYape();
@@ -1222,41 +1515,72 @@ document.addEventListener(
         actualizarBarra();
 
 
-        /* Asegurar que la pantalla de pago
-           comience cerrada */
+        /*
+           PANTALLA DE PAGO
+        */
 
         const payment =
-            document.getElementById("payment-overlay");
+            document.getElementById(
+                "payment-overlay"
+            );
+
 
         if (payment) {
 
             payment.classList.add("hidden");
 
+            payment.style.display = "";
+
+            payment.style.visibility = "";
+
+            payment.style.opacity = "";
+
         }
 
 
-        /* Seguimiento cerrado */
+        /*
+           SEGUIMIENTO
+        */
 
         const tracking =
-            document.getElementById("tracking-overlay");
+            document.getElementById(
+                "tracking-overlay"
+            );
+
 
         if (tracking) {
 
             tracking.classList.add("hidden");
 
+            tracking.style.display = "";
+
+            tracking.style.visibility = "";
+
+            tracking.style.opacity = "";
+
         }
 
 
-        /* Modal de pizza cerrado */
+        /*
+           MODAL DE PIZZA
+        */
 
         const pizza =
-            document.getElementById("pizza-modal");
+            document.getElementById(
+                "pizza-modal"
+            );
+
 
         if (pizza) {
 
             pizza.classList.add("hidden");
 
         }
+
+
+        console.log(
+            "🍕 GOLDEN PIZZERIA: sistema cargado correctamente."
+        );
 
     }
 );
