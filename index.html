@@ -410,10 +410,150 @@
     </div>
     <div class="cart-actions">
       <button onclick="vaciarPedido()" class="btn-clean">Limpiar</button>
-      <button onclick="enviarWhatsApp()" class="btn-whatsapp">Pedir por WhatsApp 📱</button>
+      <button onclick="abrirPago()" class="btn-whatsapp">Continuar al pago 💳</button>
     </div>
   </div>
+<!-- PANTALLA DE MEDIOS DE PAGO -->
+<div id="pago-overlay" class="pago-overlay hidden">
 
+  <div class="pago-panel">
+
+    <button class="cerrar-pago" onclick="cerrarPago()">✕</button>
+
+    <span class="subtitle">GOLDEN PIZZERIA</span>
+    <h2>💳 MEDIOS DE PAGO</h2>
+
+    <p class="pago-descripcion">
+      Selecciona cómo deseas pagar tu pedido.
+    </p>
+
+    <!-- RESUMEN -->
+    <div class="resumen-pago">
+      <h3>🛒 RESUMEN DEL PEDIDO</h3>
+
+      <div id="resumen-items"></div>
+
+      <div class="resumen-total">
+        <span>Total</span>
+        <strong id="pago-total">S/ 0.00</strong>
+      </div>
+    </div>
+
+    <!-- MÉTODOS -->
+    <div class="metodos-pago">
+
+      <button class="metodo" onclick="seleccionarPago('yape')">
+        🟣
+        <span>
+          <strong>Yape</strong>
+          <small>Pago mediante Yape</small>
+        </span>
+      </button>
+
+      <button class="metodo" onclick="seleccionarPago('tarjeta')">
+        💳
+        <span>
+          <strong>Tarjeta</strong>
+          <small>Pago con tarjeta</small>
+        </span>
+      </button>
+
+      <button class="metodo" onclick="seleccionarPago('efectivo')">
+        💵
+        <span>
+          <strong>Efectivo</strong>
+          <small>Pago al recibir</small>
+        </span>
+      </button>
+
+    </div>
+
+    <!-- INFORMACIÓN DEL MÉTODO -->
+    <div id="informacion-pago" class="informacion-pago">
+      Selecciona un método de pago para continuar.
+    </div>
+
+    <!-- YAPE -->
+    <div id="yape-box" class="pago-extra hidden">
+
+      <h3>🟣 PAGO CON YAPE</h3>
+
+      <p>
+        Realiza el pago mediante Yape y luego adjunta
+        tu comprobante.
+      </p>
+
+      <div class="yape-numero">
+        📱 <strong>Yape: 979 707 173</strong>
+      </div>
+
+      <label class="comprobante-label">
+        📎 Adjuntar comprobante
+      </label>
+
+      <input
+        type="file"
+        id="comprobante-yape"
+        accept="image/*"
+      >
+
+      <small>
+        El comprobante es obligatorio para confirmar el pedido.
+      </small>
+
+    </div>
+
+    <!-- BOTÓN CONFIRMAR -->
+    <button
+      id="confirmar-pedido-btn"
+      class="btn-confirmar-pago"
+      onclick="confirmarPedido()"
+    >
+      CONFIRMAR PEDIDO 🍕
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- SEGUIMIENTO DEL PEDIDO -->
+<div id="seguimiento-overlay" class="pago-overlay hidden">
+
+  <div class="pago-panel seguimiento-panel">
+
+    <span class="subtitle">GOLDEN PIZZERIA</span>
+
+    <h2>📍 SEGUIMIENTO</h2>
+
+    <div class="codigo-pedido">
+      <small>NÚMERO DE PEDIDO</small>
+      <strong id="codigo-pedido">GP-000000-000</strong>
+    </div>
+
+    <div id="estado-pedido" class="estado-pedido recibido">
+      🟡 PEDIDO RECIBIDO
+    </div>
+
+    <div id="tiempo-pedido" class="tiempo-pedido hidden">
+      ⏱️ Preparación estimada:
+      <strong id="minutos-pedido">10 min</strong>
+    </div>
+
+    <p id="mensaje-pedido">
+      Tu pedido fue recibido correctamente.
+    </p>
+
+    <button
+      class="btn-whatsapp"
+      onclick="enviarWhatsAppConfirmado()"
+    >
+      ENVIAR PEDIDO POR WHATSAPP 📱
+    </button>
+
+  </div>
+
+</div>
   <!-- FOOTER RÚSTICO -->
   <footer>
     <h4>GOLDEN PIZZERIA ARTESANAL A LEÑA</h4>
