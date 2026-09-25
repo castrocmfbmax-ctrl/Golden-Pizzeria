@@ -1,177 +1,376 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>GOLDEN PIZZERIA</title>
-
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Golden Pizzeria Artesanal a Leña</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <!-- ENCABEZADO -->
-    <header class="header">
+  <!-- HERO SECTION -->
+  <header class="hero">
+    <div class="hero-content">
+      <span class="badge">Atendemos 4PM - 10PM</span>
+      <h1>Golden Pizzeria</h1>
+      <h2>ARTESANAL A LEÑA</h2>
+      <p>"Te invitamos a una experiencia única en sabores"</p>
+      <a href="#menu" class="btn-hero">VER MENÚ COMPLETO</a>
+    </div>
+  </header>
 
-        <div class="logo">
-            <div class="logo-icon">🔥</div>
+  <!-- MENU SECTION -->
+  <main id="menu" class="menu-container">
+    <span class="subtitle">GOLDEN PIZZERIA</span>
+    <h2 class="title">NUESTRO MENÚ COMPLETO</h2>
+    <p class="description">Selecciona una categoría para explorar todas nuestras opciones</p>
 
-            <div>
-                <h1>GOLDEN</h1>
-                <span>PIZZERIA</span>
-            </div>
-        </div>
-
-        <div class="header-buttons">
-            <button onclick="mostrarCarrito()">
-                🛒 Carrito
-                <span id="contador-carrito">0</span>
-            </button>
-        </div>
-
-    </header>
-
-
-    <!-- PRESENTACIÓN -->
-    <section class="hero">
-
-        <div class="hero-content">
-
-            <p class="small-title">PIZZERÍA ARTESANAL</p>
-
-            <h2>
-                El sabor que<br>
-                <span>merece tu momento</span>
-            </h2>
-
-            <p>
-                Pizzas, frappés y bebidas preparadas
-                para disfrutar cada momento.
-            </p>
-
-            <button class="btn-principal" onclick="irAlMenu()">
-                VER MENÚ
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <!-- MENÚ -->
-    <main id="menu">
-
-        <div class="titulo-seccion">
-
-            <p>GOLDEN PIZZERIA</p>
-
-            <h2>NUESTRO MENÚ</h2>
-
-            <span>
-                Elige tus favoritos y agrégalos a tu pedido
-            </span>
-
-        </div>
-
-
-        <!-- CATEGORÍAS -->
-        <div class="categorias">
-
-            <button onclick="filtrarProductos('todos')">
-                TODOS
-            </button>
-
-            <button onclick="filtrarProductos('pizza')">
-                🍕 PIZZAS
-            </button>
-
-            <button onclick="filtrarProductos('frappe')">
-                🥤 FRAPPÉS
-            </button>
-
-            <button onclick="filtrarProductos('caliente')">
-                ☕ BEBIDAS CALIENTES
-            </button>
-
-            <button onclick="filtrarProductos('fria')">
-                🧊 BEBIDAS FRÍAS
-            </button>
-
-        </div>
-
-
-        <!-- PRODUCTOS -->
-        <div id="productos" class="productos">
-
-            <!-- Los productos aparecerán aquí mediante JavaScript -->
-
-        </div>
-
-    </main>
-
-
-    <!-- CARRITO -->
-    <div id="carrito-panel" class="carrito-panel">
-
-        <div class="carrito-header">
-
-            <h2>🛒 Tu pedido</h2>
-
-            <button onclick="cerrarCarrito()">✕</button>
-
-        </div>
-
-        <div id="carrito-productos">
-
-            <p class="carrito-vacio">
-                Tu carrito está vacío.
-            </p>
-
-        </div>
-
-        <div class="carrito-total">
-
-            <span>Total</span>
-
-            <strong id="total">
-                S/ 0.00
-            </strong>
-
-        </div>
-
-        <button class="btn-confirmar" onclick="irAlPago()">
-            CONTINUAR AL PAGO
-        </button>
-
+    <!-- FILTROS -->
+    <div class="filters">
+      <button class="filter-btn active" onclick="filterCategory('todas')">TODAS LAS PIZZAS</button>
+      <button class="filter-btn" onclick="filterCategory('clasicas')">PIZZAS CLÁSICAS</button>
+      <button class="filter-btn" onclick="filterCategory('unicas')">SABORES ÚNICOS</button>
+      <button class="filter-btn" onclick="filterCategory('casa')">PIZZAS DE CASA</button>
+      <button class="filter-btn" onclick="filterCategory('especiales')">ESPECIALES / MIXTAS</button>
+      <button class="filter-btn" onclick="filterCategory('panes')">PAN AL AJO</button>
+      <button class="filter-btn" onclick="filterCategory('bebidas')">BEBIDAS Y GASEOSAS</button>
+      <button class="filter-btn" onclick="filterCategory('frappes')">FRAPPÉS Y CALIENTES</button>
     </div>
 
+    <!-- GRID DE PRODUCTOS -->
+    <div class="products-grid">
 
-    <!-- FONDO OSCURO DEL CARRITO -->
-    <div
-        id="overlay"
-        class="overlay"
-        onclick="cerrarCarrito()">
+      <!-- PIZZAS CLÁSICAS -->
+      <div class="card clasicas">
+        <h3>Americana</h3>
+        <p>Queso mozzarella, jamón inglés, salchicha ahumada y chorizo.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Pizza Americana (Personal)', 16.00)">Personal S/ 16.00</button>
+          <button onclick="agregarPedido('Pizza Americana (Mediana)', 23.00)">Mediana S/ 23.00</button>
+          <button onclick="agregarPedido('Pizza Americana (Familiar)', 32.00)">Familiar S/ 32.00</button>
+        </div>
+      </div>
+
+      <div class="card clasicas">
+        <h3>Hawaiana</h3>
+        <p>Queso mozzarella, jamón inglés y piña Golden.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Pizza Hawaiana (Personal)', 18.00)">Personal S/ 18.00</button>
+          <button onclick="agregarPedido('Pizza Hawaiana (Mediana)', 25.00)">Mediana S/ 25.00</button>
+          <button onclick="agregarPedido('Pizza Hawaiana (Familiar)', 36.00)">Familiar S/ 36.00</button>
+        </div>
+      </div>
+
+      <div class="card clasicas">
+        <h3>Pepperoni</h3>
+        <p>Queso mozzarella y pepperoni.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Pizza Pepperoni (Personal)', 18.00)">Personal S/ 18.00</button>
+          <button onclick="agregarPedido('Pizza Pepperoni (Mediana)', 28.00)">Mediana S/ 28.00</button>
+          <button onclick="agregarPedido('Pizza Pepperoni (Familiar)', 38.00)">Familiar S/ 38.00</button>
+        </div>
+      </div>
+
+      <div class="card clasicas">
+        <h3>Italiana</h3>
+        <p>Queso mozzarella, jamón inglés, champiñones y rodajas de tomate.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Pizza Italiana (Personal)', 18.00)">Personal S/ 18.00</button>
+          <button onclick="agregarPedido('Pizza Italiana (Mediana)', 25.00)">Mediana S/ 25.00</button>
+          <button onclick="agregarPedido('Pizza Italiana (Familiar)', 35.00)">Familiar S/ 35.00</button>
+        </div>
+      </div>
+
+      <div class="card clasicas">
+        <h3>Margarita</h3>
+        <p>Queso mozzarella, espinaca, albahaca y pimentón.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Pizza Margarita (Personal)', 17.00)">Personal S/ 17.00</button>
+          <button onclick="agregarPedido('Pizza Margarita (Mediana)', 24.00)">Mediana S/ 24.00</button>
+          <button onclick="agregarPedido('Pizza Margarita (Familiar)', 32.00)">Familiar S/ 32.00</button>
+        </div>
+      </div>
+
+      <div class="card clasicas">
+        <h3>Siciliana</h3>
+        <p>Queso mozzarella, champiñones, aceituna y cebolla rosada soasada.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Pizza Siciliana (Personal)', 18.00)">Personal S/ 18.00</button>
+          <button onclick="agregarPedido('Pizza Siciliana (Mediana)', 25.00)">Mediana S/ 25.00</button>
+          <button onclick="agregarPedido('Pizza Siciliana (Familiar)', 34.00)">Familiar S/ 34.00</button>
+        </div>
+      </div>
+
+      <div class="card clasicas">
+        <h3>Vegetariana</h3>
+        <p>Queso mozzarella, espinaca, champiñones, pimentón y aceituna verde.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Pizza Vegetariana (Personal)', 18.00)">Personal S/ 18.00</button>
+          <button onclick="agregarPedido('Pizza Vegetariana (Mediana)', 25.00)">Mediana S/ 25.00</button>
+          <button onclick="agregarPedido('Pizza Vegetariana (Familiar)', 34.00)">Familiar S/ 34.00</button>
+        </div>
+      </div>
+
+      <div class="card clasicas">
+        <h3>Mixta Compartida Dos Sabores</h3>
+        <p>Queso mozzarella, mitad Americana y mitad Hawaiana.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Pizza Mixta (Personal)', 18.00)">Personal S/ 18.00</button>
+          <button onclick="agregarPedido('Pizza Mixta (Mediana)', 26.00)">Mediana S/ 26.00</button>
+          <button onclick="agregarPedido('Pizza Mixta (Familiar)', 35.00)">Familiar S/ 35.00</button>
+        </div>
+      </div>
+
+      <div class="card clasicas">
+        <h3>Karibeña</h3>
+        <p>Queso mozzarella, jamón inglés, durazno y piña.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Pizza Karibeña (Personal)', 22.00)">Personal S/ 22.00</button>
+          <button onclick="agregarPedido('Pizza Karibeña (Mediana)', 28.00)">Mediana S/ 28.00</button>
+          <button onclick="agregarPedido('Pizza Karibeña (Familiar)', 40.00)">Familiar S/ 40.00</button>
+        </div>
+      </div>
+
+      <div class="card clasicas">
+        <h3>La Rustika (Especial Simple)</h3>
+        <p>Queso mozzarella, jamón inglés, tocino ahumado, chorizo ahumado y cavanosi.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Pizza La Rustika (Personal)', 20.00)">Personal S/ 20.00</button>
+          <button onclick="agregarPedido('Pizza La Rustika (Mediana)', 28.00)">Mediana S/ 28.00</button>
+          <button onclick="agregarPedido('Pizza La Rustika (Familiar)', 36.00)">Familiar S/ 36.00</button>
+        </div>
+      </div>
+
+      <!-- SABORES ÚNICOS -->
+      <div class="card unicas">
+        <h3>Napolitana</h3>
+        <p>Queso mozzarella y rodajas de tomate.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Pizza Napolitana (Personal)', 16.00)">Personal S/ 16.00</button>
+          <button onclick="agregarPedido('Pizza Napolitana (Mediana)', 24.00)">Mediana S/ 24.00</button>
+          <button onclick="agregarPedido('Pizza Napolitana (Familiar)', 32.00)">Familiar S/ 32.00</button>
+        </div>
+      </div>
+
+      <div class="card unicas">
+        <h3>De Champiñones</h3>
+        <p>Queso mozzarella y champiñones.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Pizza Champiñones (Personal)', 20.00)">Personal S/ 20.00</button>
+          <button onclick="agregarPedido('Pizza Champiñones (Mediana)', 26.00)">Mediana S/ 26.00</button>
+          <button onclick="agregarPedido('Pizza Champiñones (Familiar)', 34.00)">Familiar S/ 34.00</button>
+        </div>
+      </div>
+
+      <div class="card unicas">
+        <h3>De Salchicha / Aceituna / Chorizo / Jamón / Salame</h3>
+        <p>Queso mozzarella con ingrediente a elección.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Pizza Sabor Único (Personal)', 16.00)">Personal S/ 16.00</button>
+          <button onclick="agregarPedido('Pizza Sabor Único (Mediana)', 25.00)">Mediana S/ 25.00</button>
+          <button onclick="agregarPedido('Pizza Sabor Único (Familiar)', 33.00)">Familiar S/ 33.00</button>
+        </div>
+      </div>
+
+      <!-- PIZZAS DE CASA -->
+      <div class="card casa">
+        <h3>Golden de la Casa</h3>
+        <p>Mozzarella, jamón inglés, champiñones, tocino, salame, chorizo, cavanosi y aceituna.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Golden de la Casa (Personal)', 20.00)">Personal S/ 20.00</button>
+          <button onclick="agregarPedido('Golden de la Casa (Mediana)', 30.00)">Mediana S/ 30.00</button>
+          <button onclick="agregarPedido('Golden de la Casa (Familiar)', 40.00)">Familiar S/ 40.00</button>
+        </div>
+      </div>
+
+      <div class="card casa">
+        <h3>La Suprema de Casa</h3>
+        <p>Mozzarella, jamón inglés, pepperoni, tocino, salame, chorizo, cavanosi y pimentón.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('La Suprema (Personal)', 22.00)">Personal S/ 22.00</button>
+          <button onclick="agregarPedido('La Suprema (Mediana)', 32.00)">Mediana S/ 32.00</button>
+          <button onclick="agregarPedido('La Suprema (Familiar)', 42.00)">Familiar S/ 42.00</button>
+        </div>
+      </div>
+
+      <div class="card casa highlight">
+        <h3>🌋 La Volcánica (Explosión de Sabores)</h3>
+        <p>Mozzarella, chorizo ahumado, pepperoni, piña, cavanosi, maíz dulce, salchicha AQP y chorizo AQP.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('La Volcánica (Personal)', 26.00)">Personal S/ 26.00</button>
+          <button onclick="agregarPedido('La Volcánica (Mediana)', 35.00)">Mediana S/ 35.00</button>
+          <button onclick="agregarPedido('La Volcánica (Familiar)', 45.00)">Familiar S/ 45.00</button>
+        </div>
+      </div>
+
+      <div class="card casa">
+        <h3>Boloñesa (Carnívora)</h3>
+        <p>Queso mozzarella, carne picada, jamón inglés, salame y cavanosi.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Boloñesa (Personal)', 25.00)">Personal S/ 25.00</button>
+          <button onclick="agregarPedido('Boloñesa (Mediana)', 35.00)">Mediana S/ 35.00</button>
+          <button onclick="agregarPedido('Boloñesa (Familiar)', 45.00)">Familiar S/ 45.00</button>
+        </div>
+      </div>
+
+      <div class="card casa">
+        <h3>Trika Tres Sabores</h3>
+        <p>Carne+Cavanosi | Pollo+Jamón | Tocino+Chorizo ahumado.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Trika (Mediana)', 36.00)">Mediana S/ 36.00</button>
+          <button onclick="agregarPedido('Trika (Familiar)', 46.00)">Familiar S/ 46.00</button>
+        </div>
+      </div>
+
+      <div class="card casa">
+        <h3>Tradición Arequipeña</h3>
+        <p>Queso mozzarella, chorizo arequipeño, salchicha arequipeña y jamón inglés.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Tradición Arequipeña (Personal)', 24.00)">Personal S/ 24.00</button>
+          <button onclick="agregarPedido('Tradición Arequipeña (Mediana)', 32.00)">Mediana S/ 32.00</button>
+          <button onclick="agregarPedido('Tradición Arequipeña (Familiar)', 42.00)">Familiar S/ 42.00</button>
+        </div>
+      </div>
+
+      <div class="card casa">
+        <h3>Picante Caústico</h3>
+        <p>Queso mozzarella, trozos de carne, rodajas de rocoto, salchicha ahumada y chorizo ahumado.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Picante Caústico (Personal)', 25.00)">Personal S/ 25.00</button>
+          <button onclick="agregarPedido('Picante Caústico (Mediana)', 36.00)">Mediana S/ 36.00</button>
+          <button onclick="agregarPedido('Picante Caústico (Familiar)', 46.00)">Familiar S/ 46.00</button>
+        </div>
+      </div>
+
+      <!-- ESPECIALES / MIXTAS -->
+      <div class="card especiales">
+        <h3>Pollo</h3>
+        <p>Queso mozzarella, jamón inglés, pollo y tocino ahumado.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Pizza Pollo (Personal)', 25.00)">Personal S/ 25.00</button>
+          <button onclick="agregarPedido('Pizza Pollo (Mediana)', 35.00)">Mediana S/ 35.00</button>
+          <button onclick="agregarPedido('Pizza Pollo (Familiar)', 45.00)">Familiar S/ 45.00</button>
+        </div>
+      </div>
+
+      <div class="card especiales">
+        <h3>Tropical</h3>
+        <p>Mozzarella, leche condensada, fudge, plátano, manzana, durazno, piña y fresa.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Pizza Tropical (Personal)', 24.00)">Personal S/ 24.00</button>
+          <button onclick="agregarPedido('Pizza Tropical (Mediana)', 32.00)">Mediana S/ 32.00</button>
+          <button onclick="agregarPedido('Pizza Tropical (Familiar)', 42.00)">Familiar S/ 42.00</button>
+        </div>
+      </div>
+
+      <div class="card especiales">
+        <h3>Cuatro Estaciones</h3>
+        <p>Primavera (Tomate/Espinaca), Verano (Piña/Durazno), Invierno (Pepperoni/Cavanosi), Otoño (Jamón/Chorizo).</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Cuatro Estaciones (Mediana)', 36.00)">Mediana S/ 36.00</button>
+          <button onclick="agregarPedido('Cuatro Estaciones (Familiar)', 46.00)">Familiar S/ 46.00</button>
+        </div>
+      </div>
+
+      <div class="card especiales">
+        <h3>Mexicana</h3>
+        <p>Queso mozzarella, jalapeños, cebolla rosada y carne.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Pizza Mexicana (Personal)', 25.00)">Personal S/ 25.00</button>
+          <button onclick="agregarPedido('Pizza Mexicana (Mediana)', 33.00)">Mediana S/ 33.00</button>
+          <button onclick="agregarPedido('Pizza Mexicana (Familiar)', 43.00)">Familiar S/ 43.00</button>
+        </div>
+      </div>
+
+      <!-- PAN AL AJO -->
+      <div class="card panes">
+        <h3>Pan al Ajo Simple</h3>
+        <p>Deliciosos panes tostados al ajo.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Pan al Ajo Simple', 6.00)">Agregar S/ 6.00</button>
+        </div>
+      </div>
+
+      <div class="card panes">
+        <h3>Pan al Ajo Especial</h3>
+        <p>Panes tostados al ajo con queso derretido.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Pan al Ajo Especial', 8.00)">Agregar S/ 8.00</button>
+        </div>
+      </div>
+
+      <!-- BEBIDAS Y GASEOSAS -->
+      <div class="card bebidas">
+        <h3>Limonada / Chicha Morada (Al Tiempo)</h3>
+        <p>Refrescantes bebidas naturales de la casa.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Bebida Casa 1/2L Al Tiempo', 6.00)">1/2 Litro S/ 6.00</button>
+          <button onclick="agregarPedido('Bebida Casa 1L Al Tiempo', 10.00)">1 Litro S/ 10.00</button>
+        </div>
+      </div>
+
+      <div class="card bebidas">
+        <h3>Limonada / Chicha Morada (Frozen)</h3>
+        <p>Bebidas heladas batidas al instante.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Bebida Casa 1/2L Frozen', 8.00)">1/2 Litro S/ 8.00</button>
+          <button onclick="agregarPedido('Bebida Casa 1L Frozen', 12.00)">1 Litro S/ 12.00</button>
+        </div>
+      </div>
+
+      <div class="card bebidas">
+        <h3>Coca Cola / Inka Kola / Pepsi</h3>
+        <p>Gaseosas heladas en distintas presentaciones.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Gaseosa 500ml', 5.00)">500 ml S/ 5.00</button>
+          <button onclick="agregarPedido('Gaseosa 1 Litro', 8.00)">1 Litro S/ 8.00</button>
+          <button onclick="agregarPedido('Gaseosa 2 Litros', 13.00)">2 Litros S/ 13.00</button>
+        </div>
+      </div>
+
+      <!-- FRAPPÉS Y CALIENTES -->
+      <div class="card frappes">
+        <h3>Frappés (Fresa / Maracuyá / Mango / Lúcuma)</h3>
+        <p>Cremosos frappés de fruta natural.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Frappé de Fruta', 10.00)">Agregar S/ 10.00</button>
+        </div>
+      </div>
+
+      <div class="card frappes">
+        <h3>Frappé Cappuccino / Oreo</h3>
+        <p>Cremosos y fríos con galleta o café espresso.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Frappé Cappuccino/Oreo', 9.00)">Agregar S/ 9.00</button>
+        </div>
+      </div>
+
+      <div class="card frappes">
+        <h3>Bebidas Calientes</h3>
+        <p>Café Artesanal, Capuccino, Mates e Infusiones.</p>
+        <div class="sizes">
+          <button onclick="agregarPedido('Infusión / Mate', 2.00)">Mate / Infusión S/ 2.00</button>
+          <button onclick="agregarPedido('Café Artesanal', 4.00)">Café S/ 4.00</button>
+          <button onclick="agregarPedido('Café Capuccino', 6.00)">Capuccino S/ 6.00</button>
+        </div>
+      </div>
+
     </div>
+  </main>
 
+  <!-- BARRA FLOTANTE DE PEDIDO -->
+  <div id="cart-bar" class="cart-bar hidden">
+    <span>Ítems: <b id="cart-count">0</b> | Total: <b id="cart-total">S/ 0.00</b></span>
+    <button onclick="enviarWhatsApp()" class="btn-whatsapp">Enviar Pedido a WhatsApp 📱</button>
+  </div>
 
-    <!-- PIE DE PÁGINA -->
-    <footer>
+  <!-- FOOTER -->
+  <footer>
+    <h4>GOLDEN PIZZERIA ARTESANAL A LEÑA</h4>
+    <p>Atendemos de 4:00 PM a 10:00 PM</p>
+    <p class="copy">&copy; 2026 GOLDEN PIZZERIA</p>
+  </footer>
 
-        <h2>GOLDEN PIZZERIA</h2>
-
-        <p>
-            El sabor que merece tu momento
-        </p>
-
-        <p class="copyright">
-            © 2026 GOLDEN PIZZERIA
-        </p>
-
-    </footer>
-
-
-    <script src="script.js"></script>
-
+  <script src="script.js"></script>
 </body>
 </html>
