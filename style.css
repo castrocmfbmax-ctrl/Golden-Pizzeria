@@ -1,586 +1,223 @@
-/* =========================================
-   GOLDEN PIZZERIA
-   DISEÑO RÚSTICO - PREMIUM
-   ========================================= */
-
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #0b0d0c;
-    color: #f5f1e8;
+  background-color: #0b0c0e;
+  color: #ffffff;
+  padding-bottom: 80px;
 }
 
-/* =========================================
-   ENCABEZADO
-   ========================================= */
-
-.header {
-    width: 100%;
-    height: 82px;
-    padding: 0 7%;
-    background: #101512;
-    border-bottom: 1px solid #2c352e;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.logo-icon {
-    font-size: 35px;
-}
-
-.logo h1 {
-    color: #d4af37;
-    font-size: 25px;
-    letter-spacing: 4px;
-    line-height: 22px;
-}
-
-.logo span {
-    color: #eeeeee;
-    font-size: 11px;
-    letter-spacing: 5px;
-}
-
-.header-buttons button {
-    background: transparent;
-    color: white;
-    border: 1px solid #d4af37;
-    border-radius: 6px;
-
-    padding: 10px 18px;
-
-    cursor: pointer;
-    font-weight: bold;
-
-    transition: 0.3s;
-}
-
-.header-buttons button:hover {
-    background: #d4af37;
-    color: #0b0d0c;
-}
-
-#contador-carrito {
-    background: #d62828;
-    color: white;
-
-    padding: 2px 7px;
-    border-radius: 20px;
-
-    margin-left: 5px;
-}
-
-/* =========================================
-   HERO
-   ========================================= */
-
+/* HERO */
 .hero {
-    min-height: 570px;
-
-    display: flex;
-    align-items: center;
-
-    padding: 70px 10%;
-
-    position: relative;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(8, 10, 9, 0.96),
-            rgba(8, 10, 9, 0.72),
-            rgba(8, 10, 9, 0.35)
-        ),
-        radial-gradient(
-            circle at 75% 50%,
-            #513d18 0%,
-            #182019 35%,
-            #0b0d0c 75%
-        );
+  padding: 50px 20px;
+  background: radial-gradient(circle at top, #3b1b08 0%, #0b0c0e 80%);
+  text-align: center;
 }
 
 .hero-content {
-    max-width: 650px;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-.small-title {
-    color: #18a558;
-    font-weight: bold;
-    letter-spacing: 4px;
-    margin-bottom: 18px;
+.badge {
+  background-color: #e67e22;
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  color: #f1c40f;
+  margin-top: 15px;
 }
 
 .hero h2 {
-    font-family: Georgia, serif;
-    font-size: clamp(45px, 6vw, 78px);
-    line-height: 1;
-    margin-bottom: 25px;
+  font-size: 1.2rem;
+  color: #e67e22;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
 }
 
-.hero h2 span {
-    color: #d4af37;
+.hero p {
+  color: #aaa;
+  font-style: italic;
+  margin-bottom: 20px;
 }
 
-.hero p:not(.small-title) {
-    color: #c7c7c7;
-    font-size: 18px;
-    line-height: 1.7;
-    max-width: 520px;
+.btn-hero {
+  display: inline-block;
+  background-color: #f1c40f;
+  color: #000;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
 }
 
-.btn-principal {
-    margin-top: 30px;
-
-    background: #d4af37;
-    color: #111;
-
-    border: none;
-    padding: 15px 30px;
-
-    border-radius: 5px;
-
-    font-weight: bold;
-    letter-spacing: 1px;
-
-    cursor: pointer;
-
-    transition: 0.3s;
+/* MENU SECTION */
+.menu-container {
+  max-width: 1250px;
+  margin: 30px auto;
+  padding: 0 15px;
+  text-align: center;
 }
 
-.btn-principal:hover {
-    background: #18a558;
-    color: white;
-    transform: translateY(-2px);
+.subtitle {
+  color: #e67e22;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  font-weight: bold;
 }
 
-/* =========================================
-   MENÚ
-   ========================================= */
-
-main {
-    padding: 80px 7%;
+.title {
+  color: #f1c40f;
+  font-size: 2rem;
+  margin: 5px 0 10px;
 }
 
-.titulo-seccion {
-    text-align: center;
-    margin-bottom: 40px;
+.description {
+  color: #888;
+  font-size: 0.9rem;
+  margin-bottom: 25px;
 }
 
-.titulo-seccion p {
-    color: #18a558;
-    font-size: 13px;
-    font-weight: bold;
-    letter-spacing: 4px;
-    margin-bottom: 10px;
+/* FILTERS */
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
 }
 
-.titulo-seccion h2 {
-    font-family: Georgia, serif;
-    color: #d4af37;
-    font-size: 42px;
-    margin-bottom: 12px;
+.filter-btn {
+  background-color: #16181c;
+  border: 1px solid #333;
+  color: #bbb;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: bold;
 }
 
-.titulo-seccion span {
-    color: #999;
+.filter-btn.active, .filter-btn:hover {
+  background-color: #e67e22;
+  color: #fff;
+  border-color: #e67e22;
 }
 
-/* =========================================
-   CATEGORÍAS
-   ========================================= */
-
-.categorias {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-
-    margin-bottom: 45px;
+/* GRID */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 15px;
 }
 
-.categorias button {
-    background: #151916;
-    color: #ddd;
-
-    border: 1px solid #303932;
-    border-radius: 30px;
-
-    padding: 11px 20px;
-
-    cursor: pointer;
-
-    transition: 0.3s;
+.card {
+  background-color: #121418;
+  border: 1px solid #1e2229;
+  border-radius: 10px;
+  padding: 18px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.categorias button:hover,
-.categorias button.activo {
-    background: #d4af37;
-    color: #111;
-    border-color: #d4af37;
+.card.highlight {
+  border: 1px solid #f1c40f;
+  background-color: #1a170d;
 }
 
-/* =========================================
-   PRODUCTOS
-   ========================================= */
-
-.productos {
-    display: grid;
-
-    grid-template-columns:
-        repeat(auto-fit, minmax(230px, 1fr));
-
-    gap: 25px;
+.card h3 {
+  font-size: 1.05rem;
+  color: #f1c40f;
+  margin-bottom: 6px;
 }
 
-.producto {
-    background: #151916;
-
-    border: 1px solid #29332c;
-    border-radius: 10px;
-
-    overflow: hidden;
-
-    transition: 0.3s;
+.card p {
+  font-size: 0.78rem;
+  color: #aaa;
+  margin-bottom: 15px;
+  line-height: 1.3;
 }
 
-.producto:hover {
-    transform: translateY(-5px);
-    border-color: #d4af37;
-
-    box-shadow:
-        0 10px 35px rgba(0, 0, 0, 0.35);
+.sizes {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: auto;
 }
 
-.producto-imagen {
-    height: 190px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background:
-        radial-gradient(
-            circle,
-            #493819,
-            #151916 70%
-        );
-
-    font-size: 65px;
+.sizes button {
+  background-color: #1e2229;
+  border: 1px solid #2ecc71;
+  color: #2ecc71;
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  transition: 0.2s;
 }
 
-.producto-info {
-    padding: 20px;
+.sizes button:hover {
+  background-color: #2ecc71;
+  color: #000;
 }
 
-.producto-info h3 {
-    font-family: Georgia, serif;
-    font-size: 22px;
-    margin-bottom: 8px;
+/* BARRA FLOTANTE DE PEDIDO */
+.cart-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #1a1d24;
+  border-top: 2px solid #25d366;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
 }
 
-.producto-info p {
-    color: #999;
-    font-size: 14px;
-    line-height: 1.5;
-    margin-bottom: 15px;
+.cart-bar.hidden {
+  display: none;
 }
 
-.producto-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.btn-whatsapp {
+  background-color: #25d366;
+  color: #000;
+  border: none;
+  padding: 8px 16px;
+  font-weight: bold;
+  border-radius: 20px;
+  cursor: pointer;
 }
 
-.precio {
-    color: #d4af37;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.btn-agregar {
-    background: #18a558;
-    color: white;
-
-    border: none;
-    border-radius: 5px;
-
-    padding: 9px 13px;
-
-    cursor: pointer;
-    font-weight: bold;
-
-    transition: 0.3s;
-}
-
-.btn-agregar:hover {
-    background: #147d44;
-}
-
-.btn-agregar:disabled {
-    background: #555;
-    cursor: not-allowed;
-}
-
-/* =========================================
-   CARRITO
-   ========================================= */
-
-.carrito-panel {
-    position: fixed;
-
-    top: 0;
-    right: -430px;
-
-    width: min(430px, 100%);
-    height: 100vh;
-
-    background: #101512;
-
-    z-index: 2000;
-
-    padding: 25px;
-
-    display: flex;
-    flex-direction: column;
-
-    transition: right 0.35s ease;
-
-    box-shadow:
-        -10px 0 30px rgba(0, 0, 0, 0.5);
-}
-
-.carrito-panel.abierto {
-    right: 0;
-}
-
-.carrito-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    padding-bottom: 20px;
-    border-bottom: 1px solid #303932;
-}
-
-.carrito-header h2 {
-    color: #d4af37;
-}
-
-.carrito-header button {
-    background: none;
-    color: white;
-
-    border: none;
-
-    font-size: 25px;
-    cursor: pointer;
-}
-
-#carrito-productos {
-    flex: 1;
-    overflow-y: auto;
-    padding: 20px 0;
-}
-
-.carrito-vacio {
-    color: #888;
-    text-align: center;
-    padding: 50px 10px;
-}
-
-.carrito-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    gap: 10px;
-
-    padding: 15px 0;
-
-    border-bottom: 1px solid #292f2b;
-}
-
-.carrito-item h4 {
-    margin-bottom: 5px;
-}
-
-.carrito-item small {
-    color: #999;
-}
-
-.carrito-item strong {
-    color: #d4af37;
-}
-
-.btn-eliminar {
-    background: #d62828;
-    color: white;
-
-    border: none;
-    border-radius: 4px;
-
-    padding: 5px 8px;
-
-    cursor: pointer;
-}
-
-.carrito-total {
-    display: flex;
-    justify-content: space-between;
-
-    padding: 20px 0;
-
-    border-top: 1px solid #303932;
-}
-
-.carrito-total span {
-    color: #aaa;
-}
-
-.carrito-total strong {
-    color: #d4af37;
-    font-size: 24px;
-}
-
-.btn-confirmar {
-    width: 100%;
-
-    background: #18a558;
-    color: white;
-
-    border: none;
-    border-radius: 5px;
-
-    padding: 15px;
-
-    font-weight: bold;
-    cursor: pointer;
-
-    transition: 0.3s;
-}
-
-.btn-confirmar:hover {
-    background: #147d44;
-}
-
-/* =========================================
-   OVERLAY
-   ========================================= */
-
-.overlay {
-    position: fixed;
-
-    inset: 0;
-
-    background: rgba(0, 0, 0, 0.7);
-
-    z-index: 1500;
-
-    opacity: 0;
-    visibility: hidden;
-
-    transition: 0.3s;
-}
-
-.overlay.activo {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* =========================================
-   FOOTER
-   ========================================= */
-
+/* FOOTER */
 footer {
-    text-align: center;
-
-    padding: 50px 20px;
-
-    background: #070908;
-
-    border-top: 1px solid #202720;
+  margin-top: 50px;
+  text-align: center;
+  padding: 25px;
+  border-top: 1px solid #1a1d24;
 }
 
-footer h2 {
-    color: #d4af37;
-    letter-spacing: 4px;
-    margin-bottom: 10px;
+footer h4 {
+  color: #f1c40f;
 }
 
 footer p {
-    color: #888;
-}
-
-footer .copyright {
-    margin-top: 25px;
-    font-size: 13px;
-}
-
-/* =========================================
-   RESPONSIVE
-   ========================================= */
-
-@media (max-width: 700px) {
-
-    .header {
-        padding: 0 5%;
-        height: 70px;
-    }
-
-    .logo h1 {
-        font-size: 20px;
-    }
-
-    .logo span {
-        font-size: 9px;
-    }
-
-    .hero {
-        min-height: 500px;
-        padding: 60px 7%;
-    }
-
-    .hero h2 {
-        font-size: 48px;
-    }
-
-    main {
-        padding: 60px 5%;
-    }
-
-    .titulo-seccion h2 {
-        font-size: 34px;
-    }
-
-    .categorias {
-        justify-content: flex-start;
-        overflow-x: auto;
-        flex-wrap: nowrap;
-        padding-bottom: 10px;
-    }
-
-    .categorias button {
-        white-space: nowrap;
-    }
+  color: #666;
+  font-size: 0.8rem;
+  margin-top: 5px;
 }
