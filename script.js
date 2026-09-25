@@ -1,7 +1,7 @@
 let pedido = [];
 let total = 0;
 
-// Número de WhatsApp configurado para los pedidos
+// Número oficial de la pizzería
 const NUMERO_WHATSAPP = "51979707173";
 
 function filterCategory(cat) {
@@ -9,7 +9,7 @@ function filterCategory(cat) {
   const buttons = document.querySelectorAll('.filter-btn');
 
   buttons.forEach(btn => btn.classList.remove('active'));
-  event.target.classList.add('active');
+  event.currentTarget.classList.add('active');
 
   cards.forEach(card => {
     if (cat === 'todas') {
@@ -31,6 +31,26 @@ function filterCategory(cat) {
 function agregarPedido(producto, precio) {
   pedido.push({ producto, precio });
   total += precio;
+  
+  // Feedback visual animado en el botón presionado
+  const btn = event.currentTarget;
+  const textoOriginal = btn.innerText;
+  btn.innerText = "✓ ¡Añadido!";
+  btn.style.background = "#f1c40f";
+  btn.style.color = "#000";
+
+  setTimeout(() => {
+    btn.innerText = textoOriginal;
+    btn.style.background = "";
+    btn.style.color = "";
+  }, 700);
+
+  actualizarBarra();
+}
+
+function vaciarPedido() {
+  pedido = [];
+  total = 0;
   actualizarBarra();
 }
 
