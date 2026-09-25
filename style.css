@@ -1,257 +1,325 @@
-@import url('https://fonts.cdnfonts.com/css/matcha-world');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+/* =========================================================
+   GOLDEN PIZZERIA - ESTILOS GENERALES Y FUENTE UNIFICADA
+========================================================= */
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Poppins', sans-serif;
-  scroll-behavior: smooth;
-}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Poppins:wght@400;600;700;800;900&display=swap');
 
-/* APLICACIÓN DE FUENTE MATCHA WORLD EN ENCABEZADOS Y TÍTULOS */
-h1, h2, h3, h4, .title, .subtitle, .brand-font, .order-code, .payment-box h2, .tracking-box h2 {
-  font-family: 'Matcha World', cursive, sans-serif !important;
-  letter-spacing: 1px;
+/* APLICAR FUENTE UNIFICADA A ABSOLUTAMENTE TODO */
+*, *::before, *::after, html, body, input, button, select, textarea {
+    font-family: 'Poppins', 'Montserrat', sans-serif !important;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-  background: #0d0a08 url('https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1920&q=80') center center fixed;
-  background-size: cover;
-  color: #f5f5f5;
-  padding-bottom: 90px;
+    background-color: #0c0f0d;
+    color: #ffffff;
+    line-height: 1.5;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(13, 10, 8, 0.92);
-  z-index: -1;
-}
-
-/* HERO CON BANNER */
+/* =========================================================
+   HERO / ENCABEZADO
+========================================================= */
 .hero {
-  position: relative;
-  padding: 60px 20px;
-  background: url('https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
-  text-align: center;
-}
-
-.hero-overlay {
-  background: linear-gradient(180deg, rgba(13,10,8,0.5) 0%, rgba(13,10,8,0.95) 100%);
-  padding: 40px 10px;
-  border-radius: 20px;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000') center/cover no-repeat;
+    text-align: center;
+    padding: 60px 20px;
+    border-bottom: 2px solid #D4AF37;
 }
 
 .hero-badge {
-  background: #d35400;
-  color: #fff;
-  padding: 6px 16px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  display: inline-block;
-  margin-bottom: 15px;
+    background: #D4AF37;
+    color: #000;
+    font-weight: 800;
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
 }
 
 .hero h1 {
-  font-size: 3.5rem;
-  color: #D4AF37;
-  text-shadow: 2px 2px 8px #000;
+    font-size: 2.8rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: #fff;
 }
 
-.hero h1 span { color: #e67e22; }
+.hero h1 span {
+    color: #D4AF37;
+}
+
+.hero-subtitle {
+    color: #D4AF37;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-top: 5px;
+}
 
 .btn-main {
-  display: inline-block;
-  background: linear-gradient(45deg, #D4AF37, #e67e22);
-  color: #000;
-  padding: 12px 28px;
-  text-decoration: none;
-  font-weight: 700;
-  border-radius: 30px;
-  margin-top: 20px;
-  box-shadow: 0 4px 15px rgba(212,175,55,0.4);
+    display: inline-block;
+    margin-top: 20px;
+    background: #D4AF37;
+    color: #000;
+    padding: 12px 25px;
+    font-weight: 800;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: 0.3s;
 }
 
-/* SECCIÓN CONSULTAR SEGUIMIENTO CLIENTE */
-.tracking-search-section {
-  max-width: 600px;
-  margin: 30px auto;
-  background: #101411;
-  border: 1px solid #D4AF37;
-  padding: 20px;
-  border-radius: 15px;
-  text-align: center;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+.btn-main:hover {
+    background: #fff;
 }
 
-.tracking-search-section h3 {
-  color: #D4AF37;
-  font-size: 1.6rem;
-  margin-bottom: 10px;
+/* =========================================================
+   PROMO BANNER & BÚSQUEDA
+========================================================= */
+.promo-banner {
+    background: #D4AF37;
+    color: #000;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.9rem;
 }
 
-.search-box-group {
-  display: flex;
-  gap: 10px;
-  margin-top: 15px;
-}
-
-.search-box-group input {
-  flex: 1;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #444;
-  background: #191e1b;
-  color: #fff;
-  font-size: 1rem;
-  text-transform: uppercase;
-}
-
-.btn-search-order {
-  background: #D4AF37;
-  color: #000;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.btn-search-order:hover { background: #f1c40f; }
-
-/* MENÚ Y TARJETAS */
+/* =========================================================
+   MENÚ Y FILTROS
+========================================================= */
 .menu-container {
-  max-width: 1250px;
-  margin: 0 auto;
-  padding: 20px;
-  text-align: center;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
 }
 
+.section-title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.section-title span {
+    color: #D4AF37;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.section-title h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+}
+
+.menu-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.filter-btn {
+    background: #181d1a;
+    color: #ccc;
+    border: 1px solid #333;
+    padding: 10px 18px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.filter-btn.active, .filter-btn:hover {
+    background: #D4AF37;
+    color: #000;
+    border-color: #D4AF37;
+}
+
+/* =========================================================
+   TARJETAS DEL MENÚ
+========================================================= */
 .product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
 }
 
 .card {
-  background: rgba(23, 27, 24, 0.9);
-  border: 1px solid #3d2b1f;
-  border-radius: 15px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  text-align: left;
-  transition: transform 0.3s ease;
+    background: #131714;
+    border: 1px solid #262c28;
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: 0.3s;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  border-color: #D4AF37;
+    border-color: #D4AF37;
+    transform: translateY(-3px);
+}
+
+.category-tag {
+    color: #D4AF37;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
 .card h3 {
-  color: #D4AF37;
-  font-size: 1.3rem;
-  margin-bottom: 8px;
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin: 5px 0 10px 0;
+    color: #fff;
+}
+
+.card p {
+    color: #aaa;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
 }
 
 .price {
-  color: #2ecc71;
-  font-weight: bold;
-  font-size: 0.85rem;
-  margin: 10px 0;
+    color: #2ecc71;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
 }
 
 .btn-add {
-  background: #18A558;
-  color: #fff;
-  border: none;
-  padding: 10px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  width: 100%;
+    background: #27ae60;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 700;
+    width: 100%;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-.btn-add:hover { background: #14934d; }
-
-/* ESTILOS DEL MODAL DE TAMAÑOS */
-.btn-size {
-  background: #171b18;
-  border: 1px solid #D4AF37;
-  color: #fff;
-  padding: 12px;
-  border-radius: 10px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.2s;
+.btn-add:hover {
+    background: #219150;
 }
 
-.btn-size:hover {
-  background: #D4AF37;
-  color: #000;
+/* =========================================================
+   BARRA FLOTANTE DE CARRITO
+========================================================= */
+.cart-bar {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #131714;
+    border: 2px solid #D4AF37;
+    padding: 15px 25px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    z-index: 999;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
 }
 
-/* OVERLAYS Y MODALES */
+.cart-bar.hidden {
+    display: none !important;
+}
+
+.btn-clean {
+    background: #c0392b;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-whatsapp {
+    background: #D4AF37;
+    color: black;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 15px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+/* =========================================================
+   OVERLAYS Y MODALES
+========================================================= */
 .payment-overlay, .tracking-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  z-index: 99999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
 }
 
 .payment-overlay.hidden, .tracking-overlay.hidden {
-  display: none !important;
+    display: none !important;
 }
 
 .payment-box, .tracking-box {
-  background: #101411;
-  border: 1px solid #D4AF37;
-  border-radius: 18px;
-  padding: 25px;
-  width: 100%;
-  max-width: 550px;
-  color: white;
-  max-height: 90vh;
-  overflow-y: auto;
+    background: #181d1a;
+    border: 1px solid #D4AF37;
+    border-radius: 15px;
+    padding: 25px;
+    width: 90%;
+    max-width: 450px;
 }
 
-/* CARRITO FLOTANTE */
-.cart-bar {
-  position: fixed;
-  bottom: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: 650px;
-  background: #101411;
-  border: 2px solid #18A558;
-  border-radius: 30px;
-  padding: 12px 25px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 9000;
+.payment-methods {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
 }
 
-.cart-bar.hidden { display: none; }
+.payment-method {
+    flex: 1;
+    background: #0f1210;
+    border: 1px solid #333;
+    padding: 10px;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
 
-.btn-whatsapp {
-  background: #18A558;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 20px;
-  font-weight: bold;
-  cursor: pointer;
+.payment-method.selected {
+    border-color: #D4AF37;
+    background: #262c28;
+}
+
+.payment-section {
+    display: none;
+    margin-bottom: 15px;
+}
+
+.payment-section.active {
+    display: block;
+}
+
+.btn-close-payment {
+    background: #444;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-confirm-payment {
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
 }
