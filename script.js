@@ -33,7 +33,7 @@ function abrirModalPizza(nombre, precioPersonal, precioMediana, precioFamiliar) 
     const container = document.getElementById("pizza-modal-sizes");
 
     if (!modal || !container) {
-        // Fallback si no existe el modal en el HTML: añade la mediana por defecto
+        // Fallback si no existe el modal en el HTML: añade el precio disponible
         const precio = precioMediana || precioPersonal || precioFamiliar;
         agregarPedido(`${nombre} (Mediana)`, precio);
         return;
