@@ -14,10 +14,66 @@ let total = 0;
 
 let metodoPagoSeleccionado = null;
 let codigoPedidoActual = null;
+let pizzaEnModal = null;
 
 let temporizador = null;
 
 const NUMERO_WHATSAPP = "51979707173";
+
+
+/* =========================================================
+   MODAL DE PIZZA (SELECCIÓN DE TAMAÑO)
+========================================================= */
+
+function abrirModalPizza(nombre, precioPersonal, precioMediana, precioFamiliar) {
+    pizzaEnModal = nombre;
+
+    const modal = document.getElementById("pizza-modal");
+    const titulo = document.getElementById("pizza-modal-title");
+    const container = document.getElementById("pizza-modal-sizes");
+
+    if (!modal || !container) {
+        // Fallback si no existe el modal en el HTML: añade la mediana por defecto
+        const precio = precioMediana || precioPersonal || precioFamiliar;
+        agregarPedido(`${nombre} (Mediana)`, precio);
+        return;
+    }
+
+    if (titulo) titulo.innerText = nombre;
+
+    let htmlButtons = "";
+
+    if (precioPersonal !== null && precioPersonal !== undefined) {
+        htmlButtons += `<button type="button" class="btn-size" onclick="seleccionarTamano('Personal', ${precioPersonal})">Personal • S/ ${precioPersonal.toFixed(2)}</button>`;
+    }
+    if (precioMediana !== null && precioMediana !== undefined) {
+        htmlButtons += `<button type="button" class="btn-size" onclick="seleccionarTamano('Mediana', ${precioMediana})">Mediana • S/ ${precioMediana.toFixed(2)}</button>`;
+    }
+    if (precioFamiliar !== null && precioFamiliar !== undefined) {
+        htmlButtons += `<button type="button" class="btn-size" onclick="seleccionarTamano('Familiar', ${precioFamiliar})">Familiar • S/ ${precioFamiliar.toFixed(2)}</button>`;
+    }
+
+    container.innerHTML = htmlButtons;
+
+    modal.classList.remove("hidden");
+    modal.style.display = "flex";
+}
+
+function seleccionarTamano(tamano, precio) {
+    if (pizzaEnModal) {
+        agregarPedido(`${pizzaEnModal} (${tamano})`, precio);
+    }
+    cerrarModalPizza();
+}
+
+function cerrarModalPizza() {
+    const modal = document.getElementById("pizza-modal");
+    if (modal) {
+        modal.classList.add("hidden");
+        modal.style.display = "none";
+    }
+    pizzaEnModal = null;
+}
 
 
 /* =========================================================
@@ -32,10 +88,6 @@ function filterCategory(cat) {
     buttons.forEach(btn => {
         btn.classList.remove("active");
     });
-
-    /*
-       Intentamos detectar el botón presionado
-    */
 
     if (typeof event !== "undefined" && event && event.currentTarget) {
         event.currentTarget.classList.add("active");
@@ -93,10 +145,6 @@ function agregarPedido(producto, precio) {
     });
 
     total += precio;
-
-    /*
-       Animación del botón
-    */
 
     let boton = null;
 
@@ -179,21 +227,12 @@ function vaciarPedido() {
 
 function abrirPago(evento) {
 
-    /*
-       Evitar que el botón envíe un formulario
-    */
-
     if (evento) {
         evento.preventDefault();
         evento.stopPropagation();
     }
 
     console.log("GOLDEN PIZZERIA: abriendo pantalla de pago");
-
-
-    /*
-       Verificar carrito
-    */
 
     if (pedido.length === 0) {
 
@@ -202,11 +241,6 @@ function abrirPago(evento) {
         return false;
 
     }
-
-
-    /*
-       Buscar ventana de pago
-    */
 
     const overlay =
         document.getElementById("payment-overlay");
@@ -227,24 +261,9 @@ function abrirPago(evento) {
 
     }
 
-
-    /*
-       Mostrar resumen
-    */
-
     mostrarResumenPago();
 
-
-    /*
-       Reiniciar método
-    */
-
     metodoPagoSeleccionado = null;
-
-
-    /*
-       Quitar selección de botones
-    */
 
     document
         .querySelectorAll(".payment-method")
@@ -254,11 +273,6 @@ function abrirPago(evento) {
 
         });
 
-
-    /*
-       Ocultar secciones
-    */
-
     document
         .querySelectorAll(".payment-section")
         .forEach(section => {
@@ -266,11 +280,6 @@ function abrirPago(evento) {
             section.classList.remove("active");
 
         });
-
-
-    /*
-       Limpiar comprobante anterior
-    */
 
     const archivo =
         document.getElementById("receipt-file");
@@ -294,19 +303,7 @@ function abrirPago(evento) {
 
     }
 
-
-    /*
-       =====================================================
-       ABRIR LA VENTANA
-       =====================================================
-    */
-
     overlay.classList.remove("hidden");
-
-    /*
-       Forzar visibilidad.
-       Esto evita problemas con CSS.
-    */
 
     overlay.style.display = "flex";
 
@@ -341,11 +338,6 @@ function cerrarPago() {
     }
 
     overlay.classList.add("hidden");
-
-    /*
-       Restauramos el estado visual
-       para la próxima apertura.
-    */
 
     overlay.style.display = "";
 
@@ -442,11 +434,6 @@ function seleccionarPago(metodo) {
 
     metodoPagoSeleccionado = metodo;
 
-
-    /*
-       Quitar selección anterior
-    */
-
     document
         .querySelectorAll(".payment-method")
         .forEach(btn => {
@@ -455,11 +442,6 @@ function seleccionarPago(metodo) {
 
         });
 
-
-    /*
-       Ocultar todas las secciones
-    */
-
     document
         .querySelectorAll(".payment-section")
         .forEach(section => {
@@ -467,11 +449,6 @@ function seleccionarPago(metodo) {
             section.classList.remove("active");
 
         });
-
-
-    /*
-       YAPE
-    */
 
     if (metodo === "yape") {
 
@@ -497,11 +474,6 @@ function seleccionarPago(metodo) {
 
     }
 
-
-    /*
-       TARJETA
-    */
-
     if (metodo === "tarjeta") {
 
         const boton =
@@ -525,11 +497,6 @@ function seleccionarPago(metodo) {
         }
 
     }
-
-
-    /*
-       EFECTIVO
-    */
 
     if (metodo === "efectivo") {
 
@@ -573,21 +540,11 @@ function comprobarReciboYape() {
     const etiqueta =
         document.querySelector(".receipt-label");
 
-
-    /*
-       No existe el input
-    */
-
     if (!archivo) {
 
         return false;
 
     }
-
-
-    /*
-       No hay archivo
-    */
 
     if (
         !archivo.files ||
@@ -621,11 +578,6 @@ function comprobarReciboYape() {
     const archivoSeleccionado =
         archivo.files[0];
 
-
-    /*
-       Verificar que sea imagen
-    */
-
     if (
         !archivoSeleccionado.type ||
         !archivoSeleccionado.type.startsWith("image/")
@@ -645,11 +597,6 @@ function comprobarReciboYape() {
         return false;
 
     }
-
-
-    /*
-       Comprobante correcto
-    */
 
     if (nombre) {
 
@@ -682,10 +629,6 @@ function comprobarReciboYape() {
 
 function confirmarPedido() {
 
-    /*
-       Verificar productos
-    */
-
     if (pedido.length === 0) {
 
         alert("🛒 Tu pedido está vacío.");
@@ -693,11 +636,6 @@ function confirmarPedido() {
         return;
 
     }
-
-
-    /*
-       Verificar método de pago
-    */
 
     if (!metodoPagoSeleccionado) {
 
@@ -708,11 +646,6 @@ function confirmarPedido() {
         return;
 
     }
-
-
-    /*
-       YAPE NECESITA COMPROBANTE
-    */
 
     if (metodoPagoSeleccionado === "yape") {
 
@@ -732,32 +665,12 @@ function confirmarPedido() {
 
     }
 
-
-    /*
-       Generar código
-    */
-
     codigoPedidoActual =
         generarCodigoPedido();
 
-
-    /*
-       Cerrar pago
-    */
-
     cerrarPago();
 
-
-    /*
-       Mostrar seguimiento
-    */
-
     mostrarSeguimiento();
-
-
-    /*
-       Enviar pedido a WhatsApp
-    */
 
     enviarWhatsAppConfirmado();
 
@@ -794,11 +707,6 @@ function generarCodigoPedido() {
 
     const fecha =
         año + mes + dia;
-
-
-    /*
-       Contador diario
-    */
 
     const clave =
         "golden_pizzeria_pedidos_" + fecha;
@@ -871,14 +779,6 @@ function obtenerNombrePago() {
 
 /* =========================================================
    CALCULAR TIEMPO DE PREPARACIÓN
-=========================================================
-
-   Pizza solamente:
-   10 minutos
-
-   Pizza + bebida:
-   12 minutos
-
 ========================================================= */
 
 function calcularTiempoPedido() {
@@ -1036,11 +936,6 @@ function resetearSeguimiento() {
         timer.style.display = "none";
 
     }
-
-
-    /*
-       Detener temporizador
-    */
 
     if (temporizador) {
 
@@ -1442,10 +1337,6 @@ function enviarWhatsAppConfirmado() {
         "\n🟡 *PEDIDO RECIBIDO*";
 
 
-    /*
-       Abrir WhatsApp
-    */
-
     const url =
         "https://wa.me/" +
         NUMERO_WHATSAPP +
@@ -1514,16 +1405,10 @@ document.addEventListener(
 
         actualizarBarra();
 
-
-        /*
-           PANTALLA DE PAGO
-        */
-
         const payment =
             document.getElementById(
                 "payment-overlay"
             );
-
 
         if (payment) {
 
@@ -1537,16 +1422,10 @@ document.addEventListener(
 
         }
 
-
-        /*
-           SEGUIMIENTO
-        */
-
         const tracking =
             document.getElementById(
                 "tracking-overlay"
             );
-
 
         if (tracking) {
 
@@ -1560,23 +1439,16 @@ document.addEventListener(
 
         }
 
-
-        /*
-           MODAL DE PIZZA
-        */
-
         const pizza =
             document.getElementById(
                 "pizza-modal"
             );
-
 
         if (pizza) {
 
             pizza.classList.add("hidden");
 
         }
-
 
         console.log(
             "🍕 GOLDEN PIZZERIA: sistema cargado correctamente."
