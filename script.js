@@ -1,5 +1,5 @@
 /* =========================================================
-   GOLDEN PIZZERIA - CONFIGURACIÓN DE SEDES Y WHATSAPP
+   GOLDEN PIZZERIA - CONFIGURACIÓN DE SEDES Y NÚMEROS
 ========================================================= */
 
 const CONFIG_SEDES = {
@@ -235,7 +235,7 @@ function mostrarNombreArchivo(input) {
     }
 }
 
-/* --- CONFIRMACIÓN Y ENVÍO AUTOMÁTICO A LA SEDE CORRECTA --- */
+/* --- CONFIRMACIÓN Y ENVÍO A WHATSAPP DE LA SEDE CORRESPONDIENTE --- */
 function confirmarPedido() {
     if (carrito.length === 0) return;
 
@@ -271,7 +271,6 @@ function confirmarPedido() {
     mensaje += `*Método de Pago:* ${metodoPagoSeleccionado.toUpperCase()}\n\n`;
     mensaje += `_Pedido generado desde la página web_`;
 
-    // Redirige al WhatsApp exacto de la sede seleccionada
     const url = `https://wa.me/${datosSede.telefonoWhatsapp}?text=${encodeURIComponent(mensaje)}`;
     window.open(url, "_blank");
 
