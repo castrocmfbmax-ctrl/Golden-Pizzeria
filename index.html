@@ -39,13 +39,16 @@
 
     /* MODALES DE OPCIONES Y PAGO */
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
-    .modal-content { background: #141816; color: white; padding: 25px; border-radius: 12px; border: 1px solid #D4AF37; width: 90%; max-width: 420px; position: relative; max-height: 90vh; overflow-y: auto; }
+    .modal-content { background: #141816; color: white; padding: 25px; border-radius: 12px; border: 1px solid #D4AF37; width: 90%; max-width: 440px; position: relative; max-height: 90vh; overflow-y: auto; }
     .modal-close { position: absolute; top: 12px; right: 15px; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
     .btn-size-option { width: 100%; background: #1e2421; color: white; border: 1px solid #333; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; text-align: left; margin-bottom: 10px; transition: all 0.2s; }
     .btn-size-option:hover { background: #D4AF37; color: black; border-color: #D4AF37; }
 
-    /* OPCIONES DE PAGO */
+    /* FORMULARIO Y OPCIONES DE PAGO */
+    .input-field { width: 100%; padding: 10px 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #333; background: #0d0f0e; color: white; outline: none; font-size: 0.9rem; }
+    .input-field:focus { border-color: #D4AF37; }
     .pago-option { background: #1e2421; border: 1px solid #333; padding: 12px; border-radius: 8px; margin-bottom: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+    .pago-option.disabled { opacity: 0.4; cursor: not-allowed; }
     .pago-option input { accent-color: #D4AF37; }
 
     /* CARRITO FLOTANTE Y DRAWER */
@@ -520,13 +523,31 @@
     </div>
   </div>
 
-  <!-- MODAL DE PAGO (NUEVO) -->
+  <!-- MODAL DE DATOS Y PAGO CON ANTIFRAUDE -->
   <div id="modal-pago" class="modal-overlay">
     <div class="modal-content">
       <button onclick="cerrarModalPago()" class="modal-close">&times;</button>
-      <h2 style="color:#D4AF37; margin-bottom:15px; font-size:1.3rem;">💳 MÉTODOS DE PAGO</h2>
+      <h2 style="color:#D4AF37; margin-bottom:15px; font-size:1.3rem;">📋 DATOS DE ENTREGA & PAGO</h2>
       
-      <p style="color:#ccc; font-size:0.9rem; margin-bottom:15px;">Selecciona cómo deseas pagar tu pedido:</p>
+      <!-- SECCIÓN DATOS DEL CLIENTE -->
+      <div style="margin-bottom: 15px;">
+        <input type="text" id="cliente-nombre" class="input-field" placeholder="👤 Nombre y Apellido (Obligatorio)">
+        <input type="tel" id="cliente-telefono" class="input-field" placeholder="📞 Teléfono / Celular (Obligatorio)">
+        <input type="text" id="cliente-direccion" class="input-field" placeholder="📍 Dirección de entrega (Obligatorio)">
+        <input type="text" id="cliente-referencia" class="input-field" placeholder="🏠 Referencia / Color de casa (Obligatorio)">
+        
+        <button type="button" onclick="obtenerUbicacionGPS()" style="width:100%; background:#1e2421; color:#D4AF37; border:1px solid #D4AF37; padding:8px; border-radius:6px; cursor:pointer; font-size:0.8rem; font-weight:bold; margin-bottom:10px;">
+          📍 Compartir mi Ubicación GPS Actual
+        </button>
+        <span id="gps-status" style="display:block; font-size:0.75rem; color:#25D366; text-align:center;"></span>
+      </div>
+
+      <p style="color:#ccc; font-size:0.85rem; margin-bottom:10px; font-weight:bold;">Selecciona tu Método de Pago:</p>
+
+      <!-- ADVERTENCIA PEDIDOS GRANDES -->
+      <div id="alerta-limite" style="display:none; background:rgba(212,175,55,0.15); border:1px solid #D4AF37; padding:8px; border-radius:6px; font-size:0.75rem; color:#D4AF37; margin-bottom:10px;">
+        ⚠️ Por seguridad en pedidos mayores a S/ 50.00, solo aceptamos pagos adelantados por Yape o Tarjeta.
+      </div>
 
       <label class="pago-option">
         <input type="radio" name="metodoPago" value="yape" onchange="seleccionarMetodo('yape')">
@@ -544,23 +565,23 @@
         </div>
       </label>
 
-      <label class="pago-option">
-        <input type="radio" name="metodoPago" value="efectivo" onchange="seleccionarMetodo('efectivo')">
+      <label class="pago-option" id="option-efectivo">
+        <input type="radio" name="metodoPago" id="radio-efectivo" value="efectivo" onchange="seleccionarMetodo('efectivo')">
         <div>
           <strong>💵 Efectivo</strong>
           <div style="font-size:0.8rem; color:#aaa;">Pago presencial al entregar</div>
         </div>
       </label>
 
-      <!-- SECCIÓN YAPE (Subida obligatoria de imagen) -->
-      <div id="sec-yape" style="display:none; background:#1e2421; border:1px dashed #D4AF37; padding:15px; border-radius:8px; margin-top:15px;">
+      <!-- SECCIÓN YAPE (Subida obligatoria) -->
+      <div id="sec-yape" style="display:none; background:#1e2421; border:1px dashed #D4AF37; padding:15px; border-radius:8px; margin-top:10px;">
         <p style="font-size:0.85rem; color:#25D366; margin-bottom:5px;"><strong>Número Yape / Plin: 979707173</strong></p>
         <p style="font-size:0.8rem; color:#ccc; margin-bottom:10px;">Adjunta obligatoriamente la captura del comprobante:</p>
         <input type="file" id="yape-file" accept="image/*" style="font-size:0.85rem; color:#ccc;">
       </div>
 
-      <button onclick="procesarEnvioFinal()" class="btn-add" style="margin-top:20px; padding:12px; font-size:1rem;">
-        🚀 CONFIRMAR Y ENVIAR POR WHATSAPP
+      <button onclick="procesarEnvioFinal()" class="btn-add" style="margin-top:15px; padding:12px; font-size:1rem;">
+        🚀 ENVIAR PEDIDO POR WHATSAPP
       </button>
     </div>
   </div>
@@ -596,6 +617,7 @@
     let carrito = [];
     let pizzaSeleccionada = {};
     let metodoSeleccionado = "";
+    let ubicacionGPS = "";
 
     function filterCategory(cat, event) {
       const btns = document.querySelectorAll('.filter-btn');
@@ -682,6 +704,10 @@
       actualizarCarrito();
     }
 
+    function obtenerTotal() {
+      return carrito.reduce((acc, item) => acc + (item.precio * item.cant), 0);
+    }
+
     function actualizarCarrito() {
       const container = document.getElementById('carrito-items');
       const count = document.getElementById('carrito-count');
@@ -727,9 +753,27 @@
       document.getElementById('drawer-carrito').classList.toggle('open');
     }
 
-    // --- NUEVO FLUJO DE PAGO ---
+    // --- LÓGICA DE PAGO Y ANTIFRAUDE ---
     function iniciarProcesoPago() {
       if (carrito.length === 0) return alert('Agrega productos a tu pedido primero.');
+      
+      const total = obtenerTotal();
+      const optionEfectivo = document.getElementById('option-efectivo');
+      const radioEfectivo = document.getElementById('radio-efectivo');
+      const alertaLimite = document.getElementById('alerta-limite');
+
+      // Regla Antitroll: Si el pedido supera S/ 50, se deshabilita el pago en efectivo
+      if (total >= 50) {
+        optionEfectivo.classList.add('disabled');
+        radioEfectivo.disabled = true;
+        alertaLimite.style.display = 'block';
+        if (metodoSeleccionado === 'efectivo') metodoSeleccionado = '';
+      } else {
+        optionEfectivo.classList.remove('disabled');
+        radioEfectivo.disabled = false;
+        alertaLimite.style.display = 'none';
+      }
+
       document.getElementById('drawer-carrito').classList.remove('open');
       document.getElementById('modal-pago').style.display = 'flex';
     }
@@ -743,9 +787,37 @@
       document.getElementById('sec-yape').style.display = (tipo === 'yape') ? 'block' : 'none';
     }
 
+    function obtenerUbicacionGPS() {
+      const status = document.getElementById('gps-status');
+      if (navigator.geolocation) {
+        status.innerText = "⏳ Obteniendo ubicación...";
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            ubicacionGPS = `https://maps.google.com/?q=${pos.coords.latitude},${pos.coords.longitude}`;
+            status.innerText = "✅ Ubicación GPS obtenida con éxito";
+          },
+          () => {
+            status.innerText = "⚠️ No se pudo acceder al GPS. Ingresa tu dirección manualmente.";
+          }
+        );
+      } else {
+        status.innerText = "⚠️ Geolocalización no soportada en este navegador.";
+      }
+    }
+
     async function procesarEnvioFinal() {
+      const nombre = document.getElementById('cliente-nombre').value.trim();
+      const telefono = document.getElementById('cliente-telefono').value.trim();
+      const direccion = document.getElementById('cliente-direccion').value.trim();
+      const referencia = document.getElementById('cliente-referencia').value.trim();
+
+      // Validar que los campos de seguridad estén completos
+      if (!nombre || !telefono || !direccion || !referencia) {
+        return alert("⚠️ Por favor completa todos tus datos personales y de entrega antes de enviar.");
+      }
+
       if (!metodoSeleccionado) {
-        return alert("Por favor selecciona una forma de pago.");
+        return alert("Por favor selecciona un método de pago.");
       }
 
       let detallePago = "";
@@ -754,18 +826,16 @@
       if (metodoSeleccionado === 'yape') {
         const fileInput = document.getElementById('yape-file');
         if (!fileInput.files || fileInput.files.length === 0) {
-          return alert("⚠️ OBLIGATORIO: Debes adjuntar la captura del comprobante de Yape para continuar.");
+          return alert("⚠️ OBLIGATORIO: Debes adjuntar la captura del comprobante de Yape.");
         }
 
-        // Subida automática de captura
         const file = fileInput.files[0];
         const formData = new FormData();
         formData.append('image', file);
 
-        alert("⏳ Subiendo comprobante, por favor espera un momento...");
+        alert("⏳ Verificando comprobante, por favor espera un momento...");
 
         try {
-          // Servidor de subida gratuito (ImgBB / free API)
           const res = await fetch("https://api.imgbb.com/1/upload?key=c2b3d8f89e2402dd1d7398fb66453d10", {
             method: "POST",
             body: formData
@@ -773,12 +843,12 @@
           const data = await res.json();
           if (data.success) {
             urlCaptura = data.data.url;
-            detallePago = `📱 *Método de Pago:* Yape / Plin\n🧾 *Captura del Comprobante:* ${urlCaptura}`;
+            detallePago = `📱 *Método de Pago:* Yape / Plin\n🧾 *Captura Comprobante:* ${urlCaptura}`;
           } else {
             throw new Error();
           }
         } catch (e) {
-          return alert("Hubo un error subiendo la imagen. Intenta de nuevo o verifica tu conexión.");
+          return alert("Hubo un error subiendo la imagen. Revisa tu conexión a internet.");
         }
 
       } else if (metodoSeleccionado === 'tarjeta') {
@@ -787,8 +857,15 @@
         detallePago = "💵 *Método de Pago:* Efectivo (Pago Presencial)";
       }
 
-      // Estructurar el mensaje de WhatsApp
-      let msg = "🍕 *¡NUEVO PEDIDO - GOLDEN PIZZERIA & CAFE!* 🍕\n\n";
+      // Estructurar mensaje con los datos del cliente + pedido
+      let msg = "🍕 *¡NUEVO PEDIDO CONFIRMADO - GOLDEN PIZZERIA!* 🍕\n\n";
+      msg += `👤 *Cliente:* ${nombre}\n`;
+      msg += `📞 *Teléfono:* ${telefono}\n`;
+      msg += `📍 *Dirección:* ${direccion}\n`;
+      msg += `🏠 *Referencia:* ${referencia}\n`;
+      if (ubicacionGPS) msg += `🗺️ *Ubicación GPS:* ${ubicacionGPS}\n`;
+      
+      msg += `\n🛒 *DETALLE DEL PEDIDO:*\n`;
       let tot = 0;
       carrito.forEach(i => {
         const sub = i.precio * i.cant;
@@ -798,7 +875,6 @@
 
       msg += `\n💰 *TOTAL A PAGAR:* S/ ${tot}.00\n`;
       msg += `${detallePago}\n`;
-      msg += `📍 *Ubicación del local:* AV ARGENTINA 1432`;
 
       window.open(`https://wa.me/51979707173?text=${encodeURIComponent(msg)}`, '_blank');
       cerrarModalPago();
