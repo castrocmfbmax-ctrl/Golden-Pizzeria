@@ -1,139 +1,68 @@
-/* =========================================================
-   GOLDEN PIZZERIA - SISTEMA COMPLETO, CARRITO Y SEGURIDAD
-========================================================= */
-
+/* --- ESTADO GLOBAL --- */
 let carrito = [];
-let metodoPagoSeleccionado = "yape";
-let pizzaActual = "";
-let comprobanteAdjunto = null;
+let metodoPagoSeleccionado = 'yape';
+let comprobanteAdjunto = false;
 
-/* --- SISTEMA DE SEGURIDAD ANTI-TROLLS --- */
-document.addEventListener('contextmenu', e => e.preventDefault());
-document.addEventListener('keydown', e => {
-    if (e.keyCode === 123 || 
-       (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
-       (e.ctrlKey && e.keyCode === 85)) {
-        e.preventDefault();
-    }
-});
+/* --- FILTRADO DE CATEGORÍAS --- */
+function filterCategory(category) {
+    const buttons = document.querySelectorAll('.filter-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
 
-/* --- LÓGICA DEL CARRITO Y MANEJO DE CANTIDADES --- */
-function agregarPedido(nombre, precio) {
-    let itemExistente = carrito.find(item => item.nombre === nombre);
-    if (itemExistente) {
-        itemExistente.cantidad++;
-    } else {
-        carrito.push({ nombre: nombre, precio: parseFloat(precio), cantidad: 1 });
-    }
-    actualizarCarritoUI();
-}
+    const activeBtn = Array.from(buttons).find(btn => btn.getAttribute('onclick').includes(category));
+    if (activeBtn) activeBtn.classList.add('active');
 
-function cambiarCantidad(index, delta) {
-    carrito[index].cantidad += delta;
-    if (carrito[index].cantidad <= 0) {
-        carrito.splice(index, 1);
-    }
-    actualizarCarritoUI();
-    const overlay = document.getElementById("payment-overlay");
-    if (overlay && overlay.style.display === "flex") {
-        renderResumenPago();
-    }
-}
-
-function actualizarCarritoUI() {
-    const cartBar = document.getElementById("cart-bar");
-    const cartCount = document.getElementById("cart-count");
-    const cartTotal = document.getElementById("cart-total");
-
-    let totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
-    let totalPrecio = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
-
-    if (totalItems > 0) {
-        if (cartBar) {
-            cartBar.classList.remove("hidden");
-            cartBar.style.display = "flex";
-        }
-        if (cartCount) cartCount.innerText = totalItems;
-        if (cartTotal) cartTotal.innerText = `S/ ${totalPrecio.toFixed(2)}`;
-    } else {
-        if (cartBar) {
-            cartBar.classList.add("hidden");
-            cartBar.style.display = "none";
-        }
-        cerrarPago();
-    }
-}
-
-function vaciarPedido() {
-    carrito = [];
-    comprobanteAdjunto = null;
-    const fileInput = document.getElementById("receipt-file");
-    if (fileInput) fileInput.value = "";
-    const receiptName = document.getElementById("receipt-name");
-    if (receiptName) receiptName.innerText = "";
-    actualizarCarritoUI();
-}
-
-/* --- FILTROS DE CATEGORÍA --- */
-function filterCategory(cat) {
-    const cards = document.querySelectorAll(".card");
-    const btns = document.querySelectorAll(".filter-btn");
-
-    btns.forEach(btn => btn.classList.remove("active"));
-    if (event && event.target) {
-        event.target.classList.add("active");
-    }
-
+    const cards = document.querySelectorAll('.card');
     cards.forEach(card => {
-        if (cat === 'todas' || card.classList.contains(cat)) {
-            card.style.display = "block";
+        if (category === 'todas') {
+            card.style.display = 'flex';
         } else {
-            card.style.display = "none";
+            if (card.classList.contains(category)) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
         }
     });
 }
 
-/* --- MODAL DE SELECCIÓN DE TAMAÑOS --- */
+/* --- MANEJO DEL MODAL DE PIZZAS --- */
 function abrirModalPizza(nombre, pPersonal, pMediana, pFamiliar) {
-    pizzaActual = nombre;
-    const modal = document.getElementById("pizza-modal");
-    const titulo = document.getElementById("pizza-modal-title");
-    const container = document.getElementById("pizza-modal-sizes");
+    const modal = document.getElementById('pizza-modal');
+    const title = document.getElementById('pizza-modal-title');
+    const container = document.getElementById('pizza-modal-sizes');
 
-    if (!modal || !container) return;
+    title.textContent = `🍕 ${nombre}`;
+    container.innerHTML = '';
 
-    if (titulo) titulo.innerText = `🍕 ${nombre}`;
+    if (pPersonal) {
+        container.innerHTML += `<button class="filter-btn" style="text-align:left; padding:12px;" onclick="seleccionarPizza('${nombre} (Personal)', ${pPersonal})">🍕 Personal - S/ ${pPersonal.toFixed(2)}</button>`;
+    }
+    if (pMediana) {
+        container.innerHTML += `<button class="filter-btn" style="text-align:left; padding:12px;" onclick="seleccionarPizza('${nombre} (Mediana)', ${pMediana})">🍕 Mediana - S/ ${pMediana.toFixed(2)}</button>`;
+    }
+    if (pFamiliar) {
+        container.innerHTML += `<button class="filter-btn" style="text-align:left; padding:12px;" onclick="seleccionarPizza('${nombre} (Familiar)', ${pFamiliar})">🍕 Familiar - S/ ${pFamiliar.toFixed(2)}</button>`;
+    }
 
-    let htmlButtons = "";
-    if (pPersonal) htmlButtons += `<button type="button" class="filter-btn" style="padding:12px;" onclick="seleccionarTamanoPizza('Personal', ${pPersonal})">Personal - S/ ${parseFloat(pPersonal).toFixed(2)}</button>`;
-    if (pMediana) htmlButtons += `<button type="button" class="filter-btn" style="padding:12px;" onclick="seleccionarTamanoPizza('Mediana', ${pMediana})">Mediana - S/ ${parseFloat(pMediana).toFixed(2)}</button>`;
-    if (pFamiliar) htmlButtons += `<button type="button" class="filter-btn" style="padding:12px;" onclick="seleccionarTamanoPizza('Familiar', ${pFamiliar})">Familiar - S/ ${parseFloat(pFamiliar).toFixed(2)}</button>`;
-
-    container.innerHTML = htmlButtons;
-    modal.classList.remove("hidden");
-    modal.style.display = "flex";
-}
-
-function seleccionarTamanoPizza(tamano, precio) {
-    agregarPedido(`Pizza ${pizzaActual} (${tamano})`, precio);
-    cerrarModalPizza();
+    modal.classList.remove('hidden');
 }
 
 function cerrarModalPizza() {
-    const modal = document.getElementById("pizza-modal");
-    if (modal) {
-        modal.classList.add("hidden");
-        modal.style.display = "none";
-    }
+    document.getElementById('pizza-modal').classList.add('hidden');
 }
 
-/* --- MODAL DE FRAPPÉS --- */
+function seleccionarPizza(nombreCompleto, precio) {
+    agregarPedido(nombreCompleto, precio);
+    cerrarModalPizza();
+}
+
+/* --- MANEJO DEL MODAL DE FRAPPÉS --- */
 function abrirModalFrappe() {
-    const modal = document.getElementById("frappe-modal");
-    if (modal) {
-        modal.classList.remove("hidden");
-        modal.style.display = "flex";
-    }
+    document.getElementById('frappe-modal').classList.remove('hidden');
+}
+
+function cerrarModalFrappe() {
+    document.getElementById('frappe-modal').classList.add('hidden');
 }
 
 function seleccionarFrappe(sabor, precio) {
@@ -141,100 +70,152 @@ function seleccionarFrappe(sabor, precio) {
     cerrarModalFrappe();
 }
 
-function cerrarModalFrappe() {
-    const modal = document.getElementById("frappe-modal");
-    if (modal) {
-        modal.classList.add("hidden");
-        modal.style.display = "none";
-    }
-}
-
-/* --- COMPROBANTE YAPE --- */
-function mostrarNombreArchivo(input) {
-    const container = document.getElementById("receipt-name");
-    if (input.files && input.files[0]) {
-        comprobanteAdjunto = input.files[0];
-        container.innerText = `✅ Adjunto: ${input.files[0].name}`;
-        container.style.color = "#25d366";
+/* --- CARRITO DE COMPRAS --- */
+function agregarPedido(nombre, precio) {
+    const existe = carrito.find(item => item.nombre === nombre);
+    if (existe) {
+        existe.cantidad += 1;
     } else {
-        comprobanteAdjunto = null;
-        container.innerText = "❌ Adjunto obligatorio";
-        container.style.color = "#ff4d4d";
+        carrito.push({ nombre, precio, cantidad: 1 });
+    }
+    actualizarBarraCarrito();
+}
+
+function cambiarCantidad(index, delta) {
+    carrito[index].cantidad += delta;
+    if (carrito[index].cantidad <= 0) {
+        carrito.splice(index, 1);
+    }
+    actualizarBarraCarrito();
+    renderizarResumenPago();
+}
+
+function actualizarBarraCarrito() {
+    const cartBar = document.getElementById('cart-bar');
+    const cartCount = document.getElementById('cart-count');
+    const cartTotal = document.getElementById('cart-total');
+
+    let totalItems = 0;
+    let totalPrecio = 0;
+
+    carrito.forEach(item => {
+        totalItems += item.cantidad;
+        totalPrecio += item.precio * item.cantidad;
+    });
+
+    if (totalItems > 0) {
+        cartBar.classList.remove('hidden');
+        cartCount.textContent = `${totalItems} ítem${totalItems > 1 ? 's' : ''}`;
+        cartTotal.textContent = `S/ ${totalPrecio.toFixed(2)}`;
+    } else {
+        cartBar.classList.add('hidden');
+        cerrarPago();
     }
 }
 
-/* --- MODAL DE PAGO Y RESUMEN DE COMPRA --- */
+function vaciarPedido() {
+    carrito = [];
+    actualizarBarraCarrito();
+}
+
+/* --- MODAL DE PAGO Y CONFIRMACIÓN --- */
 function abrirPago(e) {
     if (e) e.preventDefault();
-    const overlay = document.getElementById("payment-overlay");
-    if (!overlay) return;
+    if (carrito.length === 0) return;
 
-    renderResumenPago();
-    overlay.classList.remove("hidden");
-    overlay.style.display = "flex";
-    seleccionarPago('yape');
-}
-
-function renderResumenPago() {
-    const summaryList = document.getElementById("payment-summary-list");
-    const summaryTotal = document.getElementById("payment-total");
-
-    if (summaryList) {
-        let html = "";
-        let total = 0;
-        carrito.forEach((item, index) => {
-            let subtotal = item.precio * item.cantidad;
-            total += subtotal;
-            html += `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px solid #222; padding-bottom:5px; font-size:0.85rem;">
-                <span>• ${item.nombre}</span>
-                <div>
-                  <button class="qty-btn" onclick="cambiarCantidad(${index}, -1)">-</button>
-                  <span style="color:#D4AF37; font-weight:bold;">${item.cantidad}</span>
-                  <button class="qty-btn" onclick="cambiarCantidad(${index}, 1)">+</button>
-                  <span style="color:#25d366; margin-left:8px;">S/ ${subtotal.toFixed(2)}</span>
-                </div>
-            </div>`;
-        });
-        summaryList.innerHTML = html;
-        if (summaryTotal) summaryTotal.innerText = `TOTAL: S/ ${total.toFixed(2)}`;
-    }
+    renderizarResumenPago();
+    document.getElementById('payment-overlay').classList.remove('hidden');
 }
 
 function cerrarPago() {
-    const overlay = document.getElementById("payment-overlay");
-    if (overlay) {
-        overlay.classList.add("hidden");
-        overlay.style.display = "none";
+    document.getElementById('payment-overlay').classList.add('hidden');
+}
+
+function renderizarResumenPago() {
+    const summaryList = document.getElementById('payment-summary-list');
+    const totalContainer = document.getElementById('payment-total');
+    
+    summaryList.innerHTML = '';
+    let total = 0;
+
+    carrito.forEach((item, index) => {
+        let subtotal = item.precio * item.cantidad;
+        total += subtotal;
+
+        summaryList.innerHTML += `
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; background:#121814; padding:8px 10px; border-radius:6px; border:1px solid #222;">
+                <div style="flex:1;">
+                    <div style="color:white; font-size:0.85rem; font-weight:bold;">${item.nombre}</div>
+                    <div style="color:#aaa; font-size:0.75rem;">S/ ${item.precio.toFixed(2)} c/u</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <button onclick="cambiarCantidad(${index}, -1)" style="background:#222; color:white; border:1px solid #444; width:24px; height:24px; border-radius:4px; cursor:pointer;">-</button>
+                    <span style="color:white; font-weight:bold; font-size:0.85rem;">${item.cantidad}</span>
+                    <button onclick="cambiarCantidad(${index}, 1)" style="background:#222; color:white; border:1px solid #444; width:24px; height:24px; border-radius:4px; cursor:pointer;">+</button>
+                    <span style="color:#D4AF37; font-weight:bold; font-size:0.85rem; width:55px; text-align:right;">S/ ${subtotal.toFixed(2)}</span>
+                </div>
+            </div>
+        `;
+    });
+
+    totalContainer.textContent = `TOTAL A PAGAR: S/ ${total.toFixed(2)}`;
+}
+
+function seleccionarPago(metodo) {
+    metodoPagoSeleccionado = metodo;
+
+    document.getElementById('payment-yape').classList.remove('selected');
+    document.getElementById('payment-tarjeta').classList.remove('selected');
+    document.getElementById('payment-efectivo').classList.remove('selected');
+
+    document.getElementById(`payment-${metodo}`).classList.add('selected');
+
+    document.getElementById('section-yape').style.display = metodo === 'yape' ? 'block' : 'none';
+    document.getElementById('section-tarjeta').style.display = metodo === 'tarjeta' ? 'block' : 'none';
+    document.getElementById('section-efectivo').style.display = metodo === 'efectivo' ? 'block' : 'none';
+}
+
+function mostrarNombreArchivo(input) {
+    const nameContainer = document.getElementById('receipt-name');
+    if (input.files && input.files[0]) {
+        comprobanteAdjunto = true;
+        nameContainer.style.color = '#4CAF50';
+        nameContainer.textContent = `✔ Archivo cargado: ${input.files[0].name}`;
+    } else {
+        comprobanteAdjunto = false;
+        nameContainer.textContent = '';
     }
 }
 
-function seleccionarPago(tipo) {
-    metodoPagoSeleccionado = tipo;
-    const secYape = document.getElementById("section-yape");
-    const secTarjeta = document.getElementById("section-tarjeta");
-    const secEfectivo = document.getElementById("section-efectivo");
-
-    const btnYape = document.getElementById("payment-yape");
-    const btnTarjeta = document.getElementById("payment-tarjeta");
-    const btnEfectivo = document.getElementById("payment-efectivo");
-
-    [btnYape, btnTarjeta, btnEfectivo].forEach(b => { if (b) b.classList.remove("selected"); });
-
-    if (secYape) secYape.style.display = (tipo === 'yape') ? 'block' : 'none';
-    if (secTarjeta) secTarjeta.style.display = (tipo === 'tarjeta') ? 'block' : 'none';
-    if (secEfectivo) secEfectivo.style.display = (tipo === 'efectivo') ? 'block' : 'none';
-
-    if (tipo === 'yape' && btnYape) btnYape.classList.add("selected");
-    if (tipo === 'tarjeta' && btnTarjeta) btnTarjeta.classList.add("selected");
-    if (tipo === 'efectivo' && btnEfectivo) btnEfectivo.classList.add("selected");
-}
-
-/* --- ENVÍO DIRECTO A WHATSAPP --- */
+/* --- ENVÍO DIRECTO A WHATSAPP CON VALIDACIÓN RIGUROSA --- */
 function confirmarPedido() {
     if (carrito.length === 0) return;
 
+    // 1. OBTENER DATOS DE USUARIO
+    const nombre = document.getElementById("client-name") ? document.getElementById("client-name").value.trim() : "";
+    const telefono = document.getElementById("client-phone") ? document.getElementById("client-phone").value.trim() : "";
+    const direccion = document.getElementById("client-address") ? document.getElementById("client-address").value.trim() : "";
     const selectSede = document.getElementById("select-sede");
     const sedeSeleccionada = selectSede ? selectSede.value : "";
+
+    // 2. VALIDACIONES DE SEGURIDAD
+    if (!nombre) {
+        alert("👤 Por favor ingresa tu Nombre y Apellido.");
+        document.getElementById("client-name").focus();
+        return;
+    }
+
+    if (!telefono || telefono.length < 9) {
+        alert("📞 Por favor ingresa un número de teléfono válido de 9 dígitos.");
+        document.getElementById("client-phone").focus();
+        return;
+    }
+
+    if (!direccion) {
+        alert("🏠 Por favor ingresa tu Dirección de entrega.");
+        document.getElementById("client-address").focus();
+        return;
+    }
 
     if (!sedeSeleccionada) {
         alert("📍 Por favor selecciona tu sede de atención.");
@@ -242,10 +223,11 @@ function confirmarPedido() {
     }
 
     if (metodoPagoSeleccionado === 'yape' && !comprobanteAdjunto) {
-        alert("⚠️ Por favor adjunta el comprobante Yape / Plin.");
+        alert("⚠️ Por favor adjunta la captura de tu comprobante Yape / Plin.");
         return;
     }
 
+    // 3. CONSTRUCCIÓN DEL MENSAJE DE PEDIDO
     const numeroWhatsApp = "51979707173";
     let textoDetalle = "";
     let total = 0;
@@ -257,7 +239,10 @@ function confirmarPedido() {
     });
 
     let mensaje = `*¡NUEVO PEDIDO - GOLDEN PIZZERIA!* 🍕\n\n`;
-    mensaje += `📍 *SEDE:* ${sedeSeleccionada}\n\n`;
+    mensaje += `👤 *Cliente:* ${nombre}\n`;
+    mensaje += `📞 *Teléfono:* ${telefono}\n`;
+    mensaje += `🏠 *Dirección:* ${direccion}\n`;
+    mensaje += `📍 *Sede Atentida:* ${sedeSeleccionada}\n\n`;
     mensaje += `*Detalle del Pedido:*\n${textoDetalle}\n`;
     mensaje += `*TOTAL:* S/ ${total.toFixed(2)}\n`;
     mensaje += `*Método de Pago:* ${metodoPagoSeleccionado.toUpperCase()}\n`;
@@ -266,6 +251,7 @@ function confirmarPedido() {
         mensaje += `*Comprobante:* Adjuntado en el chat 📄\n`;
     }
 
+    // 4. ABRIR WHATSAPP Y LIMPIAR
     const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
     window.open(url, "_blank");
 
