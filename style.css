@@ -1,325 +1,277 @@
-/* =========================================================
-   GOLDEN PIZZERIA - ESTILOS GENERALES Y FUENTE UNIFICADA
-========================================================= */
+/* FUENTE MATCHA WORLD DE KHURASAN */
+@font-face {
+  font-family: 'Matcha World';
+  src: url('fonts/MatchaWorld.ttf') format('truetype'),
+       url('MatchaWorld.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Poppins:wght@400;600;700;800;900&display=swap');
-
-/* APLICAR FUENTE UNIFICADA A ABSOLUTAMENTE TODO */
-*, *::before, *::after, html, body, input, button, select, textarea {
-    font-family: 'Poppins', 'Montserrat', sans-serif !important;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none; /* Bloqueo de selección de texto por seguridad */
+  -webkit-user-select: none;
 }
 
 body {
-    background-color: #0c0f0d;
-    color: #ffffff;
-    line-height: 1.5;
+  background-color: #0d110e;
+  color: #ffffff;
+  font-family: 'Matcha World', 'Poppins', sans-serif;
+  padding-bottom: 90px;
 }
 
-/* =========================================================
-   HERO / ENCABEZADO
-========================================================= */
-.hero {
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000') center/cover no-repeat;
-    text-align: center;
-    padding: 60px 20px;
-    border-bottom: 2px solid #D4AF37;
+/* HEADER */
+.header {
+  text-align: center;
+  padding: 25px 15px;
+  background: linear-gradient(180deg, #161c18 0%, #0d110e 100%);
+  border-bottom: 1px solid #222;
 }
 
-.hero-badge {
-    background: #D4AF37;
-    color: #000;
-    font-weight: 800;
-    display: inline-block;
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    margin-bottom: 15px;
+.brand-title {
+  font-family: 'Matcha World', sans-serif;
+  font-size: 2.5rem;
+  color: #D4AF37;
+  letter-spacing: 2px;
 }
 
-.hero h1 {
-    font-size: 2.8rem;
-    font-weight: 900;
-    letter-spacing: 2px;
-    color: #fff;
+.brand-subtitle {
+  font-size: 0.85rem;
+  color: #aaa;
+  letter-spacing: 3px;
 }
 
-.hero h1 span {
-    color: #D4AF37;
-}
-
-.hero-subtitle {
-    color: #D4AF37;
-    font-weight: 700;
-    letter-spacing: 1px;
-    margin-top: 5px;
-}
-
-.btn-main {
-    display: inline-block;
-    margin-top: 20px;
-    background: #D4AF37;
-    color: #000;
-    padding: 12px 25px;
-    font-weight: 800;
-    text-decoration: none;
-    border-radius: 30px;
-    transition: 0.3s;
-}
-
-.btn-main:hover {
-    background: #fff;
-}
-
-/* =========================================================
-   PROMO BANNER & BÚSQUEDA
-========================================================= */
-.promo-banner {
-    background: #D4AF37;
-    color: #000;
-    text-align: center;
-    padding: 10px;
-    font-size: 0.9rem;
-}
-
-/* =========================================================
-   MENÚ Y FILTROS
-========================================================= */
-.menu-container {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
-}
-
-.section-title {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.section-title span {
-    color: #D4AF37;
-    font-size: 0.9rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-}
-
-.section-title h2 {
-    font-size: 2.2rem;
-    font-weight: 800;
-}
-
-.menu-filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 30px;
+/* CATEGORÍAS */
+.categories {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px;
+  flex-wrap: wrap;
 }
 
 .filter-btn {
-    background: #181d1a;
-    color: #ccc;
-    border: 1px solid #333;
-    padding: 10px 18px;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: 0.3s;
+  background: #161c18;
+  border: 1px solid #333;
+  color: #ccc;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: 'Matcha World', sans-serif;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
 }
 
 .filter-btn.active, .filter-btn:hover {
-    background: #D4AF37;
-    color: #000;
-    border-color: #D4AF37;
+  background: #D4AF37;
+  color: #000;
+  border-color: #D4AF37;
 }
 
-/* =========================================================
-   TARJETAS DEL MENÚ
-========================================================= */
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 20px;
+/* CARDS CON MINIATURAS PEQUEÑAS */
+.menu-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .card {
-    background: #131714;
-    border: 1px solid #262c28;
-    border-radius: 15px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: 0.3s;
+  background: #141a16;
+  border: 1px solid #222;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.card:hover {
-    border-color: #D4AF37;
-    transform: translateY(-3px);
+/* MINIATURAS PEQUEÑAS */
+.card-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid #333;
 }
 
-.category-tag {
-    color: #D4AF37;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 1px;
+.card-info {
+  flex: 1;
 }
 
-.card h3 {
-    font-size: 1.2rem;
-    font-weight: 800;
-    margin: 5px 0 10px 0;
-    color: #fff;
+.card-info h3 {
+  font-family: 'Matcha World', sans-serif;
+  font-size: 1.1rem;
+  color: #D4AF37;
+  margin-bottom: 4px;
 }
 
-.card p {
-    color: #aaa;
-    font-size: 0.85rem;
-    margin-bottom: 15px;
+.card-info p {
+  font-size: 0.8rem;
+  color: #aaa;
+  margin-bottom: 8px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .price {
-    color: #2ecc71;
-    font-weight: 700;
-    font-size: 0.9rem;
-    margin-bottom: 15px;
+  font-weight: bold;
+  color: #fff;
+  font-size: 0.9rem;
 }
 
 .btn-add {
-    background: #27ae60;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    border-radius: 8px;
-    font-weight: 700;
-    width: 100%;
-    cursor: pointer;
-    transition: 0.3s;
+  background: #D4AF37;
+  color: #000;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-family: 'Matcha World', sans-serif;
+  font-size: 0.8rem;
+  cursor: pointer;
 }
 
-.btn-add:hover {
-    background: #219150;
-}
-
-/* =========================================================
-   BARRA FLOTANTE DE CARRITO
-========================================================= */
+/* CARRITO FLOTANTE */
 .cart-bar {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #131714;
-    border: 2px solid #D4AF37;
-    padding: 15px 25px;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    z-index: 999;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #161c18;
+  border-top: 2px solid #D4AF37;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
 }
 
-.cart-bar.hidden {
-    display: none !important;
+.cart-bar.hidden { display: none; }
+
+.cart-count {
+  background: #D4AF37;
+  color: #000;
+  padding: 2px 8px;
+  border-radius: 50%;
+  font-weight: bold;
+  margin-right: 5px;
 }
 
-.btn-clean {
-    background: #c0392b;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 15px;
-    font-weight: 600;
-    cursor: pointer;
+.btn-checkout {
+  background: #D4AF37;
+  color: #000;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-family: 'Matcha World', sans-serif;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.btn-whatsapp {
-    background: #D4AF37;
-    color: black;
-    border: none;
-    padding: 8px 18px;
-    border-radius: 15px;
-    font-weight: 800;
-    cursor: pointer;
+/* MODALES Y SOBREPUESTOS */
+.payment-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  padding: 15px;
 }
 
-/* =========================================================
-   OVERLAYS Y MODALES
-========================================================= */
-.payment-overlay, .tracking-overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.85);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
+.payment-overlay.hidden { display: none !important; }
+
+.payment-box {
+  background: #141a16;
+  border: 1px solid #D4AF37;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 450px;
+  padding: 20px;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
-.payment-overlay.hidden, .tracking-overlay.hidden {
-    display: none !important;
-}
-
-.payment-box, .tracking-box {
-    background: #181d1a;
-    border: 1px solid #D4AF37;
-    border-radius: 15px;
-    padding: 25px;
-    width: 90%;
-    max-width: 450px;
+.payment-box h2 {
+  font-family: 'Matcha World', sans-serif;
+  color: #D4AF37;
+  text-align: center;
+  margin-bottom: 5px;
 }
 
 .payment-methods {
-    display: flex;
-    gap: 10px;
-    margin: 15px 0;
+  display: flex;
+  gap: 8px;
+  margin: 15px 0;
 }
 
 .payment-method {
-    flex: 1;
-    background: #0f1210;
-    border: 1px solid #333;
-    padding: 10px;
-    text-align: center;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.85rem;
+  flex: 1;
+  background: #1f2621;
+  border: 1px solid #333;
+  padding: 10px 5px;
+  text-align: center;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
 }
 
 .payment-method.selected {
-    border-color: #D4AF37;
-    background: #262c28;
+  border-color: #D4AF37;
+  background: #2a332c;
+  color: #D4AF37;
 }
 
-.payment-section {
-    display: none;
-    margin-bottom: 15px;
+.receipt-label-required {
+  display: block;
+  background: #1f2621;
+  border: 1px dashed #D4AF37;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  text-align: center;
+  color: #D4AF37;
+  font-size: 0.85rem;
 }
 
-.payment-section.active {
-    display: block;
-}
-
-.btn-close-payment {
-    background: #444;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 8px;
-    cursor: pointer;
+.payment-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
 }
 
 .btn-confirm-payment {
-    background: #27ae60;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 8px;
-    font-weight: 700;
-    cursor: pointer;
+  flex: 2;
+  background: #25d366;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-family: 'Matcha World', sans-serif;
+  cursor: pointer;
+}
+
+.btn-close-payment {
+  flex: 1;
+  background: #333;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
 }
