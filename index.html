@@ -3,882 +3,234 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Golden Pizzeria & Cafe</title>
-  
-  <style>
-    /* ESTILOS GENERALES Y OSCUROS */
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: #0d0f0e; color: #ffffff; min-height: 100vh; padding-bottom: 80px; }
-    
-    .promo-banner { background: #D4AF37; color: #000; text-align: center; padding: 10px; font-weight: bold; font-size: 0.95rem; }
-    .menu-container { max-width: 1200px; margin: 0 auto; padding: 30px 15px; }
-    
-    .section-title { text-align: center; margin-bottom: 25px; }
-    .section-title span { color: #D4AF37; letter-spacing: 2px; font-weight: bold; font-size: 0.85rem; text-transform: uppercase; }
-    .section-title h1 { font-size: 2.2rem; margin-top: 5px; font-weight: 900; letter-spacing: 1px; }
-
-    /* FILTROS Y BUSCADOR */
-    .search-box { text-align: center; margin-bottom: 25px; }
-    .search-box input { width: 90%; max-width: 400px; padding: 12px 20px; border-radius: 25px; border: 1px solid #D4AF37; background: #141816; color: white; outline: none; text-align: center; font-size: 0.95rem; }
-    
-    .menu-filters { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 30px; }
-    .filter-btn { background: #141816; color: #D4AF37; border: 1px solid #D4AF37; padding: 8px 16px; border-radius: 20px; cursor: pointer; transition: all 0.2s; font-weight: 600; font-size: 0.85rem; }
-    .filter-btn.active, .filter-btn:hover { background: #D4AF37; color: #000; }
-
-    /* TARJETAS DE PRODUCTOS */
-    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
-    .card { background: #141816; border: 1px solid #222; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; transition: border-color 0.3s; }
-    .card:hover { border-color: #D4AF37; }
-    .category-tag { color: #D4AF37; font-size: 0.75rem; font-weight: bold; letter-spacing: 1px; }
-    .card h3 { font-size: 1.2rem; margin: 8px 0; color: #fff; }
-    .card p { font-size: 0.85rem; color: #aaa; line-height: 1.4; flex-grow: 1; margin-bottom: 15px; }
-    .price { font-size: 1.1rem; font-weight: bold; color: #25D366; margin-bottom: 12px; }
-    
-    .btn-add { width: 100%; background: #D4AF37; color: #000; border: none; padding: 10px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: background 0.2s; font-size: 0.9rem; }
-    .btn-add:hover { background: #f1c40f; }
-
-    /* MODALES DE OPCIONES Y PAGO */
-    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
-    .modal-content { background: #141816; color: white; padding: 25px; border-radius: 12px; border: 1px solid #D4AF37; width: 90%; max-width: 440px; position: relative; max-height: 90vh; overflow-y: auto; }
-    .modal-close { position: absolute; top: 12px; right: 15px; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
-    .btn-size-option { width: 100%; background: #1e2421; color: white; border: 1px solid #333; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; text-align: left; margin-bottom: 10px; transition: all 0.2s; }
-    .btn-size-option:hover { background: #D4AF37; color: black; border-color: #D4AF37; }
-
-    /* FORMULARIO Y OPCIONES DE PAGO */
-    .input-field { width: 100%; padding: 10px 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #333; background: #0d0f0e; color: white; outline: none; font-size: 0.9rem; }
-    .input-field:focus { border-color: #D4AF37; }
-    .pago-option { background: #1e2421; border: 1px solid #333; padding: 12px; border-radius: 8px; margin-bottom: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px; }
-    .pago-option.disabled { opacity: 0.4; cursor: not-allowed; }
-    .pago-option input { accent-color: #D4AF37; }
-
-    /* CARRITO FLOTANTE Y DRAWER */
-    .carrito-float-btn { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; border: none; border-radius: 50px; padding: 12px 22px; font-weight: bold; font-size: 1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.6); cursor: pointer; z-index: 1000; display: flex; align-items: center; gap: 8px; }
-    .drawer-carrito { position: fixed; top: 0; right: -360px; width: 330px; height: 100vh; background: #141816; color: white; box-shadow: -5px 0 20px rgba(0,0,0,0.8); z-index: 1001; transition: right 0.3s ease; display: flex; flex-direction: column; padding: 20px; }
-    .drawer-carrito.open { right: 0; }
-  </style>
+  <title>Golden Pizzeria Artesanal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- BANNER PROMO -->
-  <div class="promo-banner">
-    🚀 ¡Envíos a domicilio en Arequipa! Haz tu pedido por WhatsApp directamente.
-  </div>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo-container">
+      <h1 class="brand-title">GOLDEN</h1>
+      <p class="brand-subtitle">PIZZERIA ARTESANAL</p>
+    </div>
+  </header>
 
+  <!-- NAVEGACIÓN Y FILTROS -->
+  <nav class="categories">
+    <button class="filter-btn active" onclick="filterCategory('todas')">Todas</button>
+    <button class="filter-btn" onclick="filterCategory('pizzas')">Pizzas</button>
+    <button class="filter-btn" onclick="filterCategory('entradas')">Entradas</button>
+    <button class="filter-btn" onclick="filterCategory('bebidas')">Bebidas y Frappés</button>
+  </nav>
+
+  <!-- CONTENEDOR DE PRODUCTOS -->
   <main class="menu-container">
-    <div class="section-title">
-      <span>Nuestra Carta</span>
-      <h1>ELIGE TUS FAVORITOS</h1>
+
+    <!-- SECCIÓN PIZZAS -->
+    <div class="card pizzas">
+      <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=500&q=80" alt="Pizza Golden Deluxe">
+      <div class="card-info">
+        <h3>Pizza Golden Deluxe</h3>
+        <p>Queso mozzarella, pepperoni, jamón, pimiento y aceitunas.</p>
+        <div class="card-footer">
+          <span class="price">Desde S/ 18.00</span>
+          <button class="btn-add" onclick="abrirModalPizza('Golden Deluxe', 18, 32, 45)">Elegir Tamaño</button>
+        </div>
+      </div>
     </div>
 
-    <!-- BUSCADOR Y FILTROS -->
-    <div class="search-box">
-      <input type="text" id="search-input" onkeyup="buscarProducto()" placeholder="🔍 Buscar por nombre...">
+    <div class="card pizzas">
+      <img src="https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=500&q=80" alt="Pizza Pepperoni">
+      <div class="card-info">
+        <h3>Pizza Pepperoni</h3>
+        <p>Salsa de tomate, abundante queso mozzarella y pepperoni crocante.</p>
+        <div class="card-footer">
+          <span class="price">Desde S/ 16.00</span>
+          <button class="btn-add" onclick="abrirModalPizza('Pepperoni', 16, 28, 40)">Elegir Tamaño</button>
+        </div>
+      </div>
     </div>
 
-    <div class="menu-filters">
-      <button type="button" class="filter-btn active" onclick="filterCategory('todas', event)">Todos</button>
-      <button type="button" class="filter-btn" onclick="filterCategory('clasicas', event)">Pizzas Clásicas</button>
-      <button type="button" class="filter-btn" onclick="filterCategory('unicas', event)">Sabores Únicos</button>
-      <button type="button" class="filter-btn" onclick="filterCategory('casa', event)">Pizzas de Casa</button>
-      <button type="button" class="filter-btn" onclick="filterCategory('especiales', event)">Especiales / Mixtas</button>
-      <button type="button" class="filter-btn" onclick="filterCategory('pan', event)">Pan al Ajo</button>
-      <button type="button" class="filter-btn" onclick="filterCategory('bebidas', event)">Bebidas</button>
-      <button type="button" class="filter-btn" onclick="filterCategory('frappes', event)">Frappés & Calientes</button>
+    <div class="card pizzas">
+      <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=500&q=80" alt="Pizza Hawaiana">
+      <div class="card-info">
+        <h3>Pizza Hawaiana</h3>
+        <p>Queso mozzarella, jamón y piña dulce en almíbar.</p>
+        <div class="card-footer">
+          <span class="price">Desde S/ 16.00</span>
+          <button class="btn-add" onclick="abrirModalPizza('Hawaiana', 16, 28, 40)">Elegir Tamaño</button>
+        </div>
+      </div>
     </div>
 
-    <!-- PRODUCTOS DE LA CARTA -->
-    <div class="product-grid">
-
-      <!-- PIZZAS CLÁSICAS -->
-      <div class="card clasicas">
-        <div>
-          <span class="category-tag">PIZZA ARTESANAL</span>
-          <h3>PIZZA AMERICANA</h3>
-          <p>Queso mozzarella, jamón inglés, salchicha ahumada y chorizo.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 16.00</div>
-          <button type="button" onclick="abrirModalPizza('Americana',16,23,32)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
+    <div class="card pizzas">
+      <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=500&q=80" alt="Pizza Americana">
+      <div class="card-info">
+        <h3>Pizza Americana</h3>
+        <p>Salsa artesanal, queso mozzarella y doble porción de jamón.</p>
+        <div class="card-footer">
+          <span class="price">Desde S/ 15.00</span>
+          <button class="btn-add" onclick="abrirModalPizza('Americana', 15, 26, 38)">Elegir Tamaño</button>
         </div>
       </div>
-
-      <div class="card clasicas">
-        <div>
-          <span class="category-tag">PIZZA ARTESANAL</span>
-          <h3>PIZZA HAWAIANA</h3>
-          <p>Queso mozzarella, jamón inglés y piña Golden.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 18.00</div>
-          <button type="button" onclick="abrirModalPizza('Hawaiana',18,25,36)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <div class="card clasicas">
-        <div>
-          <span class="category-tag">PIZZA ARTESANAL</span>
-          <h3>PIZZA PEPPERONI</h3>
-          <p>Queso mozzarella y abundante pepperoni criollo.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 18.00</div>
-          <button type="button" onclick="abrirModalPizza('Pepperoni',18,28,38)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <div class="card clasicas">
-        <div>
-          <span class="category-tag">PIZZA ARTESANAL</span>
-          <h3>PIZZA ITALIANA</h3>
-          <p>Queso mozzarella, jamón inglés, champiñones y rodajas de tomate.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 18.00</div>
-          <button type="button" onclick="abrirModalPizza('Italiana',18,25,35)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <div class="card clasicas">
-        <div>
-          <span class="category-tag">PIZZA ARTESANAL</span>
-          <h3>PIZZA MARGARITA</h3>
-          <p>Queso mozzarella, espinaca, albahaca y pimentón.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 17.00</div>
-          <button type="button" onclick="abrirModalPizza('Margarita',17,24,32)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <div class="card clasicas">
-        <div>
-          <span class="category-tag">PIZZA ARTESANAL</span>
-          <h3>PIZZA SICILIANA</h3>
-          <p>Queso mozzarella, champiñones, aceitunas y cebolla rosada soasada.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 18.00</div>
-          <button type="button" onclick="abrirModalPizza('Siciliana',18,25,34)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <div class="card clasicas">
-        <div>
-          <span class="category-tag">PIZZA ARTESANAL</span>
-          <h3>PIZZA VEGETARIANA</h3>
-          <p>Queso mozzarella, espinaca, champiñones, pimentón y aceituna verde.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 18.00</div>
-          <button type="button" onclick="abrirModalPizza('Vegetariana',18,25,34)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <div class="card clasicas">
-        <div>
-          <span class="category-tag">PIZZA ARTESANAL</span>
-          <h3>PIZZA MIXTA COMPARTIDA</h3>
-          <p>Queso mozzarella, mitad Americana y mitad Hawaiana.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 18.00</div>
-          <button type="button" onclick="abrirModalPizza('Mixta Compartida',18,26,35)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <div class="card clasicas">
-        <div>
-          <span class="category-tag">PIZZA ARTESANAL</span>
-          <h3>PIZZA KARIBEÑA</h3>
-          <p>Queso mozzarella, jamón inglés, durazno y piña.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 22.00</div>
-          <button type="button" onclick="abrirModalPizza('Karibeña',22,28,40)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <div class="card clasicas">
-        <div>
-          <span class="category-tag">PIZZA ARTESANAL</span>
-          <h3>PIZZA LA RUSTIKA</h3>
-          <p>Queso mozzarella, jamón inglés, tocino, chorizo ahumado y cavanosi.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 20.00</div>
-          <button type="button" onclick="abrirModalPizza('La Rustika',20,28,36)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <!-- SABORES ÚNICOS -->
-      <div class="card unicas">
-        <div>
-          <span class="category-tag">SABOR ÚNICO</span>
-          <h3>PIZZA NAPOLITANA</h3>
-          <p>Queso mozzarella y rodajas de tomate fresco.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 16.00</div>
-          <button type="button" onclick="abrirModalPizza('Napolitana',16,24,32)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <div class="card unicas">
-        <div>
-          <span class="category-tag">SABOR ÚNICO</span>
-          <h3>PIZZA CHAMPIÑONES</h3>
-          <p>Queso mozzarella y champiñones salteados.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 20.00</div>
-          <button type="button" onclick="abrirModalPizza('Champiñones',20,26,34)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <div class="card unicas">
-        <div>
-          <span class="category-tag">SABOR ÚNICO</span>
-          <h3>PIZZA INGREDIENTE A ELECCIÓN</h3>
-          <p>Queso mozzarella con elección de Salchicha, Aceituna, Salame, Chorizo o Jamón.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 16.00</div>
-          <button type="button" onclick="abrirModalPizza('A Elección',16,25,33)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <!-- PIZZAS DE CASA -->
-      <div class="card casa">
-        <div>
-          <span class="category-tag">DE CASA</span>
-          <h3>GOLDEN DE LA CASA</h3>
-          <p>Mozzarella, jamón, champiñones, tocino, salame, chorizo, cavanosi y aceituna.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 20.00</div>
-          <button type="button" onclick="abrirModalPizza('Golden de la Casa',20,30,40)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <div class="card casa">
-        <div>
-          <span class="category-tag">DE CASA</span>
-          <h3>LA SUPREMA DE CASA</h3>
-          <p>Mozzarella, jamón, pepperoni, tocino, salame, chorizo, cavanosi y pimentón.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 22.00</div>
-          <button type="button" onclick="abrirModalPizza('La Suprema de Casa',22,32,42)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <div class="card casa">
-        <div>
-          <span class="category-tag">DE CASA</span>
-          <h3>LA VOLCÁNICA</h3>
-          <p>Chorizo ahumado, pepperoni, piña, cavanosi, maíz y embutidos AQP.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 26.00</div>
-          <button type="button" onclick="abrirModalPizza('La Volcánica',26,35,45)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <div class="card casa">
-        <div>
-          <span class="category-tag">DE CASA</span>
-          <h3>PIZZA CARNÍVORA (BOLOÑESA)</h3>
-          <p>Queso mozzarella, carne picada, jamón inglés, salame y cavanosi.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 25.00</div>
-          <button type="button" onclick="abrirModalPizza('Carnívora Boloñesa',25,35,45)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <div class="card casa">
-        <div>
-          <span class="category-tag">DE CASA</span>
-          <h3>TRIKA TRES SABORES</h3>
-          <p>Carne+Cavanosi | Pollo+Jamón | Tocino+Chorizo ahumado.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 36.00</div>
-          <button type="button" onclick="abrirModalPizza('Trika Tres Sabores',null,36,46)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <div class="card casa">
-        <div>
-          <span class="category-tag">DE CASA</span>
-          <h3>PIZZA 3 CARNES</h3>
-          <p>Queso mozzarella y combinación especial de Carne + Pollo + Tocino.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 25.00</div>
-          <button type="button" onclick="abrirModalPizza('3 Carnes',25,35,45)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <div class="card casa">
-        <div>
-          <span class="category-tag">DE CASA</span>
-          <h3>TRADICIÓN AREQUIPEÑA</h3>
-          <p>Queso mozzarella, chorizo arequipeño, salchicha arequipeña y jamón.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 24.00</div>
-          <button type="button" onclick="abrirModalPizza('Tradición Arequipeña',24,32,42)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <div class="card casa">
-        <div>
-          <span class="category-tag">DE CASA</span>
-          <h3>PICANTE CAÚSTICO</h3>
-          <p>Mozzarella, carne, rocoto, salchicha y chorizo ahumado.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 25.00</div>
-          <button type="button" onclick="abrirModalPizza('Picante Caústico',25,36,46)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <!-- ESPECIALES / MIXTAS -->
-      <div class="card especiales">
-        <div>
-          <span class="category-tag">ESPECIAL</span>
-          <h3>POLLO ESPECIAL</h3>
-          <p>Queso mozzarella, jamón inglés, pollo y tocino ahumado.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 25.00</div>
-          <button type="button" onclick="abrirModalPizza('Pollo Especial',25,35,45)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <div class="card especiales">
-        <div>
-          <span class="category-tag">ESPECIAL</span>
-          <h3>ORIENTAL</h3>
-          <p>Queso mozzarella, pollo, jamón inglés y piña.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 25.00</div>
-          <button type="button" onclick="abrirModalPizza('Oriental',25,34,44)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <div class="card especiales">
-        <div>
-          <span class="category-tag">ESPECIAL</span>
-          <h3>TROPICAL DULCE</h3>
-          <p>Mozzarella, leche condensada, fudge, plátano, manzana, durazno, piña y fresa.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 24.00</div>
-          <button type="button" onclick="abrirModalPizza('Tropical Dulce',24,32,42)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <div class="card especiales">
-        <div>
-          <span class="category-tag">ESPECIAL</span>
-          <h3>CUATRO ESTACIONES</h3>
-          <p>Primavera (Tomate), Verano (Piña), Invierno (Pepperoni), Otoño (Jamón).</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 36.00</div>
-          <button type="button" onclick="abrirModalPizza('Cuatro Estaciones',null,36,46)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <div class="card especiales">
-        <div>
-          <span class="category-tag">ESPECIAL</span>
-          <h3>LA ESPAÑOLA</h3>
-          <p>Base crema de ajo, mozzarella, chorizo pizzero, aceitunas y champiñones.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 22.00</div>
-          <button type="button" onclick="abrirModalPizza('La Española',22,31,41)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <div class="card especiales">
-        <div>
-          <span class="category-tag">ESPECIAL</span>
-          <h3>MEXICANA</h3>
-          <p>Queso mozzarella, jalapeños, cebolla rosada y carne.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 25.00</div>
-          <button type="button" onclick="abrirModalPizza('Mexicana',25,33,43)" class="btn-add">ELEGIR TAMAÑO 🍕</button>
-        </div>
-      </div>
-
-      <!-- PAN AL AJO -->
-      <div class="card pan">
-        <div>
-          <span class="category-tag">ENTRADA</span>
-          <h3>PAN AL AJO SIMPLE</h3>
-          <p>Crujientes panes tostados al ajo y especias.</p>
-        </div>
-        <div>
-          <div class="price">S/ 6.00</div>
-          <button type="button" onclick="agregarPedido('Pan al Ajo Simple', 6)" class="btn-add">AGREGAR 🥖</button>
-        </div>
-      </div>
-
-      <div class="card pan">
-        <div>
-          <span class="category-tag">ENTRADA</span>
-          <h3>PAN AL AJO ESPECIAL</h3>
-          <p>Panes al ajo gratinados con queso mozzarella derretido.</p>
-        </div>
-        <div>
-          <div class="price">S/ 8.00</div>
-          <button type="button" onclick="agregarPedido('Pan al Ajo Especial', 8)" class="btn-add">AGREGAR 🥖</button>
-        </div>
-      </div>
-
-      <!-- BEBIDAS -->
-      <div class="card bebidas">
-        <div>
-          <span class="category-tag">REFRESCO</span>
-          <h3>LIMONADA / CHICHA MORADA</h3>
-          <p>Al tiempo o Frozen en presentaciones de 1/2L o 1L.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 6.00</div>
-          <button type="button" onclick="agregarPedido('Limonada/Chicha 1/2L Tiempo', 6)" class="btn-add" style="margin-bottom:5px;">1/2L Tiempo S/6 🥤</button>
-          <button type="button" onclick="agregarPedido('Limonada/Chicha 1L Tiempo', 10)" class="btn-add" style="margin-bottom:5px;">1L Tiempo S/10 🥤</button>
-          <button type="button" onclick="agregarPedido('Limonada/Chicha 1/2L Frozen', 8)" class="btn-add" style="margin-bottom:5px;">1/2L Frozen S/8 🧊</button>
-          <button type="button" onclick="agregarPedido('Limonada/Chicha 1L Frozen', 12)" class="btn-add">1L Frozen S/12 🧊</button>
-        </div>
-      </div>
-
-      <div class="card bebidas">
-        <div>
-          <span class="category-tag">GASEOSA</span>
-          <h3>GASEOSAS HELADAS</h3>
-          <p>Coca Cola, Inka Kola, Pepsi o Kola Escocesa.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 5.00</div>
-          <button type="button" onclick="agregarPedido('Gaseosa 500ml', 5)" class="btn-add" style="margin-bottom:5px;">500ml S/5 🍾</button>
-          <button type="button" onclick="agregarPedido('Gaseosa 1 Litro', 8)" class="btn-add" style="margin-bottom:5px;">1 Litro S/8 🍾</button>
-          <button type="button" onclick="agregarPedido('Gaseosa 2 Litros', 13)" class="btn-add">2 Litros S/13 🍾</button>
-        </div>
-      </div>
-
-      <!-- FRAPPÉS Y CALIENTES -->
-      <div class="card frappes">
-        <div>
-          <span class="category-tag">FRAPPÉ</span>
-          <h3>FRAPPÉ DE FRUTA</h3>
-          <p>Maracuyá, Fresa, Mango o Lúcuma.</p>
-        </div>
-        <div>
-          <div class="price">S/ 10.00</div>
-          <button type="button" onclick="abrirModalFrappe('fruta')" class="btn-add">ELEGIR SABOR 🍧</button>
-        </div>
-      </div>
-
-      <div class="card frappes">
-        <div>
-          <span class="category-tag">FRAPPÉ</span>
-          <h3>FRAPPÉ ESPECIAL</h3>
-          <p>Cappuccino o Galleta Oreo.</p>
-        </div>
-        <div>
-          <div class="price">S/ 9.00</div>
-          <button type="button" onclick="abrirModalFrappe('especial')" class="btn-add">ELEGIR SABOR ☕</button>
-        </div>
-      </div>
-
-      <div class="card frappes">
-        <div>
-          <span class="category-tag">CALIENTES</span>
-          <h3>BEBIDAS CALIENTES</h3>
-          <p>Infusiones, Café Artesanal o Capuccino.</p>
-        </div>
-        <div>
-          <div class="price">Desde S/ 2.00</div>
-          <button type="button" onclick="agregarPedido('Infusión', 2)" class="btn-add" style="margin-bottom:5px;">Infusión S/2 ☕</button>
-          <button type="button" onclick="agregarPedido('Café Artesanal', 4)" class="btn-add" style="margin-bottom:5px;">Café S/4 ☕</button>
-          <button type="button" onclick="agregarPedido('Capuccino', 6)" class="btn-add">Capuccino S/6 ☕</button>
-        </div>
-      </div>
-
     </div>
+
+    <!-- SECCIÓN ENTRADAS -->
+    <div class="card entradas">
+      <img src="https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?auto=format&fit=crop&w=500&q=80" alt="Pan al Ajo Clásico">
+      <div class="card-info">
+        <h3>Pan al Ajo Clásico</h3>
+        <p>Pan horneado al momento con mantequilla de ajo y finas hierbas.</p>
+        <div class="card-footer">
+          <span class="price">S/ 8.00</span>
+          <button class="btn-add" onclick="agregarPedido('Pan al Ajo Clásico', 8)">Agregar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card entradas">
+      <img src="https://images.unsplash.com/photo-1619895092538-128341789043?auto=format&fit=crop&w=500&q=80" alt="Pan al Ajo con Queso">
+      <div class="card-info">
+        <h3>Pan al Ajo Especial con Queso</h3>
+        <p>Pan al ajo artesanal cubierto con abundante queso mozzarella gratina.</p>
+        <div class="card-footer">
+          <span class="price">S/ 12.00</span>
+          <button class="btn-add" onclick="agregarPedido('Pan al Ajo con Queso', 12)">Agregar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN BEBIDAS Y FRAPPÉS -->
+    <div class="card bebidas">
+      <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=500&q=80" alt="Frappé de Fruta">
+      <div class="card-info">
+        <h3>Frappé de Fruta</h3>
+        <p>Elige tu sabor favorito: Maracuyá, Fresa, Mango o Lúcuma.</p>
+        <div class="card-footer">
+          <span class="price">S/ 10.00</span>
+          <button class="btn-add" onclick="abrirModalFrappe('fruta')">Elegir Sabor</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card bebidas">
+      <img src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=500&q=80" alt="Frappé Especial">
+      <div class="card-info">
+        <h3>Frappé Especial</h3>
+        <p>Cremoso y helado. Elige entre Cappuccino u Oreo.</p>
+        <div class="card-footer">
+          <span class="price">S/ 9.00</span>
+          <button class="btn-add" onclick="abrirModalFrappe('especial')">Elegir Sabor</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card bebidas">
+      <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=500&q=80" alt="Inca Kola 1.5L">
+      <div class="card-info">
+        <h3>Inca Kola 1.5 Litros</h3>
+        <p>Gaseosa helada familiar.</p>
+        <div class="card-footer">
+          <span class="price">S/ 9.00</span>
+          <button class="btn-add" onclick="agregarPedido('Inca Kola 1.5L', 9)">Agregar</button>
+        </div>
+      </div>
+    </div>
+
   </main>
 
-  <!-- MODAL SELECCIÓN DE TAMAÑO O SABOR -->
-  <div id="modal-custom" class="modal-overlay">
-    <div class="modal-content">
-      <button onclick="cerrarModal()" class="modal-close">&times;</button>
-      <h2 id="modal-title" style="color:#D4AF37; margin-bottom:15px; font-size:1.3rem;"></h2>
-      <div id="modal-body"></div>
+  <!-- BARRA FLOTANTE DE CARRITO -->
+  <div id="cart-bar" class="cart-bar hidden">
+    <div class="cart-info">
+      <span class="cart-count" id="cart-count">0</span>
+      <span>Productos seleccionados</span>
+    </div>
+    <div class="cart-actions">
+      <span class="cart-total" id="cart-total">S/ 0.00</span>
+      <button class="btn-checkout" onclick="abrirPago(event)">Ver Pedido y Pagar</button>
     </div>
   </div>
 
-  <!-- MODAL DE DATOS Y PAGO CON ANTIFRAUDE -->
-  <div id="modal-pago" class="modal-overlay">
-    <div class="modal-content">
-      <button onclick="cerrarModalPago()" class="modal-close">&times;</button>
-      <h2 style="color:#D4AF37; margin-bottom:15px; font-size:1.3rem;">📋 DATOS DE ENTREGA & PAGO</h2>
-      
-      <!-- SECCIÓN DATOS DEL CLIENTE -->
-      <div style="margin-bottom: 15px;">
-        <input type="text" id="cliente-nombre" class="input-field" placeholder="👤 Nombre y Apellido (Obligatorio)">
-        <input type="tel" id="cliente-telefono" class="input-field" placeholder="📞 Teléfono / Celular (Obligatorio)">
-        <input type="text" id="cliente-direccion" class="input-field" placeholder="📍 Dirección de entrega (Obligatorio)">
-        <input type="text" id="cliente-referencia" class="input-field" placeholder="🏠 Referencia / Color de casa (Obligatorio)">
-        
-        <button type="button" onclick="obtenerUbicacionGPS()" style="width:100%; background:#1e2421; color:#D4AF37; border:1px solid #D4AF37; padding:8px; border-radius:6px; cursor:pointer; font-size:0.8rem; font-weight:bold; margin-bottom:10px;">
-          📍 Compartir mi Ubicación GPS Actual
-        </button>
-        <span id="gps-status" style="display:block; font-size:0.75rem; color:#25D366; text-align:center;"></span>
-      </div>
-
-      <p style="color:#ccc; font-size:0.85rem; margin-bottom:10px; font-weight:bold;">Selecciona tu Método de Pago:</p>
-
-      <!-- ADVERTENCIA PEDIDOS GRANDES -->
-      <div id="alerta-limite" style="display:none; background:rgba(212,175,55,0.15); border:1px solid #D4AF37; padding:8px; border-radius:6px; font-size:0.75rem; color:#D4AF37; margin-bottom:10px;">
-        ⚠️ Por seguridad en pedidos mayores a S/ 50.00, solo aceptamos pagos adelantados por Yape o Tarjeta.
-      </div>
-
-      <label class="pago-option">
-        <input type="radio" name="metodoPago" value="yape" onchange="seleccionarMetodo('yape')">
-        <div>
-          <strong>📱 Yape / Plin</strong>
-          <div style="font-size:0.8rem; color:#aaa;">Pago virtual (requiere captura)</div>
-        </div>
-      </label>
-
-      <label class="pago-option">
-        <input type="radio" name="metodoPago" value="tarjeta" onchange="seleccionarMetodo('tarjeta')">
-        <div>
-          <strong>💳 Tarjeta Débito / Crédito</strong>
-          <div style="font-size:0.8rem; color:#aaa;">Pago presencial al entregar</div>
-        </div>
-      </label>
-
-      <label class="pago-option" id="option-efectivo">
-        <input type="radio" name="metodoPago" id="radio-efectivo" value="efectivo" onchange="seleccionarMetodo('efectivo')">
-        <div>
-          <strong>💵 Efectivo</strong>
-          <div style="font-size:0.8rem; color:#aaa;">Pago presencial al entregar</div>
-        </div>
-      </label>
-
-      <!-- SECCIÓN YAPE (Subida obligatoria) -->
-      <div id="sec-yape" style="display:none; background:#1e2421; border:1px dashed #D4AF37; padding:15px; border-radius:8px; margin-top:10px;">
-        <p style="font-size:0.85rem; color:#25D366; margin-bottom:5px;"><strong>Número Yape / Plin: 979707173</strong></p>
-        <p style="font-size:0.8rem; color:#ccc; margin-bottom:10px;">Adjunta obligatoriamente la captura del comprobante:</p>
-        <input type="file" id="yape-file" accept="image/*" style="font-size:0.85rem; color:#ccc;">
-      </div>
-
-      <button onclick="procesarEnvioFinal()" class="btn-add" style="margin-top:15px; padding:12px; font-size:1rem;">
-        🚀 ENVIAR PEDIDO POR WHATSAPP
-      </button>
+  <!-- MODAL SELECCIÓN TAMAÑO Y SABOR -->
+  <div id="pizza-modal" class="payment-overlay hidden">
+    <div class="payment-box" style="text-align: center;">
+      <h2 id="pizza-modal-title">Seleccionar Opción</h2>
+      <p style="color: #aaa; margin-bottom: 20px; font-size: 0.9rem;">Elige la presentación que prefieras:</p>
+      <div id="pizza-modal-sizes" style="display: flex; flex-direction: column; gap: 10px;"></div>
+      <button type="button" class="btn-close-payment" onclick="cerrarModalPizza()" style="margin-top: 20px; width: 100%;">Cancelar</button>
     </div>
   </div>
 
-  <!-- CARRITO Y BOTÓN FLOTANTE -->
-  <button class="carrito-float-btn" onclick="toggleCarrito()">
-    🛒 Ver Pedido (<span id="carrito-count">0</span>)
-  </button>
+  <!-- MODAL DE PAGO Y SEDES -->
+  <div id="payment-overlay" class="payment-overlay hidden">
+    <div class="payment-box">
+      <h2>Confirmar Pedido</h2>
+      <p class="payment-subtitle">Selecciona tu sede y método de pago</p>
 
-  <div id="drawer-carrito" class="drawer-carrito">
-    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #333; padding-bottom:10px;">
-      <h3 style="color:#D4AF37; margin:0;">🛒 TU PEDIDO</h3>
-      <button onclick="toggleCarrito()" style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">&times;</button>
-    </div>
-
-    <div id="carrito-items" style="flex:1; overflow-y:auto; margin-top:10px;">
-      <p style="color:#aaa; text-align:center; margin-top:20px;">Tu carrito está vacío.</p>
-    </div>
-
-    <div style="border-top:1px solid #333; padding-top:15px; margin-top:10px;">
-      <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:1.2rem; margin-bottom:15px;">
-        <span>Total:</span>
-        <span id="carrito-total" style="color:#D4AF37;">S/ 0.00</span>
+      <!-- SELECCIÓN DE SEDE -->
+      <div style="margin-bottom: 20px; text-align: left;">
+        <label for="select-sede" style="display: block; color: #D4AF37; font-weight: bold; margin-bottom: 8px; font-size: 0.95rem;">
+          📍 Selecciona la Sede de Atención:
+        </label>
+        <select id="select-sede" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #D4AF37; background: #191e1b; color: #fff; font-size: 0.9rem; outline: none; cursor: pointer; font-family: 'Poppins', sans-serif;">
+          <option value="Av. Argentina 1432 - MARIANO MELGAR">Av. Argentina 1432 - MARIANO MELGAR</option>
+          <option value="Calle Cesar Vallejo 100 - BADEN - Paucarpata">Calle Cesar Vallejo 100 - BADEN - Paucarpata</option>
+          <option value="Av. Miguel Grau 736 - Paucarpata">Av. Miguel Grau 736 - Paucarpata</option>
+        </select>
       </div>
-      <button onclick="iniciarProcesoPago()" style="width:100%; background:#25D366; color:white; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:1rem; display:flex; justify-content:center; align-items:center; gap:8px;">
-        💳 Continuar con el Pago
-      </button>
+
+      <div class="payment-summary">
+        <div id="payment-summary-list"></div>
+        <div class="payment-total" id="payment-total">S/ 0.00</div>
+      </div>
+
+      <!-- MÉTODO DE PAGO -->
+      <label style="display: block; color: #D4AF37; font-weight: bold; margin-bottom: 8px; font-size: 0.95rem; text-align: left;">
+        💳 Medio de Pago:
+      </label>
+      <div class="payment-methods">
+        <div id="payment-yape" class="payment-method selected" onclick="seleccionarPago('yape')">
+          <span>📱</span> Yape / Plin
+        </div>
+        <div id="payment-tarjeta" class="payment-method" onclick="seleccionarPago('tarjeta')">
+          <span>💳</span> Tarjeta (POS)
+        </div>
+        <div id="payment-efectivo" class="payment-method" onclick="seleccionarPago('efectivo')">
+          <span>💵</span> Efectivo
+        </div>
+      </div>
+
+      <div id="section-yape" class="payment-section">
+        <div class="yape-card">
+          <h3>Escanea y Paga por Yape / Plin</h3>
+          <p class="yape-number">979 707 173</p>
+          <p style="font-size:12px; color:#aaa;">Golden Pizzeria Artesanal</p>
+          <div class="qr-placeholder" style="border: 1px dashed #D4AF37; padding: 15px; margin: 10px 0; border-radius: 8px; color: #D4AF37;">CÓDIGO QR YAPE / PLIN</div>
+          <label class="receipt-label" style="display: block; background: #222; border: 1px solid #444; padding: 10px; border-radius: 6px; cursor: pointer; margin-top: 10px;">
+            📎 Adjuntar Comprobante (Opcional)
+            <input type="file" id="receipt-file" accept="image/*" style="display: none;" onchange="mostrarNombreArchivo(this)">
+          </label>
+          <div id="receipt-name" class="receipt-name" style="font-size: 0.8rem; color: #D4AF37; margin-top: 5px;"></div>
+        </div>
+      </div>
+
+      <div id="section-tarjeta" class="payment-section" style="display:none;">
+        <p style="text-align:center; color: #ccc; font-size: 0.9rem; margin: 15px 0;">El repartidor llevará el POS para cobro con tarjeta al entregar tu pedido.</p>
+      </div>
+
+      <div id="section-efectivo" class="payment-section" style="display:none;">
+        <p style="text-align:center; color: #ccc; font-size: 0.9rem; margin: 15px 0;">Pagas directamente en efectivo al momento de recibir tu orden.</p>
+      </div>
+
+      <div class="payment-buttons">
+        <button type="button" class="btn-close-payment" onclick="cerrarPago()">Atrás</button>
+        <button type="button" class="btn-confirm-payment" onclick="confirmarPedido()">Confirmar y Enviar a WhatsApp</button>
+      </div>
     </div>
   </div>
 
-  <!-- SCRIPT DE LÓGICA INCORPORADO -->
-  <script>
-    let carrito = [];
-    let pizzaSeleccionada = {};
-    let metodoSeleccionado = "";
-    let ubicacionGPS = "";
-
-    function filterCategory(cat, event) {
-      const btns = document.querySelectorAll('.filter-btn');
-      btns.forEach(b => b.classList.remove('active'));
-      if (event && event.target) event.target.classList.add('active');
-
-      const cards = document.querySelectorAll('.card');
-      cards.forEach(card => {
-        if (cat === 'todas' || card.classList.contains(cat)) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    }
-
-    function buscarProducto() {
-      const input = document.getElementById('search-input').value.toLowerCase();
-      const cards = document.querySelectorAll('.card');
-      cards.forEach(card => {
-        const text = card.innerText.toLowerCase();
-        card.style.display = text.includes(input) ? 'flex' : 'none';
-      });
-    }
-
-    function abrirModalPizza(nombre, pPersonal, pMediana, pFamiliar) {
-      pizzaSeleccionada = { nombre };
-      let html = '<p style="margin-bottom:15px; color:#ccc;">Elige el tamaño:</p>';
-      
-      if (pPersonal) html += `<button type="button" class="btn-size-option" onclick="confirmarPizza('Personal', ${pPersonal})">🍕 Personal - S/ ${pPersonal}.00</button>`;
-      if (pMediana) html += `<button type="button" class="btn-size-option" onclick="confirmarPizza('Mediana', ${pMediana})">🍕 Mediana - S/ ${pMediana}.00</button>`;
-      if (pFamiliar) html += `<button type="button" class="btn-size-option" onclick="confirmarPizza('Familiar', ${pFamiliar})">🍕 Familiar - S/ ${pFamiliar}.00</button>`;
-
-      document.getElementById('modal-title').innerText = `Pizza ${nombre}`;
-      document.getElementById('modal-body').innerHTML = html;
-      document.getElementById('modal-custom').style.display = 'flex';
-    }
-
-    function confirmarPizza(tamano, precio) {
-      agregarPedido(`Pizza ${pizzaSeleccionada.nombre} (${tamano})`, precio);
-      cerrarModal();
-    }
-
-    function abrirModalFrappe(tipo) {
-      let html = '<p style="margin-bottom:15px; color:#ccc;">Elige tu sabor:</p>';
-      if (tipo === 'fruta') {
-        document.getElementById('modal-title').innerText = 'Frappé de Fruta';
-        ['Maracuyá', 'Fresa', 'Mango', 'Lúcuma'].forEach(f => {
-          html += `<button type="button" class="btn-size-option" onclick="confirmarGenerico('Frappé de ${f}', 10)">🍧 ${f} - S/ 10.00</button>`;
-        });
-      } else {
-        document.getElementById('modal-title').innerText = 'Frappé Especial';
-        ['Cappuccino', 'Galleta Oreo'].forEach(e => {
-          html += `<button type="button" class="btn-size-option" onclick="confirmarGenerico('Frappé de ${e}', 9)">☕ ${e} - S/ 9.00</button>`;
-        });
-      }
-      document.getElementById('modal-body').innerHTML = html;
-      document.getElementById('modal-custom').style.display = 'flex';
-    }
-
-    function confirmarGenerico(nombre, precio) {
-      agregarPedido(nombre, precio);
-      cerrarModal();
-    }
-
-    function cerrarModal() {
-      document.getElementById('modal-custom').style.display = 'none';
-    }
-
-    function agregarPedido(nombre, precio) {
-      const idx = carrito.findIndex(p => p.nombre === nombre);
-      if (idx > -1) {
-        carrito[idx].cant += 1;
-      } else {
-        carrito.push({ nombre, precio, cant: 1 });
-      }
-      actualizarCarrito();
-      document.getElementById('drawer-carrito').classList.add('open');
-    }
-
-    function cambiarCantidad(idx, delta) {
-      carrito[idx].cant += delta;
-      if (carrito[idx].cant <= 0) carrito.splice(idx, 1);
-      actualizarCarrito();
-    }
-
-    function obtenerTotal() {
-      return carrito.reduce((acc, item) => acc + (item.precio * item.cant), 0);
-    }
-
-    function actualizarCarrito() {
-      const container = document.getElementById('carrito-items');
-      const count = document.getElementById('carrito-count');
-      const totalEl = document.getElementById('carrito-total');
-
-      if (carrito.length === 0) {
-        container.innerHTML = '<p style="color:#aaa; text-align:center; margin-top:20px;">Tu carrito está vacío.</p>';
-        count.innerText = '0';
-        totalEl.innerText = 'S/ 0.00';
-        return;
-      }
-
-      let total = 0;
-      let totalCount = 0;
-      let html = '';
-
-      carrito.forEach((item, i) => {
-        const sub = item.precio * item.cant;
-        total += sub;
-        totalCount += item.cant;
-        html += `
-          <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #222;">
-            <div>
-              <div style="font-weight:bold; color:#D4AF37; font-size:0.9rem;">${item.nombre}</div>
-              <div style="font-size:0.8rem; color:#aaa;">S/ ${item.precio}.00 c/u</div>
-            </div>
-            <div style="display:flex; align-items:center; gap:6px;">
-              <button onclick="cambiarCantidad(${i}, -1)" style="background:#222; color:white; border:1px solid #444; border-radius:3px; width:22px; height:22px; cursor:pointer;">-</button>
-              <span style="font-size:0.9rem;">${item.cant}</span>
-              <button onclick="cambiarCantidad(${i}, 1)" style="background:#222; color:white; border:1px solid #444; border-radius:3px; width:22px; height:22px; cursor:pointer;">+</button>
-              <span style="font-weight:bold; margin-left:8px; font-size:0.9rem; color:#25D366;">S/ ${sub}.00</span>
-            </div>
-          </div>
-        `;
-      });
-
-      container.innerHTML = html;
-      count.innerText = totalCount;
-      totalEl.innerText = `S/ ${total}.00`;
-    }
-
-    function toggleCarrito() {
-      document.getElementById('drawer-carrito').classList.toggle('open');
-    }
-
-    // --- LÓGICA DE PAGO Y ANTIFRAUDE ---
-    function iniciarProcesoPago() {
-      if (carrito.length === 0) return alert('Agrega productos a tu pedido primero.');
-      
-      const total = obtenerTotal();
-      const optionEfectivo = document.getElementById('option-efectivo');
-      const radioEfectivo = document.getElementById('radio-efectivo');
-      const alertaLimite = document.getElementById('alerta-limite');
-
-      // Regla Antitroll: Si el pedido supera S/ 50, se deshabilita el pago en efectivo
-      if (total >= 50) {
-        optionEfectivo.classList.add('disabled');
-        radioEfectivo.disabled = true;
-        alertaLimite.style.display = 'block';
-        if (metodoSeleccionado === 'efectivo') metodoSeleccionado = '';
-      } else {
-        optionEfectivo.classList.remove('disabled');
-        radioEfectivo.disabled = false;
-        alertaLimite.style.display = 'none';
-      }
-
-      document.getElementById('drawer-carrito').classList.remove('open');
-      document.getElementById('modal-pago').style.display = 'flex';
-    }
-
-    function cerrarModalPago() {
-      document.getElementById('modal-pago').style.display = 'none';
-    }
-
-    function seleccionarMetodo(tipo) {
-      metodoSeleccionado = tipo;
-      document.getElementById('sec-yape').style.display = (tipo === 'yape') ? 'block' : 'none';
-    }
-
-    function obtenerUbicacionGPS() {
-      const status = document.getElementById('gps-status');
-      if (navigator.geolocation) {
-        status.innerText = "⏳ Obteniendo ubicación...";
-        navigator.geolocation.getCurrentPosition(
-          (pos) => {
-            ubicacionGPS = `https://maps.google.com/?q=${pos.coords.latitude},${pos.coords.longitude}`;
-            status.innerText = "✅ Ubicación GPS obtenida con éxito";
-          },
-          () => {
-            status.innerText = "⚠️ No se pudo acceder al GPS. Ingresa tu dirección manualmente.";
-          }
-        );
-      } else {
-        status.innerText = "⚠️ Geolocalización no soportada en este navegador.";
-      }
-    }
-
-    async function procesarEnvioFinal() {
-      const nombre = document.getElementById('cliente-nombre').value.trim();
-      const telefono = document.getElementById('cliente-telefono').value.trim();
-      const direccion = document.getElementById('cliente-direccion').value.trim();
-      const referencia = document.getElementById('cliente-referencia').value.trim();
-
-      // Validar que los campos de seguridad estén completos
-      if (!nombre || !telefono || !direccion || !referencia) {
-        return alert("⚠️ Por favor completa todos tus datos personales y de entrega antes de enviar.");
-      }
-
-      if (!metodoSeleccionado) {
-        return alert("Por favor selecciona un método de pago.");
-      }
-
-      let detallePago = "";
-      let urlCaptura = "";
-
-      if (metodoSeleccionado === 'yape') {
-        const fileInput = document.getElementById('yape-file');
-        if (!fileInput.files || fileInput.files.length === 0) {
-          return alert("⚠️ OBLIGATORIO: Debes adjuntar la captura del comprobante de Yape.");
-        }
-
-        const file = fileInput.files[0];
-        const formData = new FormData();
-        formData.append('image', file);
-
-        alert("⏳ Verificando comprobante, por favor espera un momento...");
-
-        try {
-          const res = await fetch("https://api.imgbb.com/1/upload?key=c2b3d8f89e2402dd1d7398fb66453d10", {
-            method: "POST",
-            body: formData
-          });
-          const data = await res.json();
-          if (data.success) {
-            urlCaptura = data.data.url;
-            detallePago = `📱 *Método de Pago:* Yape / Plin\n🧾 *Captura Comprobante:* ${urlCaptura}`;
-          } else {
-            throw new Error();
-          }
-        } catch (e) {
-          return alert("Hubo un error subiendo la imagen. Revisa tu conexión a internet.");
-        }
-
-      } else if (metodoSeleccionado === 'tarjeta') {
-        detallePago = "💳 *Método de Pago:* Tarjeta Débito/Crédito (Pago Presencial)";
-      } else if (metodoSeleccionado === 'efectivo') {
-        detallePago = "💵 *Método de Pago:* Efectivo (Pago Presencial)";
-      }
-
-      // Estructurar mensaje con los datos del cliente + pedido
-      let msg = "🍕 *¡NUEVO PEDIDO CONFIRMADO - GOLDEN PIZZERIA!* 🍕\n\n";
-      msg += `👤 *Cliente:* ${nombre}\n`;
-      msg += `📞 *Teléfono:* ${telefono}\n`;
-      msg += `📍 *Dirección:* ${direccion}\n`;
-      msg += `🏠 *Referencia:* ${referencia}\n`;
-      if (ubicacionGPS) msg += `🗺️ *Ubicación GPS:* ${ubicacionGPS}\n`;
-      
-      msg += `\n🛒 *DETALLE DEL PEDIDO:*\n`;
-      let tot = 0;
-      carrito.forEach(i => {
-        const sub = i.precio * i.cant;
-        tot += sub;
-        msg += `• *${i.cant}x* ${i.nombre} - S/ ${sub}.00\n`;
-      });
-
-      msg += `\n💰 *TOTAL A PAGAR:* S/ ${tot}.00\n`;
-      msg += `${detallePago}\n`;
-
-      window.open(`https://wa.me/51979707173?text=${encodeURIComponent(msg)}`, '_blank');
-      cerrarModalPago();
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
