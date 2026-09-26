@@ -30,7 +30,6 @@
 
     <!-- SECCIÓN PIZZAS -->
     <div class="card pizzas">
-      <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=500&q=80" alt="Pizza Golden Deluxe">
       <div class="card-info">
         <h3>Pizza Golden Deluxe</h3>
         <p>Queso mozzarella, pepperoni, jamón, pimiento y aceitunas.</p>
@@ -42,7 +41,6 @@
     </div>
 
     <div class="card pizzas">
-      <img src="https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=500&q=80" alt="Pizza Pepperoni">
       <div class="card-info">
         <h3>Pizza Pepperoni</h3>
         <p>Salsa de tomate, abundante queso mozzarella y pepperoni crocante.</p>
@@ -54,7 +52,6 @@
     </div>
 
     <div class="card pizzas">
-      <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=500&q=80" alt="Pizza Hawaiana">
       <div class="card-info">
         <h3>Pizza Hawaiana</h3>
         <p>Queso mozzarella, jamón y piña dulce en almíbar.</p>
@@ -66,7 +63,6 @@
     </div>
 
     <div class="card pizzas">
-      <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=500&q=80" alt="Pizza Americana">
       <div class="card-info">
         <h3>Pizza Americana</h3>
         <p>Salsa artesanal, queso mozzarella y doble porción de jamón.</p>
@@ -79,7 +75,6 @@
 
     <!-- SECCIÓN ENTRADAS -->
     <div class="card entradas">
-      <img src="https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?auto=format&fit=crop&w=500&q=80" alt="Pan al Ajo Clásico">
       <div class="card-info">
         <h3>Pan al Ajo Clásico</h3>
         <p>Pan horneado al momento con mantequilla de ajo y finas hierbas.</p>
@@ -91,10 +86,9 @@
     </div>
 
     <div class="card entradas">
-      <img src="https://images.unsplash.com/photo-1619895092538-128341789043?auto=format&fit=crop&w=500&q=80" alt="Pan al Ajo con Queso">
       <div class="card-info">
         <h3>Pan al Ajo Especial con Queso</h3>
-        <p>Pan al ajo artesanal cubierto con abundante queso mozzarella gratina.</p>
+        <p>Pan al ajo artesanal cubierto con abundante queso mozzarella gratinado.</p>
         <div class="card-footer">
           <span class="price">S/ 12.00</span>
           <button class="btn-add" onclick="agregarPedido('Pan al Ajo con Queso', 12)">Agregar</button>
@@ -104,7 +98,6 @@
 
     <!-- SECCIÓN BEBIDAS Y FRAPPÉS -->
     <div class="card bebidas">
-      <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=500&q=80" alt="Frappé de Fruta">
       <div class="card-info">
         <h3>Frappé de Fruta</h3>
         <p>Elige tu sabor favorito: Maracuyá, Fresa, Mango o Lúcuma.</p>
@@ -116,7 +109,6 @@
     </div>
 
     <div class="card bebidas">
-      <img src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=500&q=80" alt="Frappé Especial">
       <div class="card-info">
         <h3>Frappé Especial</h3>
         <p>Cremoso y helado. Elige entre Cappuccino u Oreo.</p>
@@ -128,7 +120,6 @@
     </div>
 
     <div class="card bebidas">
-      <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=500&q=80" alt="Inca Kola 1.5L">
       <div class="card-info">
         <h3>Inca Kola 1.5 Litros</h3>
         <p>Gaseosa helada familiar.</p>
@@ -149,7 +140,7 @@
     </div>
     <div class="cart-actions">
       <span class="cart-total" id="cart-total">S/ 0.00</span>
-      <button class="btn-checkout" onclick="abrirPago(event)">Ver Pedido y Pagar</button>
+      <button class="btn-checkout" onclick="abrirPago(event)">Continuar al Pago</button>
     </div>
   </div>
 
@@ -157,7 +148,7 @@
   <div id="pizza-modal" class="payment-overlay hidden">
     <div class="payment-box" style="text-align: center;">
       <h2 id="pizza-modal-title">Seleccionar Opción</h2>
-      <p style="color: #aaa; margin-bottom: 20px; font-size: 0.9rem;">Elige la presentación que prefieras:</p>
+      <p style="color: #aaa; margin-bottom: 20px; font-size: 0.9rem;">Elige la opción que prefieras:</p>
       <div id="pizza-modal-sizes" style="display: flex; flex-direction: column; gap: 10px;"></div>
       <button type="button" class="btn-close-payment" onclick="cerrarModalPizza()" style="margin-top: 20px; width: 100%;">Cancelar</button>
     </div>
@@ -167,14 +158,15 @@
   <div id="payment-overlay" class="payment-overlay hidden">
     <div class="payment-box">
       <h2>Confirmar Pedido</h2>
-      <p class="payment-subtitle">Selecciona tu sede y método de pago</p>
+      <p class="payment-subtitle">Selecciona tu sede y medio de pago</p>
 
-      <!-- SELECCIÓN DE SEDE -->
+      <!-- SELECCIÓN DE SEDE OBLIGATORIA -->
       <div style="margin-bottom: 20px; text-align: left;">
         <label for="select-sede" style="display: block; color: #D4AF37; font-weight: bold; margin-bottom: 8px; font-size: 0.95rem;">
           📍 Selecciona la Sede de Atención:
         </label>
         <select id="select-sede" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #D4AF37; background: #191e1b; color: #fff; font-size: 0.9rem; outline: none; cursor: pointer; font-family: 'Poppins', sans-serif;">
+          <option value="" disabled selected>-- Selecciona una Sede --</option>
           <option value="Av. Argentina 1432 - MARIANO MELGAR">Av. Argentina 1432 - MARIANO MELGAR</option>
           <option value="Calle Cesar Vallejo 100 - BADEN - Paucarpata">Calle Cesar Vallejo 100 - BADEN - Paucarpata</option>
           <option value="Av. Miguel Grau 736 - Paucarpata">Av. Miguel Grau 736 - Paucarpata</option>
@@ -226,7 +218,7 @@
 
       <div class="payment-buttons">
         <button type="button" class="btn-close-payment" onclick="cerrarPago()">Atrás</button>
-        <button type="button" class="btn-confirm-payment" onclick="confirmarPedido()">Confirmar y Enviar a WhatsApp</button>
+        <button type="button" class="btn-confirm-payment" onclick="confirmarPedido()">Enviar Pedido por WhatsApp</button>
       </div>
     </div>
   </div>
