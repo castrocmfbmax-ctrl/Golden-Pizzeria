@@ -1,5 +1,5 @@
 /* =========================================================
-   GOLDEN PIZZERIA - SISTEMA DE PEDIDOS, SEDES Y PAGOS
+   GOLDEN PIZZERIA - SISTEMA LÓGICO DE SEDES Y PAGO
 ========================================================= */
 
 let carrito = [];
@@ -196,12 +196,20 @@ function mostrarNombreArchivo(input) {
     }
 }
 
-/* --- CONFIRMACIÓN Y ENVÍO POR WHATSAPP CON SEDE --- */
+/* --- CONFIRMACIÓN Y ENVÍO POR WHATSAPP CON VALIDACIÓN DE SEDE --- */
 function confirmarPedido() {
     if (carrito.length === 0) return;
 
+    const selectSede = document.getElementById("select-sede");
+    const sedeSeleccionada = selectSede ? selectSede.value : "";
+
+    // VALIDACIÓN: Exige al cliente seleccionar una sede antes de continuar
+    if (!sedeSeleccionada) {
+        alert("Por favor selecciona la sede donde deseas realizar tu pedido.");
+        return;
+    }
+
     const numeroWhatsApp = "51979707173";
-    const sedeSeleccionada = document.getElementById("select-sede").value;
     let textoDetalle = "";
     let total = 0;
 
