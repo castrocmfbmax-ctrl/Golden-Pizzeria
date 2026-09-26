@@ -8,446 +8,411 @@
 </head>
 <body>
 
-  <!-- HEADER -->
+  <!-- ENCABEZADO CON EMOJIS Y ESTILOS -->
   <header class="header">
-    <h1 class="brand-title">GOLDEN PIZZERIA</h1>
-    <p class="brand-subtitle">ARTESANAL A LEÑA</p>
+    <h1 class="brand-title">🍕 GOLDEN PIZZERIA 🍕</h1>
+    <p class="brand-subtitle">🔥 ARTESANAL A LEÑA | ATENDEMOS 4PM - 10PM 🔥</p>
   </header>
 
   <!-- CATEGORÍAS -->
   <nav class="categories">
-    <button class="filter-btn active" onclick="filterCategory('todas')">Todas</button>
-    <button class="filter-btn" onclick="filterCategory('clasicas')">Clásicas</button>
-    <button class="filter-btn" onclick="filterCategory('unicos')">Sabores Únicos</button>
-    <button class="filter-btn" onclick="filterCategory('casa')">Pizzas de Casa</button>
-    <button class="filter-btn" onclick="filterCategory('especiales')">Pizzas Especiales</button>
-    <button class="filter-btn" onclick="filterCategory('entradas')">Entradas y Bebidas</button>
+    <button class="filter-btn active" onclick="filterCategory('todas')">✨ Todas</button>
+    <button class="filter-btn" onclick="filterCategory('clasicas')">🍕 Clásicas</button>
+    <button class="filter-btn" onclick="filterCategory('unicos')">⭐ Sabores Únicos</button>
+    <button class="filter-btn" onclick="filterCategory('casa')">🔥 Pizzas de Casa</button>
+    <button class="filter-btn" onclick="filterCategory('especiales')">👑 Especiales</button>
+    <button class="filter-btn" onclick="filterCategory('entradas')">🥖 Entradas y Bebidas</button>
   </nav>
 
-  <!-- CONTENEDOR DEL MENÚ -->
+  <!-- CONTENEDOR DE PRODUCTOS -->
   <main class="menu-container">
 
     <!-- PIZZAS CLÁSICAS -->
     <div class="card clasicas">
-      <img src="img/americana.jpg" class="card-img" alt="Americana">
       <div class="card-info">
-        <h3>Americana</h3>
+        <h3>🍕 Americana</h3>
         <p>Queso mozzarella, jamón Inglés, salchicha ahumada y chorizo.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 16.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('Americana', 16, 23, 32)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('Americana', 16, 23, 32)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card clasicas">
-      <img src="img/hawaiiana.jpg" class="card-img" alt="Hawaiana">
       <div class="card-info">
-        <h3>Hawaiana</h3>
+        <h3>🍍 Hawaiana</h3>
         <p>Queso mozzarella, jamón Inglés y Piña Golden.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 18.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('Hawaiana', 18, 25, 36)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('Hawaiana', 18, 25, 36)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card clasicas">
-      <img src="img/pepperoni.jpg" class="card-img" alt="Pepperoni">
       <div class="card-info">
-        <h3>Pepperoni</h3>
+        <h3>🍕 Pepperoni</h3>
         <p>Queso mozzarella y Pepperoni.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 18.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('Pepperoni', 18, 28, 38)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('Pepperoni', 18, 28, 38)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card clasicas">
-      <img src="img/italiana.jpg" class="card-img" alt="Italiana">
       <div class="card-info">
-        <h3>Italiana</h3>
+        <h3>🍄 Italiana</h3>
         <p>Queso mozzarella, jamón Inglés, champiñones y rodajas de tomate.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 18.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('Italiana', 18, 25, 35)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('Italiana', 18, 25, 35)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card clasicas">
-      <img src="img/margarita.jpg" class="card-img" alt="Margarita">
       <div class="card-info">
-        <h3>Margarita</h3>
+        <h3>🌿 Margarita</h3>
         <p>Queso mozzarella, espinaca, albahaca y pimentón.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 17.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('Margarita', 17, 24, 32)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('Margarita', 17, 24, 32)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card clasicas">
-      <img src="img/siciliana.jpg" class="card-img" alt="Siciliana">
       <div class="card-info">
-        <h3>Siciliana</h3>
+        <h3>🧅 Siciliana</h3>
         <p>Queso mozzarella, champiñones, aceituna y cebolla rosada soasada.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 18.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('Siciliana', 18, 25, 34)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('Siciliana', 18, 25, 34)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card clasicas">
-      <img src="img/vegetariana.jpg" class="card-img" alt="Vegetariana">
       <div class="card-info">
-        <h3>Vegetariana</h3>
+        <h3>🥦 Vegetariana</h3>
         <p>Queso mozzarella, espinaca, champiñones, pimentón y aceituna verde.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 18.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('Vegetariana', 18, 25, 34)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('Vegetariana', 18, 25, 34)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card clasicas">
-      <img src="img/mixta-compartida.jpg" class="card-img" alt="Mixta Compartida Dos Sabores">
       <div class="card-info">
-        <h3>Mixta Compartida Dos Sabores</h3>
+        <h3>🍕 Mixta Compartida Dos Sabores</h3>
         <p>Queso mozzarella, mitad Americana y mitad Hawaiana.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 18.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('Mixta Compartida Dos Sabores', 18, 26, 35)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('Mixta Compartida Dos Sabores', 18, 26, 35)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card clasicas">
-      <img src="img/karibena.jpg" class="card-img" alt="Karibeña">
       <div class="card-info">
-        <h3>Karibeña</h3>
+        <h3>🍑 Karibeña</h3>
         <p>Queso mozzarella, jamón Inglés, durazno y piña.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 22.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('Karibeña', 22, 28, 40)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('Karibeña', 22, 28, 40)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card clasicas">
-      <img src="img/rustika.jpg" class="card-img" alt="La Rustika (Especial Simple)">
       <div class="card-info">
-        <h3>La Rustika (Especial Simple)</h3>
+        <h3>🥓 La Rustika (Especial Simple)</h3>
         <p>Queso mozzarella, jamón inglés, tocino ahumado, chorizo ahumado y cavanosi.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 20.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('La Rustika', 20, 28, 36)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('La Rustika', 20, 28, 36)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <!-- SABORES ÚNICOS -->
     <div class="card unicos">
-      <img src="img/napolitana.jpg" class="card-img" alt="Napolitana">
       <div class="card-info">
-        <h3>Napolitana</h3>
+        <h3>🍅 Napolitana</h3>
         <p>Queso mozzarella y rodajas de tomate.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 16.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('Napolitana', 16, 24, 32)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('Napolitana', 16, 24, 32)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card unicos">
-      <img src="img/champinones.jpg" class="card-img" alt="Champiñones">
       <div class="card-info">
-        <h3>Champiñones</h3>
+        <h3>🍄 Champiñones</h3>
         <p>Queso mozzarella y champiñones.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 20.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('Champiñones', 20, 26, 34)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('Champiñones', 20, 26, 34)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card unicos">
-      <img src="img/salchicha.jpg" class="card-img" alt="De Salchicha">
       <div class="card-info">
-        <h3>De Salchicha</h3>
+        <h3>🌭 De Salchicha</h3>
         <p>Queso mozzarella y salchicha ahumada.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 16.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('De Salchicha', 16, 25, 33)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('De Salchicha', 16, 25, 33)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card unicos">
-      <img src="img/aceituna.jpg" class="card-img" alt="De Aceituna">
       <div class="card-info">
-        <h3>De Aceituna</h3>
+        <h3>🫒 De Aceituna</h3>
         <p>Queso mozzarella y aceituna.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 16.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('De Aceituna', 16, 25, 33)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('De Aceituna', 16, 25, 33)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card unicos">
-      <img src="img/salame.jpg" class="card-img" alt="De Salame">
       <div class="card-info">
-        <h3>De Salame</h3>
+        <h3>🍕 De Salame</h3>
         <p>Queso mozzarella y salame.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 16.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('De Salame', 16, 25, 33)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('De Salame', 16, 25, 33)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card unicos">
-      <img src="img/chorizo.jpg" class="card-img" alt="De Chorizo">
       <div class="card-info">
-        <h3>De Chorizo</h3>
+        <h3>🌭 De Chorizo</h3>
         <p>Queso mozzarella y chorizo.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 16.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('De Chorizo', 16, 25, 33)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('De Chorizo', 16, 25, 33)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card unicos">
-      <img src="img/jamon.jpg" class="card-img" alt="De Jamón">
       <div class="card-info">
-        <h3>De Jamón</h3>
+        <h3>🍖 De Jamón</h3>
         <p>Queso mozzarella y jamón Inglés.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 16.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('De Jamón', 16, 25, 33)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('De Jamón', 16, 25, 33)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <!-- PIZZAS DE CASA -->
     <div class="card casa">
-      <img src="img/golden-casa.jpg" class="card-img" alt="Golden de la Casa">
       <div class="card-info">
-        <h3>Golden de la Casa</h3>
+        <h3>⭐ Golden de la Casa</h3>
         <p>Queso mozzarella, jamón Inglés, champiñones, tocino ahumado, salame, chorizo ahumado, cavanosi y aceituna.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 20.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('Golden de la Casa', 20, 30, 40)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('Golden de la Casa', 20, 30, 40)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card casa">
-      <img src="img/suprema.jpg" class="card-img" alt="La Suprema de Casa">
       <div class="card-info">
-        <h3>La Suprema de Casa</h3>
+        <h3>👑 La Suprema de Casa</h3>
         <p>Queso mozzarella, jamón Inglés, pepperoni, tocino ahumado, salame, chorizo ahumado, cavanosi y pimentón.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 22.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('La Suprema de Casa', 22, 32, 42)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('La Suprema de Casa', 22, 32, 42)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card casa">
-      <img src="img/volcanica.jpg" class="card-img" alt="La Volcánica">
       <div class="card-info">
-        <h3>La Volcánica</h3>
+        <h3>💥 La Volcánica</h3>
         <p>Queso mozzarella, chorizo ahumado, pepperoni, rodajas de piña, cavanosi, maíz dulce, salchicha AQP y chorizo AQP.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 26.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('La Volcánica', 26, 35, 45)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('La Volcánica', 26, 35, 45)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card casa">
-      <img src="img/bolonesa.jpg" class="card-img" alt="Boloñesa (Carnívora)">
       <div class="card-info">
-        <h3>Boloñesa (Carnívora)</h3>
+        <h3>🥩 Boloñesa (Carnívora)</h3>
         <p>Queso mozzarella, carne picada, jamón inglés, salame y cavanosi.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 25.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('Boloñesa (Carnívora)', 25, 35, 45)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('Boloñesa (Carnívora)', 25, 35, 45)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card casa">
-      <img src="img/trika.jpg" class="card-img" alt="Trika Tres Sabores">
       <div class="card-info">
-        <h3>Trika Tres Sabores</h3>
+        <h3>🎨 Trika Tres Sabores</h3>
         <p>Queso mozzarella y segmentado de: Carne + Cavanosi, Pollo + Jamón, Tocino + Chorizo ahumado.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 25.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('Trika Tres Sabores', 25, 36, 46)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('Trika Tres Sabores', 25, 36, 46)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card casa">
-      <img src="img/3carnes.jpg" class="card-img" alt="3 Carnes">
       <div class="card-info">
-        <h3>3 Carnes</h3>
+        <h3>🍗 3 Carnes</h3>
         <p>Queso mozzarella y combinado de Carne + Pollo + Tocino.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 25.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('3 Carnes', 25, 35, 45)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('3 Carnes', 25, 35, 45)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card casa">
-      <img src="img/arequipena.jpg" class="card-img" alt="Tradición Arequipeña">
       <div class="card-info">
-        <h3>Tradición Arequipeña</h3>
+        <h3>🏔️ Tradición Arequipeña</h3>
         <p>Queso mozzarella, chorizo arequipeño, salchicha arequipeña y jamón inglés.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 24.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('Tradición Arequipeña', 24, 32, 42)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('Tradición Arequipeña', 24, 32, 42)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card casa">
-      <img src="img/picante.jpg" class="card-img" alt="Picante Cáustico">
       <div class="card-info">
-        <h3>Picante Cáustico</h3>
+        <h3>🌶️ Picante Cáustico</h3>
         <p>Queso mozzarella, trozos de carne, rodajas de rocoto, salchicha ahumada y chorizo ahumado.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 25.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('Picante Cáustico', 25, 36, 46)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('Picante Cáustico', 25, 36, 46)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <!-- PIZZAS ESPECIALES -->
     <div class="card especiales">
-      <img src="img/pollo.jpg" class="card-img" alt="Pollo">
       <div class="card-info">
-        <h3>Pollo</h3>
+        <h3>🍗 Pollo</h3>
         <p>Queso mozzarella, jamón Inglés, pollo y tocino ahumado.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 25.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('Pollo', 25, 35, 45)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('Pollo', 25, 35, 45)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card especiales">
-      <img src="img/oriental.jpg" class="card-img" alt="Oriental">
       <div class="card-info">
-        <h3>Oriental</h3>
+        <h3>⛩️ Oriental</h3>
         <p>Queso mozzarella, pollo, jamón inglés y piña.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 25.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('Oriental', 25, 34, 44)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('Oriental', 25, 34, 44)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card especiales">
-      <img src="img/tropical.jpg" class="card-img" alt="Tropical">
       <div class="card-info">
-        <h3>Tropical</h3>
+        <h3>🍓 Tropical</h3>
         <p>Queso mozzarella, leche condensada, chocolate fudge, plátano, manzana, durazno, piña y fresa.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 24.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('Tropical', 24, 32, 42)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('Tropical', 24, 32, 42)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card especiales">
-      <img src="img/4estaciones.jpg" class="card-img" alt="Cuatro Estaciones">
       <div class="card-info">
-        <h3>Cuatro Estaciones</h3>
+        <h3>🍂 Cuatro Estaciones</h3>
         <p>Primavera (tomate/espinaca), Verano (piña/durazno), Invierno (pepperoni/cavanosi), Otoño (jamón/chorizo).</p>
         <div class="card-footer">
           <span class="price">Desde S/ 36.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('Cuatro Estaciones', null, 36, 46)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('Cuatro Estaciones', null, 36, 46)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card especiales">
-      <img src="img/espanola.jpg" class="card-img" alt="La Española">
       <div class="card-info">
-        <h3>La Española</h3>
+        <h3>🧄 La Española</h3>
         <p>Base de crema de ajo, queso mozzarella, chorizo pizzero ahumado, aceitunas verdes y champiñones.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 22.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('La Española', 22, 31, 41)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('La Española', 22, 31, 41)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <div class="card especiales">
-      <img src="img/mexicana.jpg" class="card-img" alt="Mexicana">
       <div class="card-info">
-        <h3>Mexicana</h3>
+        <h3>🌮 Mexicana</h3>
         <p>Queso mozzarella, jalapeños, cebolla rosada y carne.</p>
         <div class="card-footer">
           <span class="price">Desde S/ 25.00</span>
-          <button class="btn-add" onclick="abrirModalPizza('Mexicana', 25, 33, 43)">Pedir</button>
+          <button class="btn-add" onclick="abrirModalPizza('Mexicana', 25, 33, 43)">🛒 Seleccionar</button>
         </div>
       </div>
     </div>
 
     <!-- ENTRADAS Y BEBIDAS -->
     <div class="card entradas">
-      <img src="img/pan-simple.jpg" class="card-img" alt="Pan al Ajo Simple">
       <div class="card-info">
-        <h3>Pan al Ajo Simple</h3>
+        <h3>🥖 Pan al Ajo Simple</h3>
         <p>Porción clásica de pan al ajo horneado a la leña.</p>
         <div class="card-footer">
           <span class="price">S/ 6.00</span>
-          <button class="btn-add" onclick="agregarPedido('Pan al Ajo Simple', 6)">Agregar</button>
+          <button class="btn-add" onclick="agregarPedido('Pan al Ajo Simple', 6)">➕ Agregar</button>
         </div>
       </div>
     </div>
 
     <div class="card entradas">
-      <img src="img/pan-especial.jpg" class="card-img" alt="Pan al Ajo Especial">
       <div class="card-info">
-        <h3>Pan al Ajo Especial</h3>
+        <h3>🧀 Pan al Ajo Especial</h3>
         <p>Porción especial de pan al ajo con queso derretido.</p>
         <div class="card-footer">
           <span class="price">S/ 8.00</span>
-          <button class="btn-add" onclick="agregarPedido('Pan al Ajo Especial', 8)">Agregar</button>
+          <button class="btn-add" onclick="agregarPedido('Pan al Ajo Especial', 8)">➕ Agregar</button>
         </div>
       </div>
     </div>
 
     <div class="card entradas">
-      <img src="img/chicha.jpg" class="card-img" alt="Chicha Morada / Limonada">
       <div class="card-info">
-        <h3>Chicha Morada / Limonada (1 Litro)</h3>
-        <p>Bebida natural de la casa (Al tiempo o Frozen).</p>
+        <h3>🥤 Chicha Morada / Limonada (1 Litro)</h3>
+        <p>Bebida refrescante elaborada en casa.</p>
         <div class="card-footer">
           <span class="price">S/ 10.00</span>
-          <button class="btn-add" onclick="agregarPedido('Chicha Morada / Limonada 1L', 10)">Agregar</button>
+          <button class="btn-add" onclick="agregarPedido('Chicha Morada / Limonada (1L)', 10)">➕ Agregar</button>
         </div>
       </div>
     </div>
 
     <div class="card entradas">
-      <img src="img/frappe.jpg" class="card-img" alt="Frappé">
       <div class="card-info">
-        <h3>Frappés (Oreo, Lúcuma, Fresa, Mango, Maracuyá)</h3>
-        <p>Refrescante frappé de fruta o galleta Oreo.</p>
+        <h3>🧋 Frappé Especial</h3>
+        <p>Delicioso Frappé helado. Elige tu sabor favorito.</p>
         <div class="card-footer">
           <span class="price">S/ 10.00</span>
-          <button class="btn-add" onclick="agregarPedido('Frappé', 10)">Agregar</button>
+          <button class="btn-add" onclick="abrirModalFrappe()">🥤 Elegir Sabor</button>
         </div>
       </div>
     </div>
@@ -460,45 +425,62 @@
       <span id="cart-count" class="cart-count">0</span>
       <span id="cart-total" style="font-weight: bold; color: #D4AF37;">S/ 0.00</span>
     </div>
-    <button class="btn-checkout" onclick="abrirPago(event)">Pagar Pedido</button>
+    <button class="btn-checkout" onclick="abrirPago(event)">🛒 Ver Pedido / Pagar</button>
   </div>
 
-  <!-- MODAL DE SELECCIÓN DE TAMAÑOS DE PIZZA -->
+  <!-- MODAL TAMAÑOS DE PIZZA -->
   <div id="pizza-modal" class="payment-overlay hidden">
     <div class="payment-box" style="text-align: center;">
-      <h2 id="pizza-modal-title">Selecciona el Tamaño</h2>
-      <p style="color: #aaa; margin-bottom: 15px; font-size: 0.85rem;">Elige la porción ideal para tu pedido</p>
+      <h2 id="pizza-modal-title">🍕 Elige el Tamaño</h2>
+      <p style="color: #aaa; margin-bottom: 15px; font-size: 0.85rem;">Selecciona la porción deseada</p>
       <div id="pizza-modal-sizes" style="display: flex; flex-direction: column; gap: 10px;"></div>
       <button class="btn-close-payment" style="margin-top: 15px; width: 100%;" onclick="cerrarModalPizza()">Cancelar</button>
     </div>
   </div>
 
-  <!-- MODAL DE PAGO Y SEDE -->
+  <!-- MODAL SELECCIÓN DE FRAPPÉS -->
+  <div id="frappe-modal" class="payment-overlay hidden">
+    <div class="payment-box" style="text-align: center;">
+      <h2>🧋 Elige tu Sabor de Frappé</h2>
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
+        <button class="filter-btn" onclick="seleccionarFrappe('Oreo', 10)">🍪 Frappé Oreo - S/ 10.00</button>
+        <button class="filter-btn" onclick="seleccionarFrappe('Lúcuma', 10)">😋 Frappé Lúcuma - S/ 10.00</button>
+        <button class="filter-btn" onclick="seleccionarFrappe('Fresa', 10)">🍓 Frappé Fresa - S/ 10.00</button>
+        <button class="filter-btn" onclick="seleccionarFrappe('Mango', 10)">🥭 Frappé Mango - S/ 10.00</button>
+        <button class="filter-btn" onclick="seleccionarFrappe('Maracuyá', 10)">🍹 Frappé Maracuyá - S/ 10.00</button>
+        <button class="filter-btn" onclick="seleccionarFrappe('Cappuccino', 10)">☕ Frappé Cappuccino - S/ 10.00</button>
+      </div>
+      <button class="btn-close-payment" style="margin-top: 15px; width: 100%;" onclick="cerrarModalFrappe()">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- MODAL DE PAGO Y SEDE DE ATENCIÓN -->
   <div id="payment-overlay" class="payment-overlay hidden">
     <div class="payment-box">
-      <h2>CONFIRMAR PEDIDO</h2>
+      <h2>📋 CONFIRMAR PEDIDO</h2>
       
-      <!-- RESUMEN -->
+      <!-- RESUMEN CON SELECCIÓN DE CANTIDADES -->
       <div id="payment-summary-list" style="margin: 15px 0;"></div>
       <div id="payment-total" style="text-align: right; font-weight: bold; color: #D4AF37; margin-bottom: 15px;"></div>
 
-      <!-- SELECCIÓN DE SEDE -->
-      <label style="display:block; color:#D4AF37; margin-bottom:5px; font-size:0.85rem;">SELECCIONA TU SEDE DE ATENCIÓN (*):</label>
-      <select id="select-sede" style="width:100%; padding:10px; background:#191e1b; border:1px solid #333; color:white; border-radius:8px; margin-bottom:15px;">
+      <!-- SELECCIÓN DE SEDE ACTUALIZADA -->
+      <label style="display:block; color:#D4AF37; margin-bottom:5px; font-size:0.85rem;">📍 SELECCIONA TU SEDE DE ATENCIÓN (*):</label>
+      <select id="select-sede" style="width:100%; padding:10px; background:#1b241d; border:1px solid #333; color:white; border-radius:8px; margin-bottom:15px;">
         <option value="">-- Selecciona Sede --</option>
-        <option value="Sede Principal">Sede Principal</option>
-        <option value="Sede Centro">Sede Centro</option>
+        <option value="Mariano Melgar (Av. Argentina 1432)">Mariano Melgar - Av. Argentina 1432</option>
+        <option value="Paucarpata (Av. Miguel Grau 736)">Paucarpata - Av. Miguel Grau 736</option>
+        <option value="Baden Paucarpata (Calle Cesar Vallejo 100)">Baden Paucarpata - Calle Cesar Vallejo 100</option>
       </select>
 
       <!-- MÉTODOS DE PAGO -->
-      <label style="display:block; color:#D4AF37; margin-bottom:5px; font-size:0.85rem;">MÉTODO DE PAGO:</label>
+      <label style="display:block; color:#D4AF37; margin-bottom:5px; font-size:0.85rem;">💳 MÉTODO DE PAGO:</label>
       <div class="payment-methods">
-        <div id="payment-yape" class="payment-method selected" onclick="seleccionarPago('yape')">Yape / Plin</div>
-        <div id="payment-tarjeta" class="payment-method" onclick="seleccionarPago('tarjeta')">Tarjeta</div>
-        <div id="payment-efectivo" class="payment-method" onclick="seleccionarPago('efectivo')">Efectivo</div>
+        <div id="payment-yape" class="payment-method selected" onclick="seleccionarPago('yape')">💜 Yape / Plin</div>
+        <div id="payment-tarjeta" class="payment-method" onclick="seleccionarPago('tarjeta')">💳 Tarjeta</div>
+        <div id="payment-efectivo" class="payment-method" onclick="seleccionarPago('efectivo')">💵 Efectivo</div>
       </div>
 
-      <!-- SECCIÓN YAPE OBLIGATORIO -->
+      <!-- COMPROBANTE SOLO EN YAPE -->
       <div id="section-yape">
         <p style="font-size:0.8rem; color:#ccc; text-align:center;">Número Yape/Plin: <strong>979 707 173</strong></p>
         <label for="receipt-file" class="receipt-label-required">
@@ -508,18 +490,16 @@
         <div id="receipt-name" style="text-align:center; margin-top:5px; font-size:0.8rem;"></div>
       </div>
 
-      <!-- SECCIÓN TARJETA / EFECTIVO -->
       <div id="section-tarjeta" style="display:none; font-size:0.8rem; color:#aaa; text-align:center;">
-        Se llevará el POS a tu domicilio o pagarás en caja.
+        💳 Se llevará el POS a tu domicilio para la entrega.
       </div>
       <div id="section-efectivo" style="display:none; font-size:0.8rem; color:#aaa; text-align:center;">
-        El pago se realizará contra entrega en efectivo.
+        💵 El pago se realizará contra entrega en efectivo.
       </div>
 
-      <!-- BOTONES -->
       <div class="payment-buttons">
         <button class="btn-close-payment" onclick="cerrarPago()">Atrás</button>
-        <button class="btn-confirm-payment" onclick="confirmarPedido()">Enviar a WhatsApp</button>
+        <button class="btn-confirm-payment" onclick="confirmarPedido()">📲 Enviar a WhatsApp</button>
       </div>
     </div>
   </div>
