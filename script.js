@@ -1,9 +1,9 @@
 /* =========================================================
-   GOLDEN PIZZERIA - SISTEMA LÓGICO DEL CARRITO Y MODALES
+   GOLDEN PIZZERIA - SISTEMA LÓGICO Y SELECCIÓN DE FRAPPÉS
 ========================================================= */
 
 let carrito = [];
-let metodoPagoSeleccionado = "Yape / Plin";
+let metodoPagoSeleccionado = "yape";
 let pizzaActual = "";
 let preciosPizzaActual = {};
 
@@ -21,25 +21,27 @@ function actualizarCarritoUI() {
     if (carrito.length > 0) {
         if (cartBar) cartBar.classList.remove("hidden");
         let total = carrito.reduce((sum, item) => sum + item.precio, 0);
-        if (cartCount) cartCount.innerText = `${carrito.length} ítem(s)`;
+        if (cartCount) cartCount.innerText = carrito.length;
         if (cartTotal) cartTotal.innerText = `S/ ${total.toFixed(2)}`;
     } else {
         if (cartBar) cartBar.classList.add("hidden");
     }
 }
 
-function limpiarCarrito() {
+function vaciarPedido() {
     carrito = [];
     actualizarCarritoUI();
 }
 
-/* --- FILTROS DE CATEGORÍA Y BÚSQUEDA --- */
-function filtrarCategoria(cat) {
+/* --- FILTROS DE CATEGORÍA --- */
+function filterCategory(cat) {
     const cards = document.querySelectorAll(".card");
     const btns = document.querySelectorAll(".filter-btn");
 
     btns.forEach(btn => btn.classList.remove("active"));
-    event.target.classList.add("active");
+    if (event && event.target) {
+        event.target.classList.add("active");
+    }
 
     cards.forEach(card => {
         if (cat === 'todas') {
@@ -52,24 +54,9 @@ function filtrarCategoria(cat) {
     });
 }
 
-function filtrarPorNombre() {
-    const input = document.getElementById("search-input").value.toLowerCase();
-    const cards = document.querySelectorAll(".card");
-
-    cards.forEach(card => {
-        const title = card.querySelector("h3").innerText.toLowerCase();
-        if (title.includes(input)) {
-            card.style.display = "flex";
-        } else {
-            card.style.display = "none";
-        }
-    });
-}
-
-/* --- MODAL PARA TAMAÑOS DE PIZZA --- */
-function abrirModalPizza(nombre, precios) {
+/* --- MODAL DE TAMAÑOS DE PIZZA --- */
+function abrirModalPizza(nombre, pPersonal, pMediana, pFamiliar) {
     pizzaActual = nombre;
-    preciosPizzaActual = precios;
 
     const modal = document.getElementById("pizza-modal");
     const titulo = document.getElementById("pizza-modal-title");
@@ -79,12 +66,18 @@ function abrirModalPizza(nombre, precios) {
 
     if (titulo) titulo.innerText = `Pizza ${nombre}`;
 
-    container.innerHTML = `
-        <button type="button" class="btn-size" style="padding:10px; background:#191e1b; border:1px solid #D4AF37; color:white; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="seleccionarTamanoPizza('Personal', ${precios.personal})">Personal - S/ ${precios.personal.toFixed(2)}</button>
-        <button type="button" class="btn-size" style="padding:10px; background:#191e1b; border:1px solid #D4AF37; color:white; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="seleccionarTamanoPizza('Mediana', ${precios.mediana})">Mediana - S/ ${precios.mediana.toFixed(2)}</button>
-        <button type="button" class="btn-size" style="padding:10px; background:#191e1b; border:1px solid #D4AF37; color:white; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="seleccionarTamanoPizza('Familiar', ${precios.familiar})">Familiar - S/ ${precios.familiar.toFixed(2)}</button>
-    `;
+    let htmlButtons = "";
+    if (pPersonal !== null && pPersonal !== undefined) {
+        htmlButtons += `<button type="button" class="btn-size" style="padding:12px; background:#191e1b; border:1px solid #D4AF37; color:white; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="seleccionarTamanoPizza('Personal', ${pPersonal})">Personal - S/ ${parseFloat(pPersonal).toFixed(2)}</button>`;
+    }
+    if (pMediana !== null && pMediana !== undefined) {
+        htmlButtons += `<button type="button" class="btn-size" style="padding:12px; background:#191e1b; border:1px solid #D4AF37; color:white; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="seleccionarTamanoPizza('Mediana', ${pMediana})">Mediana - S/ ${parseFloat(pMediana).toFixed(2)}</button>`;
+    }
+    if (pFamiliar !== null && pFamiliar !== undefined) {
+        htmlButtons += `<button type="button" class="btn-size" style="padding:12px; background:#191e1b; border:1px solid #D4AF37; color:white; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="seleccionarTamanoPizza('Familiar', ${pFamiliar})">Familiar - S/ ${parseFloat(pFamiliar).toFixed(2)}</button>`;
+    }
 
+    container.innerHTML = htmlButtons;
     modal.classList.remove("hidden");
     modal.style.display = "flex";
 }
@@ -102,7 +95,7 @@ function cerrarModalPizza() {
     }
 }
 
-/* --- MODAL PARA SABORES DE FRAPPÉ --- */
+/* --- MODAL DE SABORES DE FRAPPÉ --- */
 function abrirModalFrappe(tipo) {
     const modal = document.getElementById("pizza-modal");
     const titulo = document.getElementById("pizza-modal-title");
@@ -129,7 +122,6 @@ function abrirModalFrappe(tipo) {
     });
 
     container.innerHTML = htmlButtons;
-
     modal.classList.remove("hidden");
     modal.style.display = "flex";
 }
@@ -139,76 +131,67 @@ function seleccionarSaborFrappe(sabor, precio) {
     cerrarModalPizza();
 }
 
-/* --- MODAL DE PAGO Y CONFIRMACIÓN --- */
-function abrirModalPago() {
-    const modal = document.getElementById("payment-modal");
-    const summaryList = document.getElementById("cart-summary-list");
+/* --- MODAL DE PAGO Y RASTREO --- */
+function abrirPago(e) {
+    if (e) e.preventDefault();
+    const overlay = document.getElementById("payment-overlay");
+    const summaryList = document.getElementById("payment-summary-list");
+    const summaryTotal = document.getElementById("payment-total");
 
-    if (!modal) return;
+    if (!overlay) return;
 
     if (summaryList) {
         let html = "";
+        let total = 0;
         carrito.forEach((item) => {
-            html += `<div style="display:flex; justify-content:space-between; margin-bottom:5px; border-bottom:1px solid #222; padding-bottom:3px;">
+            html += `<div style="display:flex; justify-content:space-between; margin-bottom:5px; border-bottom:1px solid #222; padding-bottom:3px; font-size:0.85rem; color:#ccc;">
                 <span>• ${item.nombre}</span>
                 <span style="color:#D4AF37">S/ ${item.precio.toFixed(2)}</span>
             </div>`;
+            total += item.precio;
         });
         summaryList.innerHTML = html;
+        if (summaryTotal) summaryTotal.innerText = `Total: S/ ${total.toFixed(2)}`;
     }
 
-    modal.classList.remove("hidden");
-    modal.style.display = "flex";
+    overlay.classList.remove("hidden");
+    overlay.style.display = "flex";
+    seleccionarPago('yape');
 }
 
-function cerrarModalPago() {
-    const modal = document.getElementById("payment-modal");
-    if (modal) {
-        modal.classList.add("hidden");
-        modal.style.display = "none";
-    }
-}
-
-function cambiarTipoEntrega() {
-    const tipo = document.getElementById("tipo-entrega").value;
-    const campoDireccion = document.getElementById("campo-direccion");
-    if (campoDireccion) {
-        campoDireccion.style.display = (tipo === "Delivery") ? "block" : "none";
+function cerrarPago() {
+    const overlay = document.getElementById("payment-overlay");
+    if (overlay) {
+        overlay.classList.add("hidden");
+        overlay.style.display = "none";
     }
 }
 
-function seleccionarMetodo(metodo, elemento) {
-    metodoPagoSeleccionado = metodo;
-    const methods = document.querySelectorAll(".payment-method");
-    methods.forEach(m => m.classList.remove("selected"));
-    elemento.classList.add("selected");
+function seleccionarPago(tipo) {
+    metodoPagoSeleccionado = tipo;
+    const secYape = document.getElementById("section-yape");
+    const secTarjeta = document.getElementById("section-tarjeta");
+    const secEfectivo = document.getElementById("section-efectivo");
 
-    const payYape = document.getElementById("pay-yape");
-    const payEfectivo = document.getElementById("pay-efectivo");
+    const btnYape = document.getElementById("payment-yape");
+    const btnTarjeta = document.getElementById("payment-tarjeta");
+    const btnEfectivo = document.getElementById("payment-efectivo");
 
-    if (metodo === 'Yape / Plin') {
-        if (payYape) payYape.classList.add("active");
-        if (payEfectivo) payEfectivo.classList.remove("active");
-    } else {
-        if (payYape) payYape.classList.remove("active");
-        if (payEfectivo) payEfectivo.classList.add("active");
-    }
+    [btnYape, btnTarjeta, btnEfectivo].forEach(b => { if (b) b.classList.remove("selected"); });
+
+    if (secYape) secYape.style.display = (tipo === 'yape') ? 'block' : 'none';
+    if (secTarjeta) secTarjeta.style.display = (tipo === 'tarjeta') ? 'block' : 'none';
+    if (secEfectivo) secEfectivo.style.display = (tipo === 'efectivo') ? 'block' : 'none';
+
+    if (tipo === 'yape' && btnYape) btnYape.classList.add("selected");
+    if (tipo === 'tarjeta' && btnTarjeta) btnTarjeta.classList.add("selected");
+    if (tipo === 'efectivo' && btnEfectivo) btnEfectivo.classList.add("selected");
 }
 
-/* --- ENVÍO DE ORDEN A WHATSAPP --- */
-function enviarWhatsApp() {
+function confirmarPedido() {
     if (carrito.length === 0) return;
 
     const numeroWhatsApp = "51979707173";
-    const tipoEntrega = document.getElementById("tipo-entrega").value;
-    const direccion = document.getElementById("cliente-direccion").value.trim();
-    const montoEfectivo = document.getElementById("monto-efectivo").value.trim();
-
-    if (tipoEntrega === "Delivery" && !direccion) {
-        alert("Por favor, ingresa tu dirección para el delivery.");
-        return;
-    }
-
     let textoDetalle = "";
     let total = 0;
 
@@ -218,23 +201,38 @@ function enviarWhatsApp() {
     });
 
     let mensaje = `*¡NUEVO PEDIDO - GOLDEN PIZZERIA!* 🍕\n\n`;
-    mensaje += `*Detalle de la Orden:*\n${textoDetalle}\n`;
+    mensaje += `*Detalle del Pedido:*\n${textoDetalle}\n`;
     mensaje += `*TOTAL:* S/ ${total.toFixed(2)}\n`;
-    mensaje += `*Modo de Entrega:* ${tipoEntrega}\n`;
-
-    if (tipoEntrega === "Delivery") {
-        mensaje += `*Ubicación / Dirección:* ${direccion}\n`;
-    }
-
-    mensaje += `*Método de Pago:* ${metodoPagoSeleccionado}\n`;
-
-    if (metodoPagoSeleccionado === "Efectivo" && montoEfectivo) {
-        mensaje += `*Paga con:* S/ ${montoEfectivo}\n`;
-    }
-
-    mensaje += `\n*¡Ubicación sugerida:* AV ARGENTINA 1432*\n`;
-    mensaje += `_Enviado desde la web oficial de Golden Pizzeria_`;
+    mensaje += `*Método de Pago:* ${metodoPagoSeleccionado.toUpperCase()}\n\n`;
+    mensaje += `📍 *Ubicación del local:* AV ARGENTINA 1432\n`;
+    mensaje += `_Pedido realizado desde la web de Golden Pizzeria_`;
 
     const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
     window.open(url, "_blank");
+
+    cerrarPago();
+    vaciarPedido();
+}
+
+function consultarEstadoCodigo() {
+    const input = document.getElementById("input-tracking-code");
+    if (input && input.value.trim() !== "") {
+        const trackOverlay = document.getElementById("tracking-overlay");
+        const orderCode = document.getElementById("order-code");
+        if (orderCode) orderCode.innerText = input.value.trim().toUpperCase();
+        if (trackOverlay) {
+            trackOverlay.classList.remove("hidden");
+            trackOverlay.style.display = "flex";
+        }
+    } else {
+        alert("Por favor ingresa un código de pedido válido.");
+    }
+}
+
+function cerrarTracking() {
+    const trackOverlay = document.getElementById("tracking-overlay");
+    if (trackOverlay) {
+        trackOverlay.classList.add("hidden");
+        trackOverlay.style.display = "none";
+    }
 }
