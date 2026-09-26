@@ -1,4 +1,4 @@
-/* FUENTE MATCHA WORLD DE KHURASAN */
+/* FUENTE MATCHA WORLD APLICADA A CADA ELEMENTO DE LA PÁGINA */
 @font-face {
   font-family: 'Matcha World';
   src: url('fonts/MatchaWorld.ttf') format('truetype'),
@@ -11,55 +11,62 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  user-select: none; /* Bloqueo de selección de texto por seguridad */
+  font-family: 'Matcha World', 'Poppins', cursive, sans-serif !important;
+  user-select: none; /* Sistema de seguridad anti-copia */
   -webkit-user-select: none;
 }
 
 body {
-  background-color: #0d110e;
+  background-color: #0b0e0c;
   color: #ffffff;
-  font-family: 'Matcha World', 'Poppins', sans-serif;
-  padding-bottom: 90px;
+  padding-bottom: 110px;
 }
 
-/* HEADER */
+/* HEADER Y EFECTOS VISUALES */
 .header {
   text-align: center;
-  padding: 25px 15px;
-  background: linear-gradient(180deg, #161c18 0%, #0d110e 100%);
-  border-bottom: 1px solid #222;
+  padding: 30px 15px;
+  background: linear-gradient(180deg, #18221b 0%, #0b0e0c 100%);
+  border-bottom: 2px solid #D4AF37;
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.25);
 }
 
 .brand-title {
-  font-family: 'Matcha World', sans-serif;
-  font-size: 2.5rem;
+  font-size: 2.6rem;
   color: #D4AF37;
+  text-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
   letter-spacing: 2px;
 }
 
 .brand-subtitle {
-  font-size: 0.85rem;
-  color: #aaa;
-  letter-spacing: 3px;
+  font-size: 0.95rem;
+  color: #25d366;
+  margin-top: 8px;
+  text-shadow: 0 0 5px rgba(37, 211, 102, 0.4);
 }
 
-/* CATEGORÍAS */
+/* NAVEGACIÓN DE CATEGORÍAS */
 .categories {
   display: flex;
   justify-content: center;
   gap: 10px;
   padding: 15px;
   flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  background: rgba(11, 14, 12, 0.95);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  border-bottom: 1px solid #1a241c;
 }
 
 .filter-btn {
-  background: #161c18;
+  background: #141c16;
   border: 1px solid #333;
   color: #ccc;
   padding: 8px 16px;
   border-radius: 20px;
   cursor: pointer;
-  font-family: 'Matcha World', sans-serif;
   font-size: 0.85rem;
   transition: all 0.3s ease;
 }
@@ -68,54 +75,45 @@ body {
   background: #D4AF37;
   color: #000;
   border-color: #D4AF37;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
+  transform: translateY(-1px);
 }
 
-/* CARDS CON MINIATURAS PEQUEÑAS */
+/* MENÚ Y TARJETAS DE PRODUCTO (SIN OPCIÓN DE IMAGEN) */
 .menu-container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 10px;
+  padding: 15px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 15px;
 }
 
 .card {
-  background: #141a16;
+  background: #121814;
   border: 1px solid #222;
+  border-left: 4px solid #D4AF37;
   border-radius: 12px;
-  padding: 12px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  padding: 15px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* MINIATURAS PEQUEÑAS */
-.card-img {
-  width: 60px;
-  height: 60px;
-  border-radius: 8px;
-  object-fit: cover;
-  flex-shrink: 0;
-  border: 1px solid #333;
-}
-
-.card-info {
-  flex: 1;
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 10px rgba(212, 175, 55, 0.2);
 }
 
 .card-info h3 {
-  font-family: 'Matcha World', sans-serif;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   color: #D4AF37;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .card-info p {
-  font-size: 0.8rem;
-  color: #aaa;
-  margin-bottom: 8px;
-  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  color: #bbb;
+  margin-bottom: 12px;
+  line-height: 1.4;
 }
 
 .card-footer {
@@ -125,60 +123,72 @@ body {
 }
 
 .price {
+  font-size: 1.05rem;
+  color: #25d366;
   font-weight: bold;
-  color: #fff;
-  font-size: 0.9rem;
 }
 
 .btn-add {
-  background: #D4AF37;
+  background: linear-gradient(135deg, #D4AF37 0%, #aa820a 100%);
   color: #000;
   border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-family: 'Matcha World', sans-serif;
-  font-size: 0.8rem;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
   cursor: pointer;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+  transition: filter 0.2s ease;
 }
 
-/* CARRITO FLOTANTE */
+.btn-add:hover {
+  filter: brightness(1.15);
+}
+
+/* BARRA FLOTANTE DEL CARRITO */
 .cart-bar {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  background: #161c18;
+  background: #141c16;
   border-top: 2px solid #D4AF37;
-  padding: 12px 20px;
+  padding: 15px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 1000;
+  box-shadow: 0 -5px 25px rgba(0,0,0,0.9);
 }
 
-.cart-bar.hidden { display: none; }
+.cart-bar.hidden { display: none !important; }
 
 .cart-count {
   background: #D4AF37;
   color: #000;
-  padding: 2px 8px;
+  padding: 4px 10px;
   border-radius: 50%;
+  font-size: 0.9rem;
+  margin-right: 8px;
   font-weight: bold;
-  margin-right: 5px;
 }
 
 .btn-checkout {
-  background: #D4AF37;
-  color: #000;
+  background: #25d366;
+  color: #fff;
   border: none;
-  padding: 10px 18px;
+  padding: 10px 20px;
   border-radius: 8px;
-  font-family: 'Matcha World', sans-serif;
-  font-weight: bold;
+  font-size: 0.9rem;
   cursor: pointer;
+  box-shadow: 0 0 12px rgba(37, 211, 102, 0.5);
+  transition: filter 0.2s;
 }
 
-/* MODALES Y SOBREPUESTOS */
+.btn-checkout:hover {
+  filter: brightness(1.1);
+}
+
+/* VENTANAS MODALES */
 .payment-overlay {
   position: fixed;
   top: 0;
@@ -186,6 +196,7 @@ body {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -196,23 +207,43 @@ body {
 .payment-overlay.hidden { display: none !important; }
 
 .payment-box {
-  background: #141a16;
+  background: #121814;
   border: 1px solid #D4AF37;
   border-radius: 12px;
   width: 100%;
-  max-width: 450px;
+  max-width: 480px;
   padding: 20px;
   max-height: 90vh;
   overflow-y: auto;
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.2);
 }
 
 .payment-box h2 {
-  font-family: 'Matcha World', sans-serif;
   color: #D4AF37;
   text-align: center;
-  margin-bottom: 5px;
+  margin-bottom: 12px;
 }
 
+/* BOTONES DE CONTROL DE CANTIDAD EN RESUMEN */
+.qty-btn {
+  background: #222;
+  border: 1px solid #555;
+  color: #fff;
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 4px;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.qty-btn:hover {
+  background: #D4AF37;
+  color: #000;
+}
+
+/* SELECCIÓN DE MÉTODO DE PAGO Y SEDES */
 .payment-methods {
   display: flex;
   gap: 8px;
@@ -221,24 +252,26 @@ body {
 
 .payment-method {
   flex: 1;
-  background: #1f2621;
+  background: #1b241d;
   border: 1px solid #333;
   padding: 10px 5px;
   text-align: center;
   border-radius: 8px;
   cursor: pointer;
   font-size: 0.8rem;
+  transition: all 0.2s ease;
 }
 
 .payment-method.selected {
   border-color: #D4AF37;
-  background: #2a332c;
+  background: #27342a;
   color: #D4AF37;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
 }
 
 .receipt-label-required {
   display: block;
-  background: #1f2621;
+  background: #1b241d;
   border: 1px dashed #D4AF37;
   padding: 12px;
   border-radius: 8px;
@@ -262,8 +295,8 @@ body {
   border: none;
   padding: 12px;
   border-radius: 8px;
-  font-family: 'Matcha World', sans-serif;
   cursor: pointer;
+  box-shadow: 0 0 10px rgba(37, 211, 102, 0.3);
 }
 
 .btn-close-payment {
