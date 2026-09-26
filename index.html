@@ -454,7 +454,7 @@
     </div>
   </div>
 
-  <!-- MODAL DE PAGO Y SEDE DE ATENCIÓN -->
+  <!-- MODAL DE PAGO Y REGISTRO DE DATOS OBLIGATORIOS -->
   <div id="payment-overlay" class="payment-overlay hidden">
     <div class="payment-box">
       <h2>📋 CONFIRMAR PEDIDO</h2>
@@ -463,7 +463,19 @@
       <div id="payment-summary-list" style="margin: 15px 0;"></div>
       <div id="payment-total" style="text-align: right; font-weight: bold; color: #D4AF37; margin-bottom: 15px;"></div>
 
-      <!-- SELECCIÓN DE SEDE ACTUALIZADA -->
+      <!-- FORMULARIO DE DATOS DEL CLIENTE (OBLIGATORIO) -->
+      <div style="background: #1b241d; padding: 12px; border-radius: 8px; border: 1px solid #222; margin-bottom: 15px;">
+        <label style="display:block; color:#D4AF37; margin-bottom:3px; font-size:0.85rem;">👤 NOMBRE Y APELLIDO (*):</label>
+        <input type="text" id="client-name" placeholder="Ej. Juan Pérez" style="width:100%; padding:8px; background:#121814; border:1px solid #333; color:white; border-radius:6px; margin-bottom:10px;">
+
+        <label style="display:block; color:#D4AF37; margin-bottom:3px; font-size:0.85rem;">📞 TELÉFONO DE CONTACTO (*):</label>
+        <input type="tel" id="client-phone" placeholder="Ej. 987654321" style="width:100%; padding:8px; background:#121814; border:1px solid #333; color:white; border-radius:6px; margin-bottom:10px;">
+
+        <label style="display:block; color:#D4AF37; margin-bottom:3px; font-size:0.85rem;">🏠 DIRECCIÓN DE ENTREGA (*):</label>
+        <input type="text" id="client-address" placeholder="Ej. Av. Lima 123 - Dpto 201" style="width:100%; padding:8px; background:#121814; border:1px solid #333; color:white; border-radius:6px;">
+      </div>
+
+      <!-- SELECCIÓN DE SEDE -->
       <label style="display:block; color:#D4AF37; margin-bottom:5px; font-size:0.85rem;">📍 SELECCIONA TU SEDE DE ATENCIÓN (*):</label>
       <select id="select-sede" style="width:100%; padding:10px; background:#1b241d; border:1px solid #333; color:white; border-radius:8px; margin-bottom:15px;">
         <option value="">-- Selecciona Sede --</option>
@@ -480,7 +492,7 @@
         <div id="payment-efectivo" class="payment-method" onclick="seleccionarPago('efectivo')">💵 Efectivo</div>
       </div>
 
-      <!-- COMPROBANTE SOLO EN YAPE -->
+      <!-- SECCIÓN YAPE OBLIGATORIO -->
       <div id="section-yape">
         <p style="font-size:0.8rem; color:#ccc; text-align:center;">Número Yape/Plin: <strong>979 707 173</strong></p>
         <label for="receipt-file" class="receipt-label-required">
