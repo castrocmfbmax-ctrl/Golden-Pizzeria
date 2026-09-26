@@ -37,12 +37,16 @@
     .btn-add { width: 100%; background: #D4AF37; color: #000; border: none; padding: 10px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: background 0.2s; font-size: 0.9rem; }
     .btn-add:hover { background: #f1c40f; }
 
-    /* MODAL DE OPCIONES Y TAMAÑOS */
+    /* MODALES DE OPCIONES Y PAGO */
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
-    .modal-content { background: #141816; color: white; padding: 25px; border-radius: 12px; border: 1px solid #D4AF37; width: 90%; max-width: 380px; position: relative; }
+    .modal-content { background: #141816; color: white; padding: 25px; border-radius: 12px; border: 1px solid #D4AF37; width: 90%; max-width: 420px; position: relative; max-height: 90vh; overflow-y: auto; }
     .modal-close { position: absolute; top: 12px; right: 15px; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
     .btn-size-option { width: 100%; background: #1e2421; color: white; border: 1px solid #333; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; text-align: left; margin-bottom: 10px; transition: all 0.2s; }
     .btn-size-option:hover { background: #D4AF37; color: black; border-color: #D4AF37; }
+
+    /* OPCIONES DE PAGO */
+    .pago-option { background: #1e2421; border: 1px solid #333; padding: 12px; border-radius: 8px; margin-bottom: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+    .pago-option input { accent-color: #D4AF37; }
 
     /* CARRITO FLOTANTE Y DRAWER */
     .carrito-float-btn { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; border: none; border-radius: 50px; padding: 12px 22px; font-weight: bold; font-size: 1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.6); cursor: pointer; z-index: 1000; display: flex; align-items: center; gap: 8px; }
@@ -516,6 +520,51 @@
     </div>
   </div>
 
+  <!-- MODAL DE PAGO (NUEVO) -->
+  <div id="modal-pago" class="modal-overlay">
+    <div class="modal-content">
+      <button onclick="cerrarModalPago()" class="modal-close">&times;</button>
+      <h2 style="color:#D4AF37; margin-bottom:15px; font-size:1.3rem;">💳 MÉTODOS DE PAGO</h2>
+      
+      <p style="color:#ccc; font-size:0.9rem; margin-bottom:15px;">Selecciona cómo deseas pagar tu pedido:</p>
+
+      <label class="pago-option">
+        <input type="radio" name="metodoPago" value="yape" onchange="seleccionarMetodo('yape')">
+        <div>
+          <strong>📱 Yape / Plin</strong>
+          <div style="font-size:0.8rem; color:#aaa;">Pago virtual (requiere captura)</div>
+        </div>
+      </label>
+
+      <label class="pago-option">
+        <input type="radio" name="metodoPago" value="tarjeta" onchange="seleccionarMetodo('tarjeta')">
+        <div>
+          <strong>💳 Tarjeta Débito / Crédito</strong>
+          <div style="font-size:0.8rem; color:#aaa;">Pago presencial al entregar</div>
+        </div>
+      </label>
+
+      <label class="pago-option">
+        <input type="radio" name="metodoPago" value="efectivo" onchange="seleccionarMetodo('efectivo')">
+        <div>
+          <strong>💵 Efectivo</strong>
+          <div style="font-size:0.8rem; color:#aaa;">Pago presencial al entregar</div>
+        </div>
+      </label>
+
+      <!-- SECCIÓN YAPE (Subida obligatoria de imagen) -->
+      <div id="sec-yape" style="display:none; background:#1e2421; border:1px dashed #D4AF37; padding:15px; border-radius:8px; margin-top:15px;">
+        <p style="font-size:0.85rem; color:#25D366; margin-bottom:5px;"><strong>Número Yape / Plin: 979707173</strong></p>
+        <p style="font-size:0.8rem; color:#ccc; margin-bottom:10px;">Adjunta obligatoriamente la captura del comprobante:</p>
+        <input type="file" id="yape-file" accept="image/*" style="font-size:0.85rem; color:#ccc;">
+      </div>
+
+      <button onclick="procesarEnvioFinal()" class="btn-add" style="margin-top:20px; padding:12px; font-size:1rem;">
+        🚀 CONFIRMAR Y ENVIAR POR WHATSAPP
+      </button>
+    </div>
+  </div>
+
   <!-- CARRITO Y BOTÓN FLOTANTE -->
   <button class="carrito-float-btn" onclick="toggleCarrito()">
     🛒 Ver Pedido (<span id="carrito-count">0</span>)
@@ -536,8 +585,8 @@
         <span>Total:</span>
         <span id="carrito-total" style="color:#D4AF37;">S/ 0.00</span>
       </div>
-      <button onclick="enviarWhatsApp()" style="width:100%; background:#25D366; color:white; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:1rem; display:flex; justify-content:center; align-items:center; gap:8px;">
-        📲 Pedir por WhatsApp
+      <button onclick="iniciarProcesoPago()" style="width:100%; background:#25D366; color:white; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:1rem; display:flex; justify-content:center; align-items:center; gap:8px;">
+        💳 Continuar con el Pago
       </button>
     </div>
   </div>
@@ -546,6 +595,7 @@
   <script>
     let carrito = [];
     let pizzaSeleccionada = {};
+    let metodoSeleccionado = "";
 
     function filterCategory(cat, event) {
       const btns = document.querySelectorAll('.filter-btn');
@@ -677,8 +727,67 @@
       document.getElementById('drawer-carrito').classList.toggle('open');
     }
 
-    function enviarWhatsApp() {
+    // --- NUEVO FLUJO DE PAGO ---
+    function iniciarProcesoPago() {
       if (carrito.length === 0) return alert('Agrega productos a tu pedido primero.');
+      document.getElementById('drawer-carrito').classList.remove('open');
+      document.getElementById('modal-pago').style.display = 'flex';
+    }
+
+    function cerrarModalPago() {
+      document.getElementById('modal-pago').style.display = 'none';
+    }
+
+    function seleccionarMetodo(tipo) {
+      metodoSeleccionado = tipo;
+      document.getElementById('sec-yape').style.display = (tipo === 'yape') ? 'block' : 'none';
+    }
+
+    async function procesarEnvioFinal() {
+      if (!metodoSeleccionado) {
+        return alert("Por favor selecciona una forma de pago.");
+      }
+
+      let detallePago = "";
+      let urlCaptura = "";
+
+      if (metodoSeleccionado === 'yape') {
+        const fileInput = document.getElementById('yape-file');
+        if (!fileInput.files || fileInput.files.length === 0) {
+          return alert("⚠️ OBLIGATORIO: Debes adjuntar la captura del comprobante de Yape para continuar.");
+        }
+
+        // Subida automática de captura
+        const file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append('image', file);
+
+        alert("⏳ Subiendo comprobante, por favor espera un momento...");
+
+        try {
+          // Servidor de subida gratuito (ImgBB / free API)
+          const res = await fetch("https://api.imgbb.com/1/upload?key=c2b3d8f89e2402dd1d7398fb66453d10", {
+            method: "POST",
+            body: formData
+          });
+          const data = await res.json();
+          if (data.success) {
+            urlCaptura = data.data.url;
+            detallePago = `📱 *Método de Pago:* Yape / Plin\n🧾 *Captura del Comprobante:* ${urlCaptura}`;
+          } else {
+            throw new Error();
+          }
+        } catch (e) {
+          return alert("Hubo un error subiendo la imagen. Intenta de nuevo o verifica tu conexión.");
+        }
+
+      } else if (metodoSeleccionado === 'tarjeta') {
+        detallePago = "💳 *Método de Pago:* Tarjeta Débito/Crédito (Pago Presencial)";
+      } else if (metodoSeleccionado === 'efectivo') {
+        detallePago = "💵 *Método de Pago:* Efectivo (Pago Presencial)";
+      }
+
+      // Estructurar el mensaje de WhatsApp
       let msg = "🍕 *¡NUEVO PEDIDO - GOLDEN PIZZERIA & CAFE!* 🍕\n\n";
       let tot = 0;
       carrito.forEach(i => {
@@ -686,8 +795,13 @@
         tot += sub;
         msg += `• *${i.cant}x* ${i.nombre} - S/ ${sub}.00\n`;
       });
-      msg += `\n💰 *TOTAL:* S/ ${tot}.00\n📍 *Ubicación del local:* AV ARGENTINA 1432`;
+
+      msg += `\n💰 *TOTAL A PAGAR:* S/ ${tot}.00\n`;
+      msg += `${detallePago}\n`;
+      msg += `📍 *Ubicación del local:* AV ARGENTINA 1432`;
+
       window.open(`https://wa.me/51979707173?text=${encodeURIComponent(msg)}`, '_blank');
+      cerrarModalPago();
     }
   </script>
 </body>
