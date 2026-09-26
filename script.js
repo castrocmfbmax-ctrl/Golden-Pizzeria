@@ -1,15 +1,43 @@
 /* =========================================================
-   GOLDEN PIZZERIA - SISTEMA LÓGICO DE SEDES Y PAGO
+   GOLDEN PIZZERIA - SISTEMA COMPLETO, CARRITO Y SEGURIDAD
 ========================================================= */
 
 let carrito = [];
 let metodoPagoSeleccionado = "yape";
 let pizzaActual = "";
+let comprobanteAdjunto = null;
 
-/* --- AGREGAR Y MANEJAR PEDIDOS --- */
+/* --- SISTEMA DE SEGURIDAD ANTI-TROLLS --- */
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', e => {
+    if (e.keyCode === 123 || 
+       (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
+       (e.ctrlKey && e.keyCode === 85)) {
+        e.preventDefault();
+    }
+});
+
+/* --- LÓGICA DEL CARRITO Y MANEJO DE CANTIDADES --- */
 function agregarPedido(nombre, precio) {
-    carrito.push({ nombre: nombre, precio: parseFloat(precio) });
+    let itemExistente = carrito.find(item => item.nombre === nombre);
+    if (itemExistente) {
+        itemExistente.cantidad++;
+    } else {
+        carrito.push({ nombre: nombre, precio: parseFloat(precio), cantidad: 1 });
+    }
     actualizarCarritoUI();
+}
+
+function cambiarCantidad(index, delta) {
+    carrito[index].cantidad += delta;
+    if (carrito[index].cantidad <= 0) {
+        carrito.splice(index, 1);
+    }
+    actualizarCarritoUI();
+    const overlay = document.getElementById("payment-overlay");
+    if (overlay && overlay.style.display === "flex") {
+        renderResumenPago();
+    }
 }
 
 function actualizarCarritoUI() {
@@ -17,18 +45,32 @@ function actualizarCarritoUI() {
     const cartCount = document.getElementById("cart-count");
     const cartTotal = document.getElementById("cart-total");
 
-    if (carrito.length > 0) {
-        if (cartBar) cartBar.classList.remove("hidden");
-        let total = carrito.reduce((sum, item) => sum + item.precio, 0);
-        if (cartCount) cartCount.innerText = carrito.length;
-        if (cartTotal) cartTotal.innerText = `S/ ${total.toFixed(2)}`;
+    let totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+    let totalPrecio = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+
+    if (totalItems > 0) {
+        if (cartBar) {
+            cartBar.classList.remove("hidden");
+            cartBar.style.display = "flex";
+        }
+        if (cartCount) cartCount.innerText = totalItems;
+        if (cartTotal) cartTotal.innerText = `S/ ${totalPrecio.toFixed(2)}`;
     } else {
-        if (cartBar) cartBar.classList.add("hidden");
+        if (cartBar) {
+            cartBar.classList.add("hidden");
+            cartBar.style.display = "none";
+        }
+        cerrarPago();
     }
 }
 
 function vaciarPedido() {
     carrito = [];
+    comprobanteAdjunto = null;
+    const fileInput = document.getElementById("receipt-file");
+    if (fileInput) fileInput.value = "";
+    const receiptName = document.getElementById("receipt-name");
+    if (receiptName) receiptName.innerText = "";
     actualizarCarritoUI();
 }
 
@@ -43,38 +85,29 @@ function filterCategory(cat) {
     }
 
     cards.forEach(card => {
-        if (cat === 'todas') {
-            card.style.display = "flex";
-        } else if (card.classList.contains(cat)) {
-            card.style.display = "flex";
+        if (cat === 'todas' || card.classList.contains(cat)) {
+            card.style.display = "block";
         } else {
             card.style.display = "none";
         }
     });
 }
 
-/* --- MODAL DE TAMAÑOS DE PIZZA --- */
+/* --- MODAL DE SELECCIÓN DE TAMAÑOS --- */
 function abrirModalPizza(nombre, pPersonal, pMediana, pFamiliar) {
     pizzaActual = nombre;
-
     const modal = document.getElementById("pizza-modal");
     const titulo = document.getElementById("pizza-modal-title");
     const container = document.getElementById("pizza-modal-sizes");
 
     if (!modal || !container) return;
 
-    if (titulo) titulo.innerText = `Pizza ${nombre}`;
+    if (titulo) titulo.innerText = `🍕 ${nombre}`;
 
     let htmlButtons = "";
-    if (pPersonal !== null && pPersonal !== undefined) {
-        htmlButtons += `<button type="button" class="btn-size" style="padding:12px; background:#191e1b; border:1px solid #D4AF37; color:white; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="seleccionarTamanoPizza('Personal', ${pPersonal})">Personal - S/ ${parseFloat(pPersonal).toFixed(2)}</button>`;
-    }
-    if (pMediana !== null && pMediana !== undefined) {
-        htmlButtons += `<button type="button" class="btn-size" style="padding:12px; background:#191e1b; border:1px solid #D4AF37; color:white; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="seleccionarTamanoPizza('Mediana', ${pMediana})">Mediana - S/ ${parseFloat(pMediana).toFixed(2)}</button>`;
-    }
-    if (pFamiliar !== null && pFamiliar !== undefined) {
-        htmlButtons += `<button type="button" class="btn-size" style="padding:12px; background:#191e1b; border:1px solid #D4AF37; color:white; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="seleccionarTamanoPizza('Familiar', ${pFamiliar})">Familiar - S/ ${parseFloat(pFamiliar).toFixed(2)}</button>`;
-    }
+    if (pPersonal) htmlButtons += `<button type="button" class="filter-btn" style="padding:12px;" onclick="seleccionarTamanoPizza('Personal', ${pPersonal})">Personal - S/ ${parseFloat(pPersonal).toFixed(2)}</button>`;
+    if (pMediana) htmlButtons += `<button type="button" class="filter-btn" style="padding:12px;" onclick="seleccionarTamanoPizza('Mediana', ${pMediana})">Mediana - S/ ${parseFloat(pMediana).toFixed(2)}</button>`;
+    if (pFamiliar) htmlButtons += `<button type="button" class="filter-btn" style="padding:12px;" onclick="seleccionarTamanoPizza('Familiar', ${pFamiliar})">Familiar - S/ ${parseFloat(pFamiliar).toFixed(2)}</button>`;
 
     container.innerHTML = htmlButtons;
     modal.classList.remove("hidden");
@@ -94,68 +127,77 @@ function cerrarModalPizza() {
     }
 }
 
-/* --- MODAL DE SABORES DE FRAPPÉ --- */
-function abrirModalFrappe(tipo) {
-    const modal = document.getElementById("pizza-modal");
-    const titulo = document.getElementById("pizza-modal-title");
-    const container = document.getElementById("pizza-modal-sizes");
-
-    if (!modal || !container) return;
-
-    let sabores = [];
-    let precio = 0;
-
-    if (tipo === 'fruta') {
-        if (titulo) titulo.innerText = "Frappé de Fruta (S/ 10.00)";
-        sabores = ["Maracuyá", "Fresa", "Mango", "Lúcuma"];
-        precio = 10;
-    } else if (tipo === 'especial') {
-        if (titulo) titulo.innerText = "Frappé Especial (S/ 9.00)";
-        sabores = ["Cappuccino", "Oreo"];
-        precio = 9;
+/* --- MODAL DE FRAPPÉS --- */
+function abrirModalFrappe() {
+    const modal = document.getElementById("frappe-modal");
+    if (modal) {
+        modal.classList.remove("hidden");
+        modal.style.display = "flex";
     }
-
-    let htmlButtons = "";
-    sabores.forEach(sabor => {
-        htmlButtons += `<button type="button" class="btn-size" style="padding:12px; background:#191e1b; border:1px solid #D4AF37; color:white; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="seleccionarSaborFrappe('${sabor}', ${precio})">Sabor: ${sabor}</button>`;
-    });
-
-    container.innerHTML = htmlButtons;
-    modal.classList.remove("hidden");
-    modal.style.display = "flex";
 }
 
-function seleccionarSaborFrappe(sabor, precio) {
+function seleccionarFrappe(sabor, precio) {
     agregarPedido(`Frappé de ${sabor}`, precio);
-    cerrarModalPizza();
+    cerrarModalFrappe();
 }
 
-/* --- MODAL DE PAGO Y SEDE --- */
+function cerrarModalFrappe() {
+    const modal = document.getElementById("frappe-modal");
+    if (modal) {
+        modal.classList.add("hidden");
+        modal.style.display = "none";
+    }
+}
+
+/* --- COMPROBANTE YAPE --- */
+function mostrarNombreArchivo(input) {
+    const container = document.getElementById("receipt-name");
+    if (input.files && input.files[0]) {
+        comprobanteAdjunto = input.files[0];
+        container.innerText = `✅ Adjunto: ${input.files[0].name}`;
+        container.style.color = "#25d366";
+    } else {
+        comprobanteAdjunto = null;
+        container.innerText = "❌ Adjunto obligatorio";
+        container.style.color = "#ff4d4d";
+    }
+}
+
+/* --- MODAL DE PAGO Y RESUMEN DE COMPRA --- */
 function abrirPago(e) {
     if (e) e.preventDefault();
     const overlay = document.getElementById("payment-overlay");
+    if (!overlay) return;
+
+    renderResumenPago();
+    overlay.classList.remove("hidden");
+    overlay.style.display = "flex";
+    seleccionarPago('yape');
+}
+
+function renderResumenPago() {
     const summaryList = document.getElementById("payment-summary-list");
     const summaryTotal = document.getElementById("payment-total");
-
-    if (!overlay) return;
 
     if (summaryList) {
         let html = "";
         let total = 0;
-        carrito.forEach((item) => {
-            html += `<div style="display:flex; justify-content:space-between; margin-bottom:5px; border-bottom:1px solid #222; padding-bottom:3px; font-size:0.85rem; color:#ccc;">
+        carrito.forEach((item, index) => {
+            let subtotal = item.precio * item.cantidad;
+            total += subtotal;
+            html += `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px solid #222; padding-bottom:5px; font-size:0.85rem;">
                 <span>• ${item.nombre}</span>
-                <span style="color:#D4AF37">S/ ${item.precio.toFixed(2)}</span>
+                <div>
+                  <button class="qty-btn" onclick="cambiarCantidad(${index}, -1)">-</button>
+                  <span style="color:#D4AF37; font-weight:bold;">${item.cantidad}</span>
+                  <button class="qty-btn" onclick="cambiarCantidad(${index}, 1)">+</button>
+                  <span style="color:#25d366; margin-left:8px;">S/ ${subtotal.toFixed(2)}</span>
+                </div>
             </div>`;
-            total += item.precio;
         });
         summaryList.innerHTML = html;
-        if (summaryTotal) summaryTotal.innerText = `Total: S/ ${total.toFixed(2)}`;
+        if (summaryTotal) summaryTotal.innerText = `TOTAL: S/ ${total.toFixed(2)}`;
     }
-
-    overlay.classList.remove("hidden");
-    overlay.style.display = "flex";
-    seleccionarPago('yape');
 }
 
 function cerrarPago() {
@@ -187,25 +229,20 @@ function seleccionarPago(tipo) {
     if (tipo === 'efectivo' && btnEfectivo) btnEfectivo.classList.add("selected");
 }
 
-function mostrarNombreArchivo(input) {
-    const container = document.getElementById("receipt-name");
-    if (input.files && input.files[0]) {
-        container.innerText = `📄 Comprobante listo: ${input.files[0].name}`;
-    } else {
-        container.innerText = "";
-    }
-}
-
-/* --- CONFIRMACIÓN Y ENVÍO POR WHATSAPP CON VALIDACIÓN DE SEDE --- */
+/* --- ENVÍO DIRECTO A WHATSAPP --- */
 function confirmarPedido() {
     if (carrito.length === 0) return;
 
     const selectSede = document.getElementById("select-sede");
     const sedeSeleccionada = selectSede ? selectSede.value : "";
 
-    // VALIDACIÓN: Exige al cliente seleccionar una sede antes de continuar
     if (!sedeSeleccionada) {
-        alert("Por favor selecciona la sede donde deseas realizar tu pedido.");
+        alert("📍 Por favor selecciona tu sede de atención.");
+        return;
+    }
+
+    if (metodoPagoSeleccionado === 'yape' && !comprobanteAdjunto) {
+        alert("⚠️ Por favor adjunta el comprobante Yape / Plin.");
         return;
     }
 
@@ -214,16 +251,20 @@ function confirmarPedido() {
     let total = 0;
 
     carrito.forEach((item) => {
-        textoDetalle += `• ${item.nombre} - S/ ${item.precio.toFixed(2)}\n`;
-        total += item.precio;
+        let subtotal = item.precio * item.cantidad;
+        textoDetalle += `• ${item.cantidad}x ${item.nombre} - S/ ${subtotal.toFixed(2)}\n`;
+        total += subtotal;
     });
 
     let mensaje = `*¡NUEVO PEDIDO - GOLDEN PIZZERIA!* 🍕\n\n`;
-    mensaje += `📍 *SEDE SELECCIONADA:* ${sedeSeleccionada}\n\n`;
+    mensaje += `📍 *SEDE:* ${sedeSeleccionada}\n\n`;
     mensaje += `*Detalle del Pedido:*\n${textoDetalle}\n`;
     mensaje += `*TOTAL:* S/ ${total.toFixed(2)}\n`;
-    mensaje += `*Método de Pago:* ${metodoPagoSeleccionado.toUpperCase()}\n\n`;
-    mensaje += `_Pedido generado desde la página web_`;
+    mensaje += `*Método de Pago:* ${metodoPagoSeleccionado.toUpperCase()}\n`;
+    
+    if (metodoPagoSeleccionado === 'yape') {
+        mensaje += `*Comprobante:* Adjuntado en el chat 📄\n`;
+    }
 
     const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
     window.open(url, "_blank");
