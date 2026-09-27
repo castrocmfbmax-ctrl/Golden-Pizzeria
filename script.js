@@ -1,6 +1,3 @@
-// ==========================================
-// ESTADO GLOBAL Y CONFIGURACIÓN
-// ==========================================
 let carrito = [];
 let tiempoRestante = 15 * 60;
 let tiempoTolerancia = 20 * 60;
@@ -11,9 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   crearEstructuraModalesYCarrito();
 });
 
-// ==========================================
-// 1. TEMPORIZADOR DE HORNO
-// ==========================================
+// TEMPORIZADOR DE COCINA
 function iniciarTemporizadorCocina() {
   if (temporizadorIntervalo) clearInterval(temporizadorIntervalo);
   
@@ -52,15 +47,13 @@ function iniciarTemporizadorCocina() {
   }, 1000);
 }
 
-// ==========================================
-// 2. FILTROS Y BÚSQUEDA
-// ==========================================
-function filterCategory(categoria) {
+// FILTRADO Y BÚSQUEDA
+function filterCategory(categoria, evt) {
   const botones = document.querySelectorAll('.filter-btn');
   botones.forEach(btn => btn.classList.remove('active'));
   
-  if (event && event.target) {
-    event.target.classList.add('active');
+  if (evt && evt.target) {
+    evt.target.classList.add('active');
   }
 
   const tarjetas = document.querySelectorAll('.product-grid .card');
@@ -89,9 +82,7 @@ function buscarProducto() {
   });
 }
 
-// ==========================================
-// 3. MODALES DE PIZZAS CON EXTRAS DIFERENCIADOS
-// ==========================================
+// MODALES DE OPCIONES (EXTRAS SEGÚN TAMAÑO)
 function abrirModalPizza(nombre, precioPersonal, precioMediana, precioFamiliar) {
   pizzaSeleccionadaActual = { nombre, precioPersonal, precioMediana, precioFamiliar };
   
@@ -284,9 +275,7 @@ function cerrarModal() {
   document.getElementById('modal-custom').style.display = 'none';
 }
 
-// ==========================================
-// 4. CARRITO CON MÁS (+) Y MENOS (-) Y ELIMINAR
-// ==========================================
+// CARRITO Y MODIFICACIÓN DE CANTIDADES
 function agregarPedido(nombre, precio) {
   const itemExistente = carrito.find(p => p.nombre === nombre);
   if (itemExistente) {
@@ -339,7 +328,7 @@ function actualizarCarritoUI() {
             <span style="font-weight:bold; font-size:0.95rem;">${item.cantidad}</span>
             <button onclick="cambiarCantidad(${index}, 1)" style="background:#2a1b14; color:#D4AF37; border:1px solid #D4AF37; border-radius:4px; width:26px; height:26px; cursor:pointer; font-weight:bold;">+</button>
             <span style="font-weight:bold; margin-left:6px; font-size:0.9rem;">S/ ${subtotal}.00</span>
-            <button onclick="eliminarProducto(${index})" style="background:none; border:none; color:#ff4444; font-size:1.1rem; cursor:pointer; margin-left:4px;" title="Eliminar">🗑️</button>
+            <button onclick="eliminarProducto(${index})" style="background:none; border:none; color:#ff4444; font-size:1.1rem; cursor:pointer; margin-left:4px;" title="Eliminar">&times;</button>
           </div>
         </div>
       `;
@@ -351,9 +340,7 @@ function actualizarCarritoUI() {
   totalMonto.innerText = `S/ ${total}.00`;
 }
 
-// ==========================================
-// 5. ENVÍO POR WHATSAPP CON DATOS ANTI-TROLLS Y YAPE OBLIGATORIO
-// ==========================================
+// ENVÍO DE PEDIDO A WHATSAPP CON VALIDACIÓN ANTI-TROLLS Y CAPTURA YAPE
 function enviarWhatsApp() {
   if (carrito.length === 0) {
     alert("Tu carrito está vacío. Agrega productos primero.");
@@ -414,9 +401,7 @@ function enviarWhatsApp() {
   window.open(url, '_blank');
 }
 
-// ==========================================
-// 6. INYECCIÓN DE FORMULARIO DE CLIENTE Y ESTILOS DINÁMICOS
-// ==========================================
+// CONSTRUCCIÓN DE COMPONENTES FLOTANTES
 function crearEstructuraModalesYCarrito() {
   const styles = `
     .input-form {
@@ -487,7 +472,6 @@ function crearEstructuraModalesYCarrito() {
   styleSheet.innerText = styles;
   document.head.appendChild(styleSheet);
 
-  // Inyectar Modal Custom
   const modalHTML = `
     <div id="modal-custom" style="display:none; position:fixed; top:0; left:0; width:100%; height:100vh; background:rgba(0,0,0,0.88); z-index:2000; justify-content:center; align-items:center;">
       <div style="background:#140e0b; color:white; padding:25px; border-radius:12px; border:1px solid #D4AF37; width:90%; max-width:420px; position:relative; box-shadow:0 0 20px rgba(212,175,55,0.3); max-height:90vh; overflow-y:auto;">
@@ -499,7 +483,6 @@ function crearEstructuraModalesYCarrito() {
   `;
   document.body.insertAdjacentHTML('beforeend', modalHTML);
 
-  // Inyectar Botón Flotante y Carrito con Formulario Anti-trolls
   const carritoHTML = `
     <button class="carrito-float-btn" onclick="document.getElementById('drawer-carrito').classList.toggle('open')">
       🛒 Ver Pedido (<span id="carrito-count">0</span>)
@@ -515,7 +498,6 @@ function crearEstructuraModalesYCarrito() {
         <p style="color:#aaa; text-align:center; margin-top:20px;">Tu carrito está vacío.</p>
       </div>
 
-      <!-- FORMULARIO ANTI-TROLLS Y CONFIRMACIÓN DE PAGO -->
       <div style="border-top:1px solid #333; padding-top:12px; margin-top:10px; display:flex; flex-direction:column; gap:8px;">
         <div style="font-size:0.8rem; color:#D4AF37; font-weight:bold;">🛡️ DATOS OBLIGATORIOS (ANTI-TROLLS):</div>
         
