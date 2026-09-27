@@ -1,4 +1,4 @@
-/* FUENTE SWEET DISTANCE DE WILDAN TYPE */
+/* FUENTE SWEET DISTANCE */
 @font-face {
   font-family: 'Sweet Distance';
   src: url('https://static.wfonts.com/data/2026/09/22/sweet-distance/Sweet Distance.ttf') format('truetype');
@@ -11,103 +11,123 @@
   padding: 0;
 }
 
-/* FONDO EFECTO HORNO RÚSTICO Y TEXTURA DE PIEDRA CÁLIDA */
+/* FONDO NOCTURNO DE HORNO RÚSTICO Y TENUE */
 body {
-  background-color: #0c0908;
+  background-color: #080504;
   background-image: 
-    radial-gradient(circle at 50% 20%, rgba(212, 110, 20, 0.25) 0%, rgba(15, 10, 8, 0.95) 75%),
-    radial-gradient(circle at 20% 80%, rgba(180, 70, 10, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+    radial-gradient(circle at 50% 15%, rgba(180, 70, 10, 0.2) 0%, rgba(8, 5, 4, 0.98) 75%),
+    radial-gradient(circle at 15% 85%, rgba(140, 40, 5, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 85% 85%, rgba(180, 120, 20, 0.08) 0%, transparent 50%);
   background-attachment: fixed;
   color: #e0e0e0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding-bottom: 80px;
+  padding-bottom: 90px;
 }
 
-/* HEADER Y EFECTOS ESPECIALES DE FUEGO ARTESANAL */
+/* HEADER TENUE RÚSTICO DE NOCHE */
 .header {
   text-align: center;
-  padding: 30px 15px 20px 15px;
-  background: linear-gradient(180deg, rgba(20, 12, 8, 0.95) 0%, rgba(12, 9, 8, 0.8) 100%);
-  border-bottom: 2px solid #D4AF37;
-  box-shadow: 0 5px 25px rgba(212, 110, 20, 0.3);
+  padding: 25px 15px 20px 15px;
+  background: linear-gradient(180deg, rgba(15, 9, 6, 0.98) 0%, rgba(8, 5, 4, 0.9) 100%);
+  border-bottom: 2px solid #b38f28;
+  box-shadow: 0 4px 20px rgba(180, 70, 10, 0.25);
 }
 
 .logo-title {
   font-family: 'Sweet Distance', 'Georgia', sans-serif !important;
   color: #D4AF37;
-  font-size: 3rem;
+  font-size: 2.8rem;
   letter-spacing: 1px;
   margin-bottom: 5px;
-  text-shadow: 0 0 10px rgba(212, 175, 55, 0.5), 2px 2px 4px rgba(0, 0, 0, 0.9);
-  animation: glowHorno 3s infinite alternate;
+  text-shadow: 0 0 12px rgba(212, 175, 55, 0.4), 2px 2px 5px rgba(0, 0, 0, 0.95);
+  animation: glowNocturno 3.5s infinite alternate;
 }
 
-@keyframes glowHorno {
-  0% { text-shadow: 0 0 8px rgba(212, 175, 55, 0.4), 2px 2px 4px #000; }
-  100% { text-shadow: 0 0 18px rgba(255, 140, 0, 0.8), 2px 2px 8px #000; }
+@keyframes glowNocturno {
+  0% { text-shadow: 0 0 6px rgba(212, 175, 55, 0.3), 2px 2px 4px #000; }
+  100% { text-shadow: 0 0 15px rgba(212, 110, 20, 0.7), 2px 2px 6px #000; }
 }
 
 .tagline {
-  color: #d4a373;
-  font-size: 1.05rem;
-  margin-bottom: 20px;
+  color: #c29562;
+  font-size: 1rem;
+  margin-bottom: 18px;
   font-style: italic;
 }
 
-/* BARRA DE BÚSQUEDA */
+/* CONTENEDOR BUSCADOR Y BOTÓN RESERVA */
 .search-container {
-  max-width: 500px;
+  max-width: 550px;
   margin: 0 auto 15px auto;
   padding: 0 15px;
+  display: flex;
+  gap: 10px;
 }
 
 #search-input {
-  width: 100%;
-  padding: 12px 20px;
+  flex: 1;
+  padding: 12px 18px;
   border-radius: 25px;
-  border: 1px solid #D4AF37;
-  background: rgba(26, 18, 14, 0.9);
+  border: 1px solid #b38f28;
+  background: rgba(18, 11, 8, 0.9);
   color: #fff;
-  font-size: 1rem;
+  font-size: 0.95rem;
   outline: none;
-  box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
   transition: all 0.3s ease;
 }
 
 #search-input:focus {
   border-color: #ff9d00;
-  box-shadow: 0 0 12px rgba(255, 157, 0, 0.6);
+  box-shadow: 0 0 10px rgba(255, 157, 0, 0.5);
+}
+
+.btn-reserva-header {
+  background: linear-gradient(135deg, #b38f28 0%, #d4af37 100%);
+  color: #000;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 3px 10px rgba(212, 175, 55, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-reserva-header:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 15px rgba(255, 157, 0, 0.6);
 }
 
 /* FILTROS */
 .filter-bar {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
   padding: 0 10px;
 }
 
 .filter-btn {
-  background: rgba(20, 14, 10, 0.85);
+  background: rgba(16, 10, 7, 0.9);
   color: #D4AF37;
-  border: 1px solid #D4AF37;
-  padding: 8px 16px;
+  border: 1px solid #b38f28;
+  padding: 8px 14px;
   border-radius: 20px;
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 600;
-  backdrop-filter: blur(5px);
+  font-size: 0.88rem;
 }
 
 .filter-btn.active, .filter-btn:hover {
   background: #D4AF37;
   color: #000;
-  box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
 }
 
-/* TARJETAS RÚSTICAS DE PRODUCTOS */
+/* TARJETAS CARTA */
 .container {
   max-width: 1100px;
   margin: 25px auto;
@@ -117,51 +137,48 @@ body {
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 22px;
+  gap: 20px;
 }
 
 .card {
-  background: linear-gradient(145deg, rgba(22, 15, 12, 0.9), rgba(14, 10, 8, 0.95));
-  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: linear-gradient(145deg, rgba(18, 12, 9, 0.92), rgba(10, 7, 5, 0.98));
+  border: 1px solid rgba(212, 175, 55, 0.25);
   border-radius: 12px;
   padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
   transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  backdrop-filter: blur(4px);
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
   border-color: #ff9d00;
-  box-shadow: 0 8px 25px rgba(255, 120, 0, 0.3);
+  box-shadow: 0 8px 20px rgba(212, 110, 20, 0.35);
 }
 
 .card h3 {
   font-family: 'Sweet Distance', 'Georgia', sans-serif !important;
   color: #D4AF37;
-  font-size: 1.6rem;
+  font-size: 1.55rem;
   margin-bottom: 10px;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
 }
 
 .card p {
-  color: #cccccc;
-  font-size: 0.95rem;
+  color: #bbbbbb;
+  font-size: 0.92rem;
   line-height: 1.4;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .card .precios {
   font-weight: bold;
   color: #ffca3a;
-  font-size: 0.9rem;
-  margin-bottom: 15px;
+  font-size: 0.88rem;
+  margin-bottom: 14px;
 }
 
-/* BOTONES DE AGREGAR CON EFECTO DE BRILLO */
 .btn-add {
   background: rgba(212, 175, 55, 0.08);
   color: #D4AF37;
@@ -172,28 +189,27 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   width: 100%;
-  letter-spacing: 0.5px;
 }
 
 .btn-add:hover {
   background: #D4AF37;
   color: #000;
-  box-shadow: 0 0 12px rgba(212, 175, 55, 0.8);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.7);
 }
 
-/* BANNER DE TEMPORIZADOR ESTILO FUEGO DE HORNO */
+/* BANNER TEMPORIZADOR */
 .timer-banner {
-  background: linear-gradient(90deg, #1f120a 0%, #361705 50%, #1f120a 100%);
+  background: linear-gradient(90deg, #180d07 0%, #2c1204 50%, #180d07 100%);
   border: 1px solid #ff9d00;
   border-radius: 12px;
   padding: 12px 20px;
   margin: 15px auto;
   max-width: 550px;
-  display: none; /* Inicia oculto hasta realizar el pedido */
+  display: none;
   align-items: center;
   justify-content: space-between;
   color: white;
-  box-shadow: 0 4px 20px rgba(255, 120, 0, 0.4);
+  box-shadow: 0 4px 18px rgba(255, 120, 0, 0.35);
 }
 
 .timer-clock {
@@ -201,5 +217,4 @@ body {
   font-weight: bold;
   color: #ffca3a;
   font-family: monospace;
-  text-shadow: 0 0 8px rgba(255, 202, 58, 0.6);
 }
