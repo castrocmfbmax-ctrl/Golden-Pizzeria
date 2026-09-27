@@ -41,11 +41,15 @@
     <div class="filter-bar">
       <button class="filter-btn active" onclick="filterCategory('todas', event)">Todas</button>
       <button class="filter-btn" onclick="filterCategory('clasicas', event)">Clásicas</button>
+      <button class="filter-btn" onclick="filterCategory('unicos', event)">Sabores Únicos</button>
+      <button class="filter-btn" onclick="filterCategory('casa', event)">De Casa</button>
       <button class="filter-btn" onclick="filterCategory('especiales', event)">Especiales</button>
+      <button class="filter-btn" onclick="filterCategory('panes', event)">🍞 Panes al Ajo</button>
       <button class="filter-btn" onclick="filterCategory('pizzetas', event)">🍕 Pizzetas</button>
       <button class="filter-btn" onclick="filterCategory('kids', event)">👶 Kids</button>
       <button class="filter-btn" onclick="filterCategory('cumpleanos', event)">🎉 Cumpleaños</button>
       <button class="filter-btn" onclick="filterCategory('bebidas', event)">Bebidas</button>
+      <button class="filter-btn" onclick="filterCategory('calientes', event)">☕ Bebidas Calientes</button>
       <button class="filter-btn" onclick="filterCategory('frappes', event)">Frappés</button>
     </div>
   </header>
@@ -57,73 +61,244 @@
       <!-- PIZZAS CLÁSICAS -->
       <div class="card clasicas">
         <h3>Pizza Americana</h3>
-        <p>Salsa de tomate casera, abundante queso mozzarella y jamón fino seleccionado.</p>
-        <p class="precios">Personal: S/ 14 | Mediana: S/ 25 | Familiar: S/ 36</p>
-        <button class="btn-add" onclick="abrirModalPizza('Americana', 14, 25, 36)">AGREGAR +</button>
+        <p>Queso mozzarella, jamón Inglés, salchicha ahumada y chorizo.</p>
+        <p class="precios">Personal: S/ 16 | Mediana: S/ 23 | Familiar: S/ 32</p>
+        <button class="btn-add" onclick="abrirModalPizza('Americana', 16, 23, 32)">AGREGAR +</button>
       </div>
 
       <div class="card clasicas">
-        <h3>Pizza Mozzarella</h3>
-        <p>Doble porción de queso mozzarella artesanal con un toque de orégano especiado.</p>
-        <p class="precios">Personal: S/ 14 | Mediana: S/ 25 | Familiar: S/ 36</p>
-        <button class="btn-add" onclick="abrirModalPizza('Mozzarella', 14, 25, 36)">AGREGAR +</button>
+        <h3>Pizza Hawaiana</h3>
+        <p>Queso mozzarella, jamón Inglés y Piña Golden.</p>
+        <p class="precios">Personal: S/ 18 | Mediana: S/ 25 | Familiar: S/ 36</p>
+        <button class="btn-add" onclick="abrirModalPizza('Hawaiana', 18, 25, 36)">AGREGAR +</button>
       </div>
 
       <div class="card clasicas">
         <h3>Pizza Pepperoni</h3>
-        <p>Clásica combinación de queso mozzarella fundido y abundante pepperoni crujiente.</p>
-        <p class="precios">Personal: S/ 16 | Mediana: S/ 28 | Familiar: S/ 39</p>
-        <button class="btn-add" onclick="abrirModalPizza('Pepperoni', 16, 28, 39)">AGREGAR +</button>
+        <p>Queso mozzarella y Pepperoni.</p>
+        <p class="precios">Personal: S/ 18 | Mediana: S/ 28 | Familiar: S/ 38</p>
+        <button class="btn-add" onclick="abrirModalPizza('Pepperoni', 18, 28, 38)">AGREGAR +</button>
       </div>
 
       <div class="card clasicas">
-        <h3>Pizza Hawaina</h3>
-        <p>El balance perfecto entre queso mozzarella, jamón y trozos de piña en su jugo.</p>
-        <p class="precios">Personal: S/ 16 | Mediana: S/ 28 | Familiar: S/ 39</p>
-        <button class="btn-add" onclick="abrirModalPizza('Hawaina', 16, 28, 39)">AGREGAR +</button>
+        <h3>Pizza Italiana</h3>
+        <p>Queso mozzarella, jamón Inglés, champiñones y rodajas de tomate.</p>
+        <p class="precios">Personal: S/ 18 | Mediana: S/ 25 | Familiar: S/ 35</p>
+        <button class="btn-add" onclick="abrirModalPizza('Italiana', 18, 25, 35)">AGREGAR +</button>
+      </div>
+
+      <div class="card clasicas">
+        <h3>Pizza Margarita</h3>
+        <p>Queso mozzarella, espinaca, albahaca y pimentón.</p>
+        <p class="precios">Personal: S/ 17 | Mediana: S/ 24 | Familiar: S/ 32</p>
+        <button class="btn-add" onclick="abrirModalPizza('Margarita', 17, 24, 32)">AGREGAR +</button>
+      </div>
+
+      <div class="card clasicas">
+        <h3>Pizza Siciliana</h3>
+        <p>Queso mozzarella, champiñones, aceituna y cebolla rosada soasada.</p>
+        <p class="precios">Personal: S/ 18 | Mediana: S/ 25 | Familiar: S/ 34</p>
+        <button class="btn-add" onclick="abrirModalPizza('Siciliana', 18, 25, 34)">AGREGAR +</button>
       </div>
 
       <div class="card clasicas">
         <h3>Pizza Vegetariana</h3>
-        <p>Queso mozzarella, pimiento, cebolla fresca, champiñones y aceitunas negras.</p>
-        <p class="precios">Personal: S/ 16 | Mediana: S/ 28 | Familiar: S/ 39</p>
-        <button class="btn-add" onclick="abrirModalPizza('Vegetariana', 16, 28, 39)">AGREGAR +</button>
+        <p>Queso mozzarella, espinaca, champiñones, pimentón y aceituna verde.</p>
+        <p class="precios">Personal: S/ 18 | Mediana: S/ 25 | Familiar: S/ 34</p>
+        <button class="btn-add" onclick="abrirModalPizza('Vegetariana', 18, 25, 34)">AGREGAR +</button>
+      </div>
+
+      <div class="card clasicas">
+        <h3>Pizza Mixta Compartida</h3>
+        <p>Queso mozzarella, mitad Americana y mitad Hawaiana.</p>
+        <p class="precios">Personal: S/ 18 | Mediana: S/ 26 | Familiar: S/ 35</p>
+        <button class="btn-add" onclick="abrirModalPizza('Mixta Compartida Dos Sabores', 18, 26, 35)">AGREGAR +</button>
+      </div>
+
+      <div class="card clasicas">
+        <h3>Pizza Karibeña</h3>
+        <p>Queso mozzarella, jamón Inglés, durazno y piña.</p>
+        <p class="precios">Personal: S/ 22 | Mediana: S/ 28 | Familiar: S/ 40</p>
+        <button class="btn-add" onclick="abrirModalPizza('Karibeña', 22, 28, 40)">AGREGAR +</button>
+      </div>
+
+      <div class="card clasicas">
+        <h3>Pizza La Rustika</h3>
+        <p>Queso mozzarella, jamón Inglés, tocino ahumado, chorizo ahumado y cavanosi.</p>
+        <p class="precios">Personal: S/ 20 | Mediana: S/ 28 | Familiar: S/ 36</p>
+        <button class="btn-add" onclick="abrirModalPizza('La Rustika (Especial Simple)', 20, 28, 36)">AGREGAR +</button>
+      </div>
+
+      <!-- SABORES ÚNICOS -->
+      <div class="card unicos">
+        <h3>Pizza Napolitana</h3>
+        <p>Queso mozzarella y rodajas de tomate.</p>
+        <p class="precios">Personal: S/ 16 | Mediana: S/ 24 | Familiar: S/ 32</p>
+        <button class="btn-add" onclick="abrirModalPizza('Napolitana', 16, 24, 32)">AGREGAR +</button>
+      </div>
+
+      <div class="card unicos">
+        <h3>Pizza Champiñones</h3>
+        <p>Queso mozzarella y champiñones frescos.</p>
+        <p class="precios">Personal: S/ 20 | Mediana: S/ 26 | Familiar: S/ 34</p>
+        <button class="btn-add" onclick="abrirModalPizza('Champiñones', 20, 26, 34)">AGREGAR +</button>
+      </div>
+
+      <div class="card unicos">
+        <h3>Pizza de Salchicha</h3>
+        <p>Queso mozzarella y salchicha ahumada.</p>
+        <p class="precios">Personal: S/ 16 | Mediana: S/ 25 | Familiar: S/ 33</p>
+        <button class="btn-add" onclick="abrirModalPizza('de Salchicha', 16, 25, 33)">AGREGAR +</button>
+      </div>
+
+      <div class="card unicos">
+        <h3>Pizza de Aceituna</h3>
+        <p>Queso mozzarella y aceituna seleccionada.</p>
+        <p class="precios">Personal: S/ 16 | Mediana: S/ 25 | Familiar: S/ 33</p>
+        <button class="btn-add" onclick="abrirModalPizza('de Aceituna', 16, 25, 33)">AGREGAR +</button>
+      </div>
+
+      <div class="card unicos">
+        <h3>Pizza de Salame</h3>
+        <p>Queso mozzarella y salame fino.</p>
+        <p class="precios">Personal: S/ 16 | Mediana: S/ 25 | Familiar: S/ 33</p>
+        <button class="btn-add" onclick="abrirModalPizza('de Salame', 16, 25, 33)">AGREGAR +</button>
+      </div>
+
+      <div class="card unicos">
+        <h3>Pizza de Chorizo</h3>
+        <p>Queso mozzarella y chorizo sabroso.</p>
+        <p class="precios">Personal: S/ 16 | Mediana: S/ 25 | Familiar: S/ 33</p>
+        <button class="btn-add" onclick="abrirModalPizza('de Chorizo', 16, 25, 33)">AGREGAR +</button>
+      </div>
+
+      <div class="card unicos">
+        <h3>Pizza de Jamón</h3>
+        <p>Queso mozzarella y jamón Inglés.</p>
+        <p class="precios">Personal: S/ 16 | Mediana: S/ 25 | Familiar: S/ 33</p>
+        <button class="btn-add" onclick="abrirModalPizza('de Jamón', 16, 25, 33)">AGREGAR +</button>
+      </div>
+
+      <!-- PIZZAS DE CASA -->
+      <div class="card casa">
+        <h3>Golden de la Casa</h3>
+        <p>Queso mozzarella, jamón Inglés, champiñones, tocino ahumado, salame, chorizo ahumado, cavanosi y aceituna.</p>
+        <p class="precios">Personal: S/ 20 | Mediana: S/ 30 | Familiar: S/ 40</p>
+        <button class="btn-add" onclick="abrirModalPizza('Golden de la Casa', 20, 30, 40)">AGREGAR +</button>
+      </div>
+
+      <div class="card casa">
+        <h3>La Suprema de Casa</h3>
+        <p>Queso mozzarella, jamón Inglés, pepperoni, tocino ahumado, salame, chorizo ahumado, cavanosi y pimentón.</p>
+        <p class="precios">Personal: S/ 22 | Mediana: S/ 32 | Familiar: S/ 42</p>
+        <button class="btn-add" onclick="abrirModalPizza('La Suprema de Casa', 22, 32, 42)">AGREGAR +</button>
+      </div>
+
+      <div class="card casa">
+        <h3>La Volcánica 🔥</h3>
+        <p>¡Explosión de sabores! Queso mozzarella, chorizo ahumado, pepperoni, rodajas de piña, cavanosi, maíz dulce, salchicha AQP y chorizo AQP.</p>
+        <p class="precios">Personal: S/ 26 | Mediana: S/ 35 | Familiar: S/ 45</p>
+        <button class="btn-add" onclick="abrirModalPizza('La Volcánica', 26, 35, 45)">AGREGAR +</button>
+      </div>
+
+      <div class="card casa">
+        <h3>Boloñesa (Carnívora)</h3>
+        <p>Queso mozzarella, carne picada, jamón Inglés, salame y cavanosi.</p>
+        <p class="precios">Personal: S/ 25 | Mediana: S/ 35 | Familiar: S/ 45</p>
+        <button class="btn-add" onclick="abrirModalPizza('Boloñesa (Carnívora)', 25, 35, 45)">AGREGAR +</button>
+      </div>
+
+      <div class="card casa">
+        <h3>Trika Tres Sabores</h3>
+        <p>Queso mozzarella y segmentado de: 1. Carne + Cavanosi | 2. Pollo + Jamón | 3. Tocino + Chorizo ahumado.</p>
+        <p class="precios">Personal: S/ 25 | Mediana: S/ 36 | Familiar: S/ 46</p>
+        <button class="btn-add" onclick="abrirModalPizza('Trika Tres Sabores', 25, 36, 46)">AGREGAR +</button>
+      </div>
+
+      <div class="card casa">
+        <h3>3 Carnes</h3>
+        <p>Queso mozzarella y combinado de Carne + Pollo + Tocino.</p>
+        <p class="precios">Personal: S/ 25 | Mediana: S/ 35 | Familiar: S/ 45</p>
+        <button class="btn-add" onclick="abrirModalPizza('3 Carnes', 25, 35, 45)">AGREGAR +</button>
+      </div>
+
+      <div class="card casa">
+        <h3>Tradición Arequipeña</h3>
+        <p>Queso mozzarella, chorizo arequipeño, salchicha arequipeña y jamón Inglés.</p>
+        <p class="precios">Personal: S/ 24 | Mediana: S/ 32 | Familiar: S/ 42</p>
+        <button class="btn-add" onclick="abrirModalPizza('Tradición Arequipeña', 24, 32, 42)">AGREGAR +</button>
+      </div>
+
+      <div class="card casa">
+        <h3>Picante Cáustico 🌶️</h3>
+        <p>Queso mozzarella, trozos de carne, rodajas de rocoto, salchicha ahumada y chorizo ahumado.</p>
+        <p class="precios">Personal: S/ 25 | Mediana: S/ 36 | Familiar: S/ 46</p>
+        <button class="btn-add" onclick="abrirModalPizza('Picante Cáustico', 25, 36, 46)">AGREGAR +</button>
       </div>
 
       <!-- PIZZAS ESPECIALES -->
       <div class="card especiales">
-        <h3>Pizza Golden</h3>
-        <p>Nuestra especialidad: Jamón, pepperoni, tocino crujiente, champiñones y aceitunas.</p>
-        <p class="precios">Personal: S/ 18 | Mediana: S/ 32 | Familiar: S/ 44</p>
-        <button class="btn-add" onclick="abrirModalPizza('Golden', 18, 32, 44)">AGREGAR +</button>
+        <h3>Pizza Pollo</h3>
+        <p>Queso mozzarella, jamón Inglés, pollo y tocino ahumado.</p>
+        <p class="precios">Personal: S/ 25 | Mediana: S/ 35 | Familiar: S/ 45</p>
+        <button class="btn-add" onclick="abrirModalPizza('Pollo', 25, 35, 45)">AGREGAR +</button>
       </div>
 
       <div class="card especiales">
-        <h3>Pizza Carnívora</h3>
-        <p>Para los amantes de la carne: Queso mozzarella, jamón, pepperoni, carne picada y tocino.</p>
-        <p class="precios">Personal: S/ 18 | Mediana: S/ 32 | Familiar: S/ 44</p>
-        <button class="btn-add" onclick="abrirModalPizza('Carnívora', 18, 32, 44)">AGREGAR +</button>
+        <h3>Pizza Oriental</h3>
+        <p>Queso mozzarella, pollo, jamón Inglés y piña.</p>
+        <p class="precios">Personal: S/ 25 | Mediana: S/ 34 | Familiar: S/ 44</p>
+        <button class="btn-add" onclick="abrirModalPizza('Oriental', 25, 34, 44)">AGREGAR +</button>
       </div>
 
       <div class="card especiales">
-        <h3>Pizza BBQ Chicken</h3>
-        <p>Salsa BBQ artesanal, pollo deshilachado marinado, queso mozzarella y cebolla.</p>
-        <p class="precios">Personal: S/ 18 | Mediana: S/ 32 | Familiar: S/ 44</p>
-        <button class="btn-add" onclick="abrirModalPizza('BBQ Chicken', 18, 32, 44)">AGREGAR +</button>
+        <h3>Pizza Tropical</h3>
+        <p>Queso mozzarella, leche condensada, chocolate fudge, plátano, manzana, durazno, piña y fresa.</p>
+        <p class="precios">Personal: S/ 24 | Mediana: S/ 32 | Familiar: S/ 42</p>
+        <button class="btn-add" onclick="abrirModalPizza('Tropical', 24, 32, 42)">AGREGAR +</button>
       </div>
 
       <div class="card especiales">
-        <h3>Pizza Suprema</h3>
-        <p>Combinación completa de carnes, pimientos, champiñones, cebolla y extra queso.</p>
-        <p class="precios">Personal: S/ 18 | Mediana: S/ 32 | Familiar: S/ 44</p>
-        <button class="btn-add" onclick="abrirModalPizza('Suprema', 18, 32, 44)">AGREGAR +</button>
+        <h3>Pizza Cuatro Estaciones</h3>
+        <p>Queso mozzarella con Primavera (Tomate/Espinaca), Verano (Piña/Durazno), Invierno (Pepperoni/Cavanosi) y Otoño (Jamón/Chorizo).</p>
+        <p class="precios">Mediana: S/ 36 | Familiar: S/ 46</p>
+        <button class="btn-add" onclick="abrirModalCuatroEstaciones()">AGREGAR +</button>
       </div>
 
       <div class="card especiales">
-        <h3>Pizza Continental</h3>
-        <p>Queso mozzarella, jamón, champiñones frescos y pollo desmenuzado.</p>
-        <p class="precios">Personal: S/ 18 | Mediana: S/ 32 | Familiar: S/ 44</p>
-        <button class="btn-add" onclick="abrirModalPizza('Continental', 18, 32, 44)">AGREGAR +</button>
+        <h3>La Española</h3>
+        <p>Base de crema de ajo, queso mozzarella, chorizo pizzero ahumado, aceitunas verdes y champiñones.</p>
+        <p class="precios">Personal: S/ 22 | Mediana: S/ 31 | Familiar: S/ 41</p>
+        <button class="btn-add" onclick="abrirModalPizza('La Española', 22, 31, 41)">AGREGAR +</button>
+      </div>
+
+      <div class="card especiales">
+        <h3>Pizza Mexicana 🌶️</h3>
+        <p>Queso mozzarella, jalapeños, cebolla rosada y carne.</p>
+        <p class="precios">Personal: S/ 25 | Mediana: S/ 33 | Familiar: S/ 43</p>
+        <button class="btn-add" onclick="abrirModalPizza('Mexicana', 25, 33, 43)">AGREGAR +</button>
+      </div>
+
+      <div class="card especiales">
+        <h3>Mixtas Especiales</h3>
+        <p>Elige tu combinación favorita de 2 zonas especiales con piña/durazno o carnes.</p>
+        <p class="precios">Personal: S/ 25 | Mediana: S/ 35 | Familiar: S/ 45</p>
+        <button class="btn-add" onclick="abrirModalMixtasEspeciales()">ELEGIR COMBINACIÓN +</button>
+      </div>
+
+      <!-- PANES AL AJO -->
+      <div class="card panes">
+        <h3>Pan al Ajo Simple</h3>
+        <p>Porción de pan horneado crujiente con mantequilla de ajo artesanal.</p>
+        <p class="precios">Precio: S/ 6.00</p>
+        <button class="btn-add" onclick="confirmarAgregarGenerico('Pan al Ajo Simple', 6)">AGREGAR +</button>
+      </div>
+
+      <div class="card panes">
+        <h3>Pan al Ajo Especial</h3>
+        <p>Porción de pan al ajo horneado cubierto con queso mozzarella gratinado.</p>
+        <p class="precios">Precio: S/ 8.00</p>
+        <button class="btn-add" onclick="confirmarAgregarGenerico('Pan al Ajo Especial', 8)">AGREGAR +</button>
       </div>
 
       <!-- PIZZETAS CRUJIENETS -->
@@ -199,54 +374,90 @@
         <button class="btn-add" onclick="confirmarAgregarGenerico('Banquete VIP Cumpleaños', 95)">AGREGAR +</button>
       </div>
 
-      <!-- BEBIDAS -->
+      <!-- BEBIDAS DE LA CASA Y GASEOSAS -->
       <div class="card bebidas">
-        <h3>Inca Kola 500ml</h3>
-        <p>Gaseosa helada personal.</p>
-        <p class="precios">S/ 4.50</p>
-        <button class="btn-add" onclick="confirmarAgregarGenerico('Inca Kola 500ml', 4.5)">AGREGAR +</button>
+        <h3>Limonada de la Casa</h3>
+        <p>Refrescante preparada al momento. Opción Al Tiempo o Frozen.</p>
+        <p class="precios">1/2L Tiempo: S/ 7 | 1L Tiempo: S/ 12<br>1/2L Frozen: S/ 9 | 1L Frozen: S/ 14</p>
+        <button class="btn-add" onclick="abrirModalBebidaCasa('Limonada')">ELEGIR PRESENTACIÓN +</button>
       </div>
 
       <div class="card bebidas">
-        <h3>Coca Cola 500ml</h3>
-        <p>Gaseosa helada personal.</p>
-        <p class="precios">S/ 4.50</p>
-        <button class="btn-add" onclick="confirmarAgregarGenerico('Coca Cola 500ml', 4.5)">AGREGAR +</button>
+        <h3>Chicha Morada Artesanal</h3>
+        <p>Preparada en casa con maíz morado, piña y frutas. Opción Al Tiempo o Frozen.</p>
+        <p class="precios">1/2L Tiempo: S/ 6 | 1L Tiempo: S/ 10<br>1/2L Frozen: S/ 8 | 1L Frozen: S/ 12</p>
+        <button class="btn-add" onclick="abrirModalBebidaCasa('Chicha Morada')">ELEGIR PRESENTACIÓN +</button>
       </div>
 
       <div class="card bebidas">
-        <h3>Inca Kola 1.5L</h3>
-        <p>Gaseosa familiar helada.</p>
-        <p class="precios">S/ 9.00</p>
-        <button class="btn-add" onclick="confirmarAgregarGenerico('Inca Kola 1.5L', 9)">AGREGAR +</button>
+        <h3>Gaseosas Personal (450ml / 500ml)</h3>
+        <p>Inca Kola, Coca Cola, Fanta, Pepsi o Kola Escocesa 440ml/600ml.</p>
+        <p class="precios">S/ 4.50 / S/ 5.00</p>
+        <button class="btn-add" onclick="abrirModalGaseosa('personal')">AGREGAR +</button>
       </div>
 
       <div class="card bebidas">
-        <h3>Coca Cola 1.5L</h3>
-        <p>Gaseosa familiar helada.</p>
-        <p class="precios">S/ 9.00</p>
-        <button class="btn-add" onclick="confirmarAgregarGenerico('Coca Cola 1.5L', 9)">AGREGAR +</button>
+        <h3>Gaseosas 1 Litro / 1.5 Litros</h3>
+        <p>Coca Cola, Inca Kola, Pepsi o Kola Escocesa 1.5L helada.</p>
+        <p class="precios">1L: S/ 8.00 | 1.5L: S/ 10.00</p>
+        <button class="btn-add" onclick="abrirModalGaseosa('mediana')">AGREGAR +</button>
       </div>
 
       <div class="card bebidas">
-        <h3>Chicha Morada Artesanal (1L)</h3>
-        <p>Preparada en casa con maíz morado, piña y un toque de limón.</p>
-        <p class="precios">S/ 8.00</p>
-        <button class="btn-add" onclick="confirmarAgregarGenerico('Chicha Morada 1L', 8)">AGREGAR +</button>
+        <h3>Gaseosas 2 Litros Familiar</h3>
+        <p>Coca Cola, Inca Kola o Kola Escocesa 2L helada.</p>
+        <p class="precios">S/ 13.00</p>
+        <button class="btn-add" onclick="abrirModalGaseosa('familiar')">AGREGAR +</button>
+      </div>
+
+      <div class="card bebidas">
+        <h3>Agua Cielo 1/2 Litro</h3>
+        <p>Agua purificada personal.</p>
+        <p class="precios">S/ 1.50</p>
+        <button class="btn-add" onclick="confirmarAgregarGenerico('Agua Cielo 500ml', 1.5)">AGREGAR +</button>
+      </div>
+
+      <!-- BEBIDAS CALIENTES -->
+      <div class="card calientes">
+        <h3>Café Artesanal</h3>
+        <p>Café recién pasado al horno a leña con aroma intenso.</p>
+        <p class="precios">Precio: S/ 4.00</p>
+        <button class="btn-add" onclick="confirmarAgregarGenerico('Café Artesanal', 4)">AGREGAR +</button>
+      </div>
+
+      <div class="card calientes">
+        <h3>Café Cappuccino</h3>
+        <p>Espumoso café pasado con leche caliente y toque de canela.</p>
+        <p class="precios">Precio: S/ 6.00</p>
+        <button class="btn-add" onclick="confirmarAgregarGenerico('Café Cappuccino', 6)">AGREGAR +</button>
+      </div>
+
+      <div class="card calientes">
+        <h3>Té Filtrantes</h3>
+        <p>Té caliente aromático servido en taza.</p>
+        <p class="precios">Precio: S/ 2.00</p>
+        <button class="btn-add" onclick="confirmarAgregarGenerico('Té Filtrante', 2)">AGREGAR +</button>
+      </div>
+
+      <div class="card calientes">
+        <h3>Infusiones o Mates</h3>
+        <p>Mate de Manzanilla, Anís, Coca o Muña reconstituyente.</p>
+        <p class="precios">Precio: S/ 2.00</p>
+        <button class="btn-add" onclick="abrirModalMate()">ELEGIR INFUSIÓN +</button>
       </div>
 
       <!-- FRAPPÉS -->
       <div class="card frappes">
         <h3>Frappé de Frutas</h3>
-        <p>Elige tu sabor preferido: Maracuyá, Fresa, Mango o Lúcuma.</p>
-        <p class="precios">S/ 10.00</p>
+        <p>Batido helado cremoso. Elige: Maracuyá, Fresa, Mango o Lúcuma.</p>
+        <p class="precios">Precio: S/ 10.00</p>
         <button class="btn-add" onclick="abrirModalFrappe('fruta')">AGREGAR +</button>
       </div>
 
       <div class="card frappes">
         <h3>Frappé Especial</h3>
-        <p>Elige entre Cappuccino batido con hielo o Galleta Oreo con crema.</p>
-        <p class="precios">S/ 9.00</p>
+        <p>Batido helado especial. Elige: Cappuccino o Galleta Oreo.</p>
+        <p class="precios">Precio: S/ 9.00</p>
         <button class="btn-add" onclick="abrirModalFrappe('especial')">AGREGAR +</button>
       </div>
 
