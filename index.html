@@ -25,6 +25,7 @@
     <button type="button" class="filter-btn" onclick="filterCategory('unicos')">✨ Sabores Únicos</button>
     <button type="button" class="filter-btn" onclick="filterCategory('casa')">🔥 Pizzas de Casa</button>
     <button type="button" class="filter-btn" onclick="filterCategory('especiales')">👑 Especiales</button>
+    <button type="button" class="filter-btn" onclick="filterCategory('cumpleanos')">🎉 Cumpleaños</button>
     <button type="button" class="filter-btn" onclick="filterCategory('entradas')">🥖 Entradas</button>
     <button type="button" class="filter-btn" onclick="filterCategory('bebidas')">🥤 Bebidas &amp; Frappés</button>
   </nav>
@@ -400,7 +401,63 @@
       </div>
     </div>
 
-    <!-- 5. ENTRADAS Y EXTRAS -->
+    <!-- 5. PROMOCIONES DE CUMPLEAÑOS -->
+    <div class="card cumpleanos">
+      <div class="card-info">
+        <h3>🎂 Promo 1: Pack Cumpleañero Básico</h3>
+        <p>1 Pizza Familiar Clásica/Especial + 1 Pan al Ajo Especial + Gaseosa 1.5L + Cantada de Happy Birthday con chispero de fuego encendido en mesa.</p>
+        <div class="card-footer">
+          <span class="price">S/ 48.00</span>
+          <button type="button" class="btn-add" onclick="agregarPedido('Promo Cumple Básico', 48)">+ Agregar S/ 48.00 🎂</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card cumpleanos">
+      <div class="card-info">
+        <h3>👑 Promo 2: Combo "Festejo Golden"</h3>
+        <p>2 Pizzas Familiares (a elección) + 2 Porciones de Pan al Ajo Especial + Gaseosa 2L + Show Cumpleañero con show musical y gorro festivo.</p>
+        <div class="card-footer">
+          <span class="price">S/ 89.00</span>
+          <button type="button" class="btn-add" onclick="agregarPedido('Promo Festejo Golden', 89)">+ Agregar S/ 89.00 👑</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card cumpleanos">
+      <div class="card-info">
+        <h3>🍓 Promo 3: Dulce Cumpleaños</h3>
+        <p>1 Pizza Familiar de Casa + 1 Pizza Tropical Personales (Dulce de Fresa/Choco/Plátano) + 2 Frappés a elección + Cantada de Happy Birthday.</p>
+        <div class="card-footer">
+          <span class="price">S/ 65.00</span>
+          <button type="button" class="btn-add" onclick="agregarPedido('Promo Dulce Cumpleaños', 65)">+ Agregar S/ 65.00 🍓</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card cumpleanos">
+      <div class="card-info">
+        <h3>🔥 Promo 4: Mega Banquete Cumpleañero</h3>
+        <p>3 Pizzas Familiares + 2 Jarras de Chicha/Limonada (1L) + 2 Panes al Ajo Especiales + Show de Fotos con Marco Gigante Golden + Happy Birthday especial.</p>
+        <div class="card-footer">
+          <span class="price">S/ 135.00</span>
+          <button type="button" class="btn-add" onclick="agregarPedido('Mega Banquete Cumpleañero', 135)">+ Agregar S/ 135.00 🔥</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card cumpleanos">
+      <div class="card-info">
+        <h3>🎉 Promo 5: Regalo del Cumpleañero</h3>
+        <p>Consumo mínimo de S/ 70 en carta y ¡el cumpleañero recibe 1 Pizzeta Personal GRATIS + Postre Helado de regalo + Canto de Cumpleaños!</p>
+        <div class="card-footer">
+          <span class="price">¡GRATIS! (Regalo)</span>
+          <button type="button" class="btn-add" onclick="agregarPedido('Cortesía Cumpleañero (Bonus gratis por S/70)', 0)">+ Añadir Promo 🎉</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. ENTRADAS Y EXTRAS -->
     <div class="card entradas">
       <div class="card-info">
         <h3>🥖 Pan al Ajo Simple</h3>
@@ -423,7 +480,7 @@
       </div>
     </div>
 
-    <!-- 6. BEBIDAS Y FRAPPÉS -->
+    <!-- 7. BEBIDAS Y FRAPPÉS -->
     <div class="card bebidas">
       <div class="card-info">
         <h3>🍧 Frappés (100% Fruta)</h3>
@@ -532,7 +589,7 @@
   <!-- MODAL DE PAGO, SEGURIDAD ANTI-TROLLS Y SEDES -->
   <div id="payment-overlay" class="payment-overlay hidden">
     <div class="payment-box">
-      <h2>🔥 Confirmar Pedido 🔥</h2>
+      <h2>🔥 Confirmar Pedido / Reserva 🔥</h2>
       <p class="payment-subtitle" style="text-align: center; color: #aaa; margin-bottom: 15px; font-size: 0.85rem;">Ingresa tus datos y confirma tu orden</p>
 
       <!-- SISTEMA ANTI-TROLLS OBLIGATORIO -->
@@ -556,23 +613,26 @@
           📍 Selecciona la Sede de Atención:
         </label>
         <select id="select-sede" onchange="actualizarDatosSede()" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #D4AF37; background: #191e1b; color: #fff; font-size: 0.85rem; outline: none; cursor: pointer; font-family: 'Poppins', sans-serif;">
-          <option value="mariano_melgar">📍 Av. Argentina 1432 - Mariano Melgar</option>
-          <option value="paucarpata_vallejo">📍 Calle Cesar Vallejo 100 - BADEN (Paucarpata)</option>
-          <option value="paucarpata_grau">📍 Av. Miguel Grau 736 - Paucarpata</option>
+          <option value="mariano_melgar">📍 Av. Argentina 1432 - Mariano Melgar (6 Mesas)</option>
+          <option value="paucarpata_vallejo">📍 Calle Cesar Vallejo 100 - BADEN (4 Mesas)</option>
+          <option value="paucarpata_grau">📍 Av. Miguel Grau 736 - Paucarpata (4 Mesas)</option>
         </select>
       </div>
 
-      <!-- TIPO DE ENTREGA -->
+      <!-- TIPO DE ENTREGA / RESERVA -->
       <div style="margin-bottom: 15px; text-align: left;">
         <label style="display: block; color: #D4AF37; font-weight: bold; margin-bottom: 5px; font-size: 0.9rem;">
-          🛵 Modalidad de Entrega:
+          🛵 Modalidad de Atención:
         </label>
-        <div style="display: flex; gap: 10px;">
-          <label style="flex: 1; background: #191e1b; border: 1px solid #444; padding: 10px; border-radius: 8px; cursor: pointer; color: white; font-size: 0.85rem; display: flex; align-items: center; gap: 5px;">
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <label style="flex: 1; min-width: 90px; background: #191e1b; border: 1px solid #444; padding: 8px; border-radius: 8px; cursor: pointer; color: white; font-size: 0.8rem; display: flex; align-items: center; gap: 4px;">
             <input type="radio" name="tipo_entrega" value="Delivery" checked onchange="toggleDireccionField()"> 🛵 Delivery
           </label>
-          <label style="flex: 1; background: #191e1b; border: 1px solid #444; padding: 10px; border-radius: 8px; cursor: pointer; color: white; font-size: 0.85rem; display: flex; align-items: center; gap: 5px;">
-            <input type="radio" name="tipo_entrega" value="Recojo en Local" onchange="toggleDireccionField()"> 🏃 Recojo en Local
+          <label style="flex: 1; min-width: 90px; background: #191e1b; border: 1px solid #444; padding: 8px; border-radius: 8px; cursor: pointer; color: white; font-size: 0.8rem; display: flex; align-items: center; gap: 4px;">
+            <input type="radio" name="tipo_entrega" value="Recojo en Local" onchange="toggleDireccionField()"> 🏃 Recojo
+          </label>
+          <label style="flex: 1; min-width: 100px; background: #191e1b; border: 1px solid #D4AF37; padding: 8px; border-radius: 8px; cursor: pointer; color: #D4AF37; font-size: 0.8rem; display: flex; align-items: center; gap: 4px; font-weight: bold;">
+            <input type="radio" name="tipo_entrega" value="Reserva de Mesa" onchange="toggleDireccionField()"> 🪑 Reservar Mesa
           </label>
         </div>
       </div>
@@ -583,6 +643,22 @@
           🏠 Dirección de Envío y Referencia:
         </label>
         <input type="text" id="input-direccion" placeholder="Ej: Calle Los Olivos 123" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #444; background: #191e1b; color: #fff; font-size: 0.85rem; outline: none;">
+      </div>
+
+      <!-- CAMPO RESERVA DE MESA -->
+      <div id="campo-reserva" style="display: none; margin-bottom: 15px; background: rgba(30, 20, 10, 0.8); border: 1px dashed #D4AF37; padding: 10px; border-radius: 8px; text-align: left;">
+        <span id="lbl-limite-mesas" style="color: #D4AF37; font-weight: bold; font-size: 0.85rem; display: block; margin-bottom: 8px;">🪑 Información de Reserva:</span>
+        
+        <div style="display: flex; gap: 10px; margin-bottom: 8px;">
+          <div style="flex: 1;">
+            <label style="display: block; color: #ccc; font-size: 0.75rem; margin-bottom: 2px;">N° Personas:</label>
+            <input type="number" id="input-personas" min="1" max="20" placeholder="Ej: 4" style="width: 100%; padding: 6px; border-radius: 6px; border: 1px solid #555; background: #120a06; color: #fff; font-size: 0.8rem;">
+          </div>
+          <div style="flex: 1;">
+            <label style="display: block; color: #ccc; font-size: 0.75rem; margin-bottom: 2px;">Hora Aproximada:</label>
+            <input type="time" id="input-hora-reserva" style="width: 100%; padding: 6px; border-radius: 6px; border: 1px solid #555; background: #120a06; color: #fff; font-size: 0.8rem;">
+          </div>
+        </div>
       </div>
 
       <div class="payment-summary">
@@ -612,11 +688,12 @@
           <p class="yape-number" id="yape-numero-pantalla" style="font-size: 1.2rem; color: #D4AF37; font-weight: bold; margin: 8px 0;">994 710 034</p>
           <p style="font-size:12px; color:#aaa;">Golden Pizzeria Artesanal</p>
           <div class="qr-placeholder" style="border: 1px dashed #D4AF37; padding: 10px; margin: 10px 0; border-radius: 8px; color: #D4AF37; font-size: 0.85rem;">CÓDIGO QR YAPE / PLIN</div>
-          <label class="receipt-label" style="display: block; background: #222; border: 1px solid #444; padding: 8px; border-radius: 6px; cursor: pointer; margin-top: 5px; font-size: 0.8rem;">
-            📎 Adjuntar Comprobante (Opcional)
-            <input type="file" id="receipt-file" accept="image/*" style="display: none;" onchange="mostrarNombreArchivo(this)">
+          
+          <label class="receipt-label" style="display: block; background: #222; border: 1px solid #e76f51; padding: 8px; border-radius: 6px; cursor: pointer; margin-top: 5px; font-size: 0.8rem; color: #f4a261;">
+            📌 Adjuntar Voucher / Captura (OBLIGATORIO) *
+            <input type="file" id="receipt-file" accept="image/*" required style="display: none;" onchange="mostrarNombreArchivo(this)">
           </label>
-          <div id="receipt-name" class="receipt-name" style="font-size: 0.8rem; color: #D4AF37; margin-top: 5px;"></div>
+          <div id="receipt-name" class="receipt-name" style="font-size: 0.8rem; color: #D4AF37; margin-top: 5px; font-weight: bold;"></div>
         </div>
       </div>
 
