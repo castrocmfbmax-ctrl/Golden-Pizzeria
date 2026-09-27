@@ -11,22 +11,23 @@
 </head>
 <body>
 
-  <!-- BANNER TEMPORIZADOR DE COCINA -->
-  <div id="timer-banner" class="timer-banner">
-    <div style="display:flex; align-items:center; gap:10px;">
-      <span style="font-size:1.8rem;">🔥</span>
-      <div>
-        <div style="font-weight:bold; font-size:0.9rem;">TIEMPO EN PREPARACIÓN</div>
-        <div id="timer-status" style="font-size:0.75rem; color:#ccc;">Pedido enviado al horno</div>
-      </div>
+  <!-- TEMPORIZADOR FLOTANTE EN LA ESQUINA INFERIOR IZQUIERDA -->
+  <div id="timer-corner-widget" class="timer-corner-widget">
+    <div class="timer-corner-header">
+      <span>🔥 PREPARACIÓN EN HORNO</span>
+      <button onclick="minimizarTemporizador()" class="btn-timer-toggle">&minus;</button>
     </div>
-    <div id="timer-display" class="timer-clock">15:00</div>
+    <div id="timer-display" class="timer-clock-corner">15:00</div>
+    <div id="timer-status" class="timer-corner-status">15 min para salir del horno a leña</div>
+    <div id="timer-warning" class="timer-corner-warning">
+      ⚠️ Recuerda aproximarte a tiempo al local, de lo contrario tu pizza podría estar tibia o fría.
+    </div>
   </div>
 
   <!-- HEADER NOCTURNO Y RÚSTICO -->
   <header class="header">
     <h1 class="logo-title">Golden Pizzeria & Cafe</h1>
-    <p class="tagline">Sabor artesanal al horno a la piedra</p>
+    <p class="tagline">SABOR ARTESANAL A LEÑA ATENDEMOS DE 4 A 10 PM</p>
 
     <!-- BARRA DE BÚSQUEDA Y RESERVA DE MESA -->
     <div class="search-container">
