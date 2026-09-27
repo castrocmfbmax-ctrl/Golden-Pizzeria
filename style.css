@@ -1,8 +1,12 @@
-/* FUENTE MATCHA WORLD APLICADA A CADA ELEMENTO DE LA PÁGINA */
+/* =========================================================
+   GOLDEN PIZZERIA - ESTILOS RÚSTICOS NOCTURNOS Y EFECTOS
+========================================================= */
+
+/* FUENTE MATCHA HOME DE KHURASAN */
 @font-face {
-  font-family: 'Matcha World';
-  src: url('fonts/MatchaWorld.ttf') format('truetype'),
-       url('MatchaWorld.ttf') format('truetype');
+  font-family: 'Matcha Home';
+  src: url('fonts/MatchaHome.ttf') format('truetype'),
+       url('MatchaHome.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -11,109 +15,126 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Matcha World', 'Poppins', cursive, sans-serif !important;
-  user-select: none; /* Sistema de seguridad anti-copia */
+  user-select: none;
   -webkit-user-select: none;
 }
 
+/* FONDO NOCTURNO DE HORNO RÚSTICO */
 body {
-  background-color: #0b0e0c;
-  color: #ffffff;
-  padding-bottom: 110px;
+  background-color: #0b0705;
+  background-image: 
+    radial-gradient(circle at 50% 20%, rgba(212, 175, 55, 0.08) 0%, rgba(15, 9, 6, 0.95) 75%),
+    linear-gradient(rgba(10, 6, 4, 0.88), rgba(10, 6, 4, 0.88)),
+    url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80'); /* Textura cálida rústica nocturna */
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  color: #f5e6d3;
+  font-family: 'Matcha Home', 'Poppins', sans-serif;
+  padding-bottom: 100px;
 }
 
-/* HEADER Y EFECTOS VISUALES */
+/* HEADER CON GLOW CÁLIDO DE HORNO */
 .header {
   text-align: center;
-  padding: 30px 15px;
-  background: linear-gradient(180deg, #18221b 0%, #0b0e0c 100%);
-  border-bottom: 2px solid #D4AF37;
-  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.25);
+  padding: 30px 15px 20px 15px;
+  background: linear-gradient(180deg, rgba(20, 10, 5, 0.9) 0%, rgba(11, 7, 5, 0.6) 100%);
+  border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
 }
 
 .brand-title {
-  font-size: 2.6rem;
+  font-family: 'Matcha Home', sans-serif;
+  font-size: 3rem;
   color: #D4AF37;
-  text-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
-  letter-spacing: 2px;
+  text-shadow: 0 0 12px rgba(212, 175, 55, 0.6), 0 0 25px rgba(255, 69, 0, 0.4);
+  letter-spacing: 3px;
 }
 
 .brand-subtitle {
-  font-size: 0.95rem;
-  color: #25d366;
-  margin-top: 8px;
-  text-shadow: 0 0 5px rgba(37, 211, 102, 0.4);
+  font-size: 0.9rem;
+  color: #d4a373;
+  letter-spacing: 4px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
-/* NAVEGACIÓN DE CATEGORÍAS */
+/* CATEGORÍAS RÚSTICAS */
 .categories {
   display: flex;
   justify-content: center;
   gap: 10px;
-  padding: 15px;
+  padding: 18px 10px;
   flex-wrap: wrap;
-  position: sticky;
-  top: 0;
-  background: rgba(11, 14, 12, 0.95);
-  backdrop-filter: blur(8px);
-  z-index: 100;
-  border-bottom: 1px solid #1a241c;
 }
 
 .filter-btn {
-  background: #141c16;
-  border: 1px solid #333;
-  color: #ccc;
-  padding: 8px 16px;
-  border-radius: 20px;
+  background: rgba(25, 15, 10, 0.85);
+  border: 1px solid #5c3a21;
+  color: #e6ccb2;
+  padding: 10px 18px;
+  border-radius: 25px;
   cursor: pointer;
-  font-size: 0.85rem;
+  font-family: 'Matcha Home', sans-serif;
+  font-size: 0.9rem;
   transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
 }
 
 .filter-btn.active, .filter-btn:hover {
-  background: #D4AF37;
-  color: #000;
-  border-color: #D4AF37;
-  box-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
-  transform: translateY(-1px);
+  background: linear-gradient(135deg, #D4AF37 0%, #b8860b 100%);
+  color: #1a0c02;
+  border-color: #ffe066;
+  font-weight: bold;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+  transform: translateY(-2px);
 }
 
-/* MENÚ Y TARJETAS DE PRODUCTO (SIN OPCIÓN DE IMAGEN) */
+/* TARJETAS RÚSTICAS CON EFECTO HOVER */
 .menu-container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 15px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 14px;
 }
 
 .card {
-  background: #121814;
-  border: 1px solid #222;
-  border-left: 4px solid #D4AF37;
-  border-radius: 12px;
-  padding: 15px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: rgba(22, 13, 8, 0.82);
+  border: 1px solid rgba(139, 69, 19, 0.4);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  backdrop-filter: blur(4px);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.6);
 }
 
 .card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 10px rgba(212, 175, 55, 0.2);
+  transform: translateY(-3px) scale(1.01);
+  border-color: #D4AF37;
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.25), 0 0 10px rgba(255, 140, 0, 0.2);
+}
+
+.card-info {
+  flex: 1;
 }
 
 .card-info h3 {
+  font-family: 'Matcha Home', sans-serif;
   font-size: 1.25rem;
-  color: #D4AF37;
+  color: #f4a261;
   margin-bottom: 6px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
 .card-info p {
   font-size: 0.85rem;
-  color: #bbb;
-  margin-bottom: 12px;
-  line-height: 1.4;
+  color: #cccccc;
+  margin-bottom: 10px;
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.3;
 }
 
 .card-footer {
@@ -123,127 +144,124 @@ body {
 }
 
 .price {
-  font-size: 1.05rem;
-  color: #25d366;
   font-weight: bold;
+  color: #e9c46a;
+  font-size: 0.95rem;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.9);
 }
 
 .btn-add {
-  background: linear-gradient(135deg, #D4AF37 0%, #aa820a 100%);
-  color: #000;
-  border: none;
+  background: linear-gradient(135deg, #e76f51 0%, #d62828 100%);
+  color: #ffffff;
+  border: 1px solid #f4a261;
   padding: 8px 16px;
   border-radius: 8px;
+  font-family: 'Matcha Home', sans-serif;
   font-size: 0.85rem;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
-  transition: filter 0.2s ease;
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 10px rgba(214, 40, 40, 0.4);
 }
 
 .btn-add:hover {
-  filter: brightness(1.15);
+  background: linear-gradient(135deg, #D4AF37 0%, #e76f51 100%);
+  color: #000;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
 }
 
-/* BARRA FLOTANTE DEL CARRITO */
+/* CARRITO FLOTANTE */
 .cart-bar {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  background: #141c16;
+  background: rgba(15, 8, 5, 0.95);
   border-top: 2px solid #D4AF37;
-  padding: 15px 20px;
+  padding: 14px 22px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 1000;
   box-shadow: 0 -5px 25px rgba(0,0,0,0.9);
+  backdrop-filter: blur(8px);
 }
 
-.cart-bar.hidden { display: none !important; }
+.cart-bar.hidden { display: none; }
 
 .cart-count {
   background: #D4AF37;
   color: #000;
-  padding: 4px 10px;
+  padding: 3px 10px;
   border-radius: 50%;
-  font-size: 0.9rem;
-  margin-right: 8px;
   font-weight: bold;
+  margin-right: 6px;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.8);
+}
+
+.cart-total {
+  font-size: 1.1rem;
+  color: #2ec4b6;
+  font-weight: bold;
+  margin-right: 15px;
 }
 
 .btn-checkout {
-  background: #25d366;
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
   color: #fff;
-  border: none;
+  border: 1px solid #70e000;
   padding: 10px 20px;
-  border-radius: 8px;
-  font-size: 0.9rem;
+  border-radius: 10px;
+  font-family: 'Matcha Home', sans-serif;
+  font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 0 12px rgba(37, 211, 102, 0.5);
-  transition: filter 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 12px rgba(37, 211, 102, 0.4);
 }
 
 .btn-checkout:hover {
-  filter: brightness(1.1);
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(37, 211, 102, 0.7);
 }
 
-/* VENTANAS MODALES */
+/* MODALES Y SOBREPUESTOS */
 .payment-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(5px);
+  background: rgba(5, 3, 2, 0.92);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 2000;
   padding: 15px;
+  backdrop-filter: blur(6px);
 }
 
 .payment-overlay.hidden { display: none !important; }
 
 .payment-box {
-  background: #121814;
-  border: 1px solid #D4AF37;
-  border-radius: 12px;
+  background: rgba(22, 12, 7, 0.96);
+  border: 2px solid #D4AF37;
+  border-radius: 16px;
   width: 100%;
-  max-width: 480px;
-  padding: 20px;
+  max-width: 460px;
+  padding: 22px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 0 25px rgba(212, 175, 55, 0.2);
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.3), 0 0 15px rgba(255, 69, 0, 0.2);
 }
 
 .payment-box h2 {
+  font-family: 'Matcha Home', sans-serif;
   color: #D4AF37;
   text-align: center;
-  margin-bottom: 12px;
+  margin-bottom: 5px;
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
 }
 
-/* BOTONES DE CONTROL DE CANTIDAD EN RESUMEN */
-.qty-btn {
-  background: #222;
-  border: 1px solid #555;
-  color: #fff;
-  width: 26px;
-  height: 26px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin: 0 4px;
-  font-size: 0.9rem;
-  transition: background 0.2s;
-}
-
-.qty-btn:hover {
-  background: #D4AF37;
-  color: #000;
-}
-
-/* SELECCIÓN DE MÉTODO DE PAGO Y SEDES */
 .payment-methods {
   display: flex;
   gap: 8px;
@@ -252,59 +270,43 @@ body {
 
 .payment-method {
   flex: 1;
-  background: #1b241d;
-  border: 1px solid #333;
+  background: rgba(35, 20, 12, 0.8);
+  border: 1px solid #5c3a21;
   padding: 10px 5px;
   text-align: center;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-  font-size: 0.8rem;
-  transition: all 0.2s ease;
+  font-size: 0.85rem;
+  transition: all 0.25s ease;
 }
 
 .payment-method.selected {
   border-color: #D4AF37;
-  background: #27342a;
+  background: rgba(212, 175, 55, 0.2);
   color: #D4AF37;
-  box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
-}
-
-.receipt-label-required {
-  display: block;
-  background: #1b241d;
-  border: 1px dashed #D4AF37;
-  padding: 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 10px;
-  text-align: center;
-  color: #D4AF37;
-  font-size: 0.85rem;
-}
-
-.payment-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
 }
 
 .btn-confirm-payment {
   flex: 2;
-  background: #25d366;
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
   color: #fff;
   border: none;
   padding: 12px;
-  border-radius: 8px;
+  border-radius: 10px;
+  font-family: 'Matcha Home', sans-serif;
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(37, 211, 102, 0.3);
+  font-size: 0.95rem;
+  box-shadow: 0 0 12px rgba(37, 211, 102, 0.4);
 }
 
 .btn-close-payment {
   flex: 1;
-  background: #333;
+  background: #3a2312;
   color: #fff;
-  border: none;
+  border: 1px solid #6b4423;
   padding: 12px;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
+  font-family: 'Matcha Home', sans-serif;
 }
