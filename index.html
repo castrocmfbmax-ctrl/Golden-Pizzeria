@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Golden Pizzeria & Cafe</title>
+  <!-- Librería de íconos FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Hoja de estilos principal -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,31 +23,33 @@
     <div id="timer-display" class="timer-clock">15:00</div>
   </div>
 
-  <!-- HEADER -->
+  <!-- HEADER NOCTURNO Y RÚSTICO -->
   <header class="header">
     <h1 class="logo-title">Golden Pizzeria & Cafe</h1>
-    <p class="tagline">Sabor artesanal en Mariano Melgar</p>
+    <p class="tagline">Sabor artesanal al horno a la piedra</p>
 
-    <!-- BARRA DE BÚSQUEDA Y BOTÓN RESERVA -->
+    <!-- BARRA DE BÚSQUEDA Y RESERVA DE MESA -->
     <div class="search-container">
       <input type="text" id="search-input" placeholder="Buscar pizza, bebida, frappe..." onkeyup="buscarProducto()">
-      <button class="btn-reserva-header" onclick="abrirModalReserva()">🪑 Reservar Mesa</button>
+      <button class="btn-reserva-header" onclick="abrirModalReserva()">
+        <i class="fa-solid fa-chair"></i> Reservar Mesa
+      </button>
     </div>
 
-    <!-- FILTROS -->
+    <!-- NAVEGACIÓN DE FILTROS -->
     <div class="filter-bar">
-      <button class="filter-btn active" onclick="filterCategory('todas')">Todas</button>
-      <button class="filter-btn" onclick="filterCategory('clasicas')">Clásicas</button>
-      <button class="filter-btn" onclick="filterCategory('especiales')">Especiales</button>
-      <button class="filter-btn" onclick="filterCategory('pizzetas')">🍕 Pizzetas</button>
-      <button class="filter-btn" onclick="filterCategory('kids')">👶 Kids</button>
-      <button class="filter-btn" onclick="filterCategory('cumpleanos')">🎉 Cumpleaños</button>
-      <button class="filter-btn" onclick="filterCategory('bebidas')">Bebidas</button>
-      <button class="filter-btn" onclick="filterCategory('frappes')">Frappés</button>
+      <button class="filter-btn active" onclick="filterCategory('todas', event)">Todas</button>
+      <button class="filter-btn" onclick="filterCategory('clasicas', event)">Clásicas</button>
+      <button class="filter-btn" onclick="filterCategory('especiales', event)">Especiales</button>
+      <button class="filter-btn" onclick="filterCategory('pizzetas', event)">🍕 Pizzetas</button>
+      <button class="filter-btn" onclick="filterCategory('kids', event)">👶 Kids</button>
+      <button class="filter-btn" onclick="filterCategory('cumpleanos', event)">🎉 Cumpleaños</button>
+      <button class="filter-btn" onclick="filterCategory('bebidas', event)">Bebidas</button>
+      <button class="filter-btn" onclick="filterCategory('frappes', event)">Frappés</button>
     </div>
   </header>
 
-  <!-- SECCIÓN CARTA / PRODUCTOS -->
+  <!-- CONTENEDOR DE PRODUCTOS -->
   <main class="container">
     <div class="product-grid">
 
@@ -120,10 +125,10 @@
         <button class="btn-add" onclick="abrirModalPizza('Continental', 18, 32, 44)">AGREGAR +</button>
       </div>
 
-      <!-- SECCIÓN PIZZETAS CON PRECIOS Y SABORES ESPECÍFICOS -->
+      <!-- PIZZETAS CRUJIENETS -->
       <div class="card pizzetas">
         <h3>🍕 Pizzetas Crujientes</h3>
-        <p>Masa delgada individual hecha al horno rústico. Elige tu sabor preferido:</p>
+        <p>Masa delgada individual horneada a la piedra. Elige tu sabor preferido:</p>
         <p class="precios">Americana: S/ 5 | Hawaiana: S/ 6 | Pepperoni: S/ 7</p>
         <button class="btn-add" onclick="abrirModalPizzeta()">ELEGIR SABOR +</button>
       </div>
@@ -157,38 +162,38 @@
         <button class="btn-add" onclick="confirmarAgregarGenerico('Salchi-Pizza Golden (Infantil)', 16)">AGREGAR +</button>
       </div>
 
-      <!-- SECCIÓN CUMPLEAÑOS (5 PROMOCIONES CUMPLEAÑERAS) -->
+      <!-- PROMOCIONES DE CUMPLEAÑOS -->
       <div class="card cumpleanos">
         <h3>🎉 Pack Cumpleañero Golden</h3>
-        <p>2 Pizzas Familiares + 1 Gaseosa 1.5L + Cantada de Happy Birthday + Corona Cumpleañera.</p>
+        <p>2 Pizzas Familiares + 1 Gaseosa 1.5L + Canto Happy Birthday + Corona Cumpleañera.</p>
         <p class="precios">Precio Promo: S/ 75.00</p>
         <button class="btn-add" onclick="confirmarAgregarGenerico('Pack Cumpleañero Golden (2 Fam + Bebida)', 75)">AGREGAR +</button>
       </div>
 
       <div class="card cumpleanos">
         <h3>🎉 Promo Cumpleañero Especial</h3>
-        <p>1 Pizza Familiar + Pan al Ajo + 1 Bebida + Postre de regalo y Canto de Cumpleaños.</p>
+        <p>1 Pizza Familiar + Pan al Ajo + 1 Bebida + Postre de regalo y Canto Especial.</p>
         <p class="precios">Precio Promo: S/ 48.00</p>
         <button class="btn-add" onclick="confirmarAgregarGenerico('Promo Cumpleañero Especial', 48)">AGREGAR +</button>
       </div>
 
       <div class="card cumpleanos">
         <h3>🎉 Mega Fiesta Cumpleañera</h3>
-        <p>3 Pizzas Familiares + 2 Gaseosas 1.5L + Porción de Pan al Ajo + Show Happy Birthday y Sombrero Golden.</p>
+        <p>3 Pizzas Familiares + 2 Gaseosas 1.5L + Porción Pan al Ajo + Show Happy Birthday y Sombrero Golden.</p>
         <p class="precios">Precio Promo: S/ 115.00</p>
         <button class="btn-add" onclick="confirmarAgregarGenerico('Mega Fiesta Cumpleañera (3 Fam + 2 Bebidas + Show)', 115)">AGREGAR +</button>
       </div>
 
       <div class="card cumpleanos">
         <h3>🎉 Duo Cumpleañero Infantil</h3>
-        <p>2 Pizzas Personales a elección + 2 Bebidas + 2 Mini Pizzetas dulces + Sorpresa y Canto Festivo.</p>
+        <p>2 Pizzas Personales + 2 Bebidas + 2 Mini Pizzetas dulces + Sorpresa y Canto Festivo.</p>
         <p class="precios">Precio Promo: S/ 35.00</p>
         <button class="btn-add" onclick="confirmarAgregarGenerico('Duo Cumpleañero Infantil', 35)">AGREGAR +</button>
       </div>
 
       <div class="card cumpleanos">
         <h3>🎉 Banquete VIP Cumpleaños</h3>
-        <p>2 Pizzas Especiales Familiares + 1 Pizzeta Pepperoni + 1 Gaseosa 1.5L + Tarta/Postre Cumpleañero con Canto Especial.</p>
+        <p>2 Pizzas Especiales Familiares + 1 Pizzeta Pepperoni + 1 Gaseosa 1.5L + Tarta Cumpleañera con Canto.</p>
         <p class="precios">Precio Promo: S/ 95.00</p>
         <button class="btn-add" onclick="confirmarAgregarGenerico('Banquete VIP Cumpleaños', 95)">AGREGAR +</button>
       </div>
@@ -247,6 +252,7 @@
     </div>
   </main>
 
+  <!-- LÓGICA DE JAVASCRIPT -->
   <script src="script.js"></script>
 </body>
 </html>
