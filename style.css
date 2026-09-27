@@ -1,12 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Poppins:wght@300;400;600;700&display=swap');
-
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* FONDO TENUE DE NOCHE DE HORNO RÚSTICO */
 body {
   background-color: #080504;
   background-image: 
@@ -19,7 +16,6 @@ body {
   padding-bottom: 90px;
 }
 
-/* HEADER */
 .header {
   text-align: center;
   padding: 25px 15px 20px 15px;
@@ -48,7 +44,6 @@ body {
   letter-spacing: 0.5px;
 }
 
-/* BUSCADOR Y RESERVA DE MESA */
 .search-container {
   max-width: 550px;
   margin: 0 auto 15px auto;
@@ -91,7 +86,6 @@ body {
   transform: scale(1.04);
 }
 
-/* FILTROS */
 .filter-bar {
   display: flex;
   justify-content: center;
@@ -118,7 +112,6 @@ body {
   box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
 }
 
-/* CARDS / CARTA DE PRODUCTOS */
 .container {
   max-width: 1100px;
   margin: 25px auto;
@@ -189,7 +182,6 @@ body {
   box-shadow: 0 0 10px rgba(212, 175, 55, 0.7);
 }
 
-/* TEMPORIZADOR FLOTANTE EN LA ESQUINA INFERIOR IZQUIERDA */
 .timer-corner-widget {
   position: fixed;
   bottom: 20px;
@@ -204,7 +196,6 @@ body {
   display: none;
   flex-direction: column;
   gap: 6px;
-  backdrop-filter: blur(8px);
 }
 
 .timer-corner-header {
