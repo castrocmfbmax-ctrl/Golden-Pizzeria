@@ -1,6 +1,6 @@
 let carrito = [];
-let tiempoRestante = 15 * 60;
-let tiempoTolerancia = 20 * 60;
+let tiempoPreparacion = 15 * 60; // 15 min de preparación
+let tiempoTolerancia = 20 * 60;  // 20 min de tolerancia
 let temporizadorIntervalo = null;
 let pizzaSeleccionadaActual = {};
 
@@ -8,43 +8,59 @@ document.addEventListener("DOMContentLoaded", () => {
   crearEstructuraModalesYCarrito();
 });
 
-// TEMPORIZADOR DE COCINA
+// TEMPORIZADOR EN LA ESQUINA INFERIOR IZQUIERDA
 function iniciarTemporizadorCocina() {
   if (temporizadorIntervalo) clearInterval(temporizadorIntervalo);
   
-  const timerBanner = document.getElementById("timer-banner");
-  if (timerBanner) timerBanner.style.display = "flex";
+  const timerWidget = document.getElementById("timer-corner-widget");
+  if (timerWidget) timerWidget.style.display = "flex";
 
   const timerElement = document.getElementById("timer-display");
   const statusElement = document.getElementById("timer-status");
+  const warningElement = document.getElementById("timer-warning");
 
   if (!timerElement) return;
 
-  tiempoRestante = 15 * 60;
+  tiempoPreparacion = 15 * 60;
   tiempoTolerancia = 20 * 60;
 
   temporizadorIntervalo = setInterval(() => {
-    if (tiempoRestante > 0) {
-      tiempoRestante--;
-      let minutos = Math.floor(tiempoRestante / 60);
-      let segundos = tiempoRestante % 60;
+    if (tiempoPreparacion > 0) {
+      tiempoPreparacion--;
+      let minutos = Math.floor(tiempoPreparacion / 60);
+      let segundos = tiempoPreparacion % 60;
       timerElement.innerText = `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
-      statusElement.innerText = "🔥 En horno a la piedra (15 min)";
+      statusElement.innerText = "🔥 En preparación en horno a leña";
       statusElement.style.color = "#ffca3a";
+      warningElement.innerText = "⚠️ 15 min para salir del horno. ¡Se prepara al instante!";
     } else if (tiempoTolerancia > 0) {
       tiempoTolerancia--;
       let minutos = Math.floor(tiempoTolerancia / 60);
       let segundos = tiempoTolerancia % 60;
       timerElement.innerText = `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
-      statusElement.innerText = "⏳ Tiempo de tolerancia (Máx 20 min)";
+      statusElement.innerText = "⏳ Margen para retirar en local (Max 20 min)";
       statusElement.style.color = "#ff6b6b";
+      warningElement.innerText = "⚠️ RECUERDA APROXIMARTE A TIEMPO AL LOCAL, DE LO CONTRARIO TU PIZZA PODRÍA ESTAR TIBIA O FRÍA.";
     } else {
       clearInterval(temporizadorIntervalo);
       timerElement.innerText = "00:00";
-      statusElement.innerText = "⚠️ Tiempo cumplido. ¡Servir o entregar ya!";
+      statusElement.innerText = "⚠️ Tiempo límite alcanzado";
       statusElement.style.color = "#ff4444";
+      warningElement.innerText = "⚠️ Tu pedido está listo en mostrador. Por favor acércate a recogerlo.";
     }
   }, 1000);
+}
+
+function minimizarTemporizador() {
+  const status = document.getElementById("timer-status");
+  const warning = document.getElementById("timer-warning");
+  if (warning.style.display === "none") {
+    warning.style.display = "block";
+    status.style.display = "block";
+  } else {
+    warning.style.display = "none";
+    status.style.display = "none";
+  }
 }
 
 // FILTRADO Y BÚSQUEDA
@@ -82,7 +98,7 @@ function buscarProducto() {
   });
 }
 
-// MODALES DE OPCIONES (EXTRAS SEGÚN TAMAÑO)
+// MODALES DE OPCIONES CON PRECIOS Y EXTRAS SEGÚN CARTA 2025
 function abrirModalPizza(nombre, precioPersonal, precioMediana, precioFamiliar) {
   pizzaSeleccionadaActual = { nombre, precioPersonal, precioMediana, precioFamiliar };
   
@@ -102,13 +118,13 @@ function abrirModalPizza(nombre, precioPersonal, precioMediana, precioFamiliar) 
 function seleccionarTamanoPizza(tamano, precioBase, costoExtra) {
   document.getElementById('modal-body').innerHTML = `
     <h4 style="color:#D4AF37; margin-bottom:10px;">Tamaño: ${tamano} (S/ ${precioBase}.00)</h4>
-    <p style="margin-bottom:10px; color:#ccc;">2. ¿Deseas adicionales opcionales? (+S/ ${costoExtra}.00 c/u):</p>
+    <p style="margin-bottom:10px; color:#ccc;">2. ¿Deseas adicionales de Carta? (+S/ ${costoExtra}.00 c/u):</p>
     
     <label style="display:block; margin-bottom:10px; cursor:pointer;">
-      <input type="checkbox" id="extra-queso" value="${costoExtra}"> Extra Queso Mozzarella (+S/ ${costoExtra}.00)
+      <input type="checkbox" id="extra-queso" value="${costoExtra}"> Extraqueso (+S/ ${costoExtra}.00)
     </label>
     <label style="display:block; margin-bottom:15px; cursor:pointer;">
-      <input type="checkbox" id="extra-embutido" value="${costoExtra}"> Extra Embutido (+S/ ${costoExtra}.00)
+      <input type="checkbox" id="extra-embutido" value="${costoExtra}"> Extraembutido (+S/ ${costoExtra}.00)
     </label>
 
     <button class="btn-modal-opcion" style="text-align:center; background:#D4AF37; color:#000;" onclick="confirmarPizzaConExtras('${tamano}', ${precioBase}, ${costoExtra})">
@@ -125,11 +141,11 @@ function confirmarPizzaConExtras(tamano, precioBase, costoExtra) {
   let precioFinal = precioBase;
 
   if (chkQueso && chkQueso.checked) {
-    extras.push("Extra Queso");
+    extras.push("Extraqueso");
     precioFinal += costoExtra;
   }
   if (chkEmbutido && chkEmbutido.checked) {
-    extras.push("Extra Embutido");
+    extras.push("Extraembutido");
     precioFinal += costoExtra;
   }
 
@@ -138,6 +154,125 @@ function confirmarPizzaConExtras(tamano, precioBase, costoExtra) {
 
   agregarPedido(nombreCompleto, precioFinal);
   cerrarModal();
+}
+
+function abrirModalCuatroEstaciones() {
+  document.getElementById('modal-title').innerText = 'Pizza Cuatro Estaciones';
+  document.getElementById('modal-body').innerHTML = `
+    <p style="margin-bottom:10px; color:#ccc;">Selecciona el tamaño:</p>
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Pizza Cuatro Estaciones (Mediana)', 36)">🍕 Mediana - S/ 36.00</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Pizza Cuatro Estaciones (Familiar)', 46)">🍕 Familiar - S/ 46.00</button>
+    </div>
+  `;
+  document.getElementById('modal-custom').style.display = 'flex';
+}
+
+function abrirModalMixtasEspeciales() {
+  document.getElementById('modal-title').innerText = 'Mixtas Especiales';
+  document.getElementById('modal-body').innerHTML = `
+    <p style="margin-bottom:10px; color:#ccc;">Elija la combinación deseada:</p>
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <button class="btn-modal-opcion" onclick="seleccionarTamanoMixtas('Pepperoni con pollo y piña con durazno')">1. Pepperoni/pollo + Piña/durazno</button>
+      <button class="btn-modal-opcion" onclick="seleccionarTamanoMixtas('Chorizo ahumado con carne y piña con durazno')">2. Chorizo/carne + Piña/durazno</button>
+      <button class="btn-modal-opcion" onclick="seleccionarTamanoMixtas('Jamón Inglés con pollo y piña con durazno')">3. Jamón/pollo + Piña/durazno</button>
+      <button class="btn-modal-opcion" onclick="seleccionarTamanoMixtas('Cavanosi con carne y piña con durazno')">4. Cavanosi/carne + Piña/durazno</button>
+      <button class="btn-modal-opcion" onclick="seleccionarTamanoMixtas('Salame con carne y pollo con durazno')">5. Salame/carne + Pollo/durazno</button>
+    </div>
+  `;
+  document.getElementById('modal-custom').style.display = 'flex';
+}
+
+function seleccionarTamanoMixtas(combinacion) {
+  document.getElementById('modal-body').innerHTML = `
+    <h4 style="color:#D4AF37; margin-bottom:10px;">${combinacion}</h4>
+    <p style="margin-bottom:10px; color:#ccc;">Selecciona el tamaño:</p>
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Mixta Especial: ${combinacion} (Personal)', 25)">Personal - S/ 25.00</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Mixta Especial: ${combinacion} (Mediana)', 35)">Mediana - S/ 35.00</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Mixta Especial: ${combinacion} (Familiar)', 45)">Familiar - S/ 45.00</button>
+    </div>
+  `;
+}
+
+function abrirModalBebidaCasa(bebida) {
+  document.getElementById('modal-title').innerText = bebida;
+  
+  let opciones = '';
+  if (bebida === 'Limonada') {
+    opciones = `
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Limonada Al Tiempo (1/2L)', 7)">🍹 1/2 Litro Al Tiempo - S/ 7.00</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Limonada Al Tiempo (1L)', 12)">🍹 1 Litro Al Tiempo - S/ 12.00</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Limonada Frozen (1/2L)', 9)">❄️ 1/2 Litro Frozen - S/ 9.00</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Limonada Frozen (1L)', 14)">❄️ 1 Litro Frozen - S/ 14.00</button>
+    `;
+  } else {
+    opciones = `
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Chicha Morada Al Tiempo (1/2L)', 6)">🍷 1/2 Litro Al Tiempo - S/ 6.00</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Chicha Morada Al Tiempo (1L)', 10)">🍷 1 Litro Al Tiempo - S/ 10.00</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Chicha Morada Frozen (1/2L)', 8)">❄️ 1/2 Litro Frozen - S/ 8.00</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Chicha Morada Frozen (1L)', 12)">❄️ 1 Litro Frozen - S/ 12.00</button>
+    `;
+  }
+
+  document.getElementById('modal-body').innerHTML = `
+    <p style="margin-bottom:12px; color:#ccc;">Selecciona presentación y temperatura:</p>
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      ${opciones}
+    </div>
+  `;
+  document.getElementById('modal-custom').style.display = 'flex';
+}
+
+function abrirModalGaseosa(tipo) {
+  document.getElementById('modal-title').innerText = 'Gaseosas Heladas';
+  let opciones = '';
+
+  if (tipo === 'personal') {
+    opciones = `
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Inca Kola Personal', 4.5)">🥤 Inca Kola Personal - S/ 4.50</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Coca Cola Personal', 4.5)">🥤 Coca Cola Personal - S/ 4.50</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Fanta Personal', 4.5)">🥤 Fanta Personal - S/ 4.50</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Kola Escocesa 440ml', 4.0)">🥤 Kola Escocesa 440ml - S/ 4.00</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Kola Escocesa 600ml', 5.0)">🥤 Kola Escocesa 600ml - S/ 5.00</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Pepsi 1/2 Litro', 4.0)">🥤 Pepsi 1/2 Litro - S/ 4.00</button>
+    `;
+  } else if (tipo === 'mediana') {
+    opciones = `
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Inca Kola 1 Litro', 8)">🥤 Inca Kola 1L - S/ 8.00</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Coca Cola 1 Litro', 8)">🥤 Coca Cola 1L - S/ 8.00</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Pepsi 1 Litro', 8)">🥤 Pepsi 1L - S/ 8.00</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Kola Escocesa 1.5L', 10)">🥤 Kola Escocesa 1.5L - S/ 10.00</button>
+    `;
+  } else if (tipo === 'familiar') {
+    opciones = `
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Inca Kola 2 Litros', 13)">🥤 Inca Kola 2L - S/ 13.00</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Coca Cola 2 Litros', 13)">🥤 Coca Cola 2L - S/ 13.00</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Kola Escocesa 2 Litros', 13)">🥤 Kola Escocesa 2L - S/ 13.00</button>
+    `;
+  }
+
+  document.getElementById('modal-body').innerHTML = `
+    <p style="margin-bottom:12px; color:#ccc;">Selecciona la marca:</p>
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      ${opciones}
+    </div>
+  `;
+  document.getElementById('modal-custom').style.display = 'flex';
+}
+
+function abrirModalMate() {
+  document.getElementById('modal-title').innerText = 'Infusiones y Mates';
+  document.getElementById('modal-body').innerHTML = `
+    <p style="margin-bottom:12px; color:#ccc;">Selecciona tu hierba preferida:</p>
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Mate de Manzanilla', 2)">☕ Mate de Manzanilla - S/ 2.00</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Mate de Anís', 2)">☕ Mate de Anís - S/ 2.00</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Mate de Coca', 2)">☕ Mate de Coca - S/ 2.00</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Mate de Muña', 2)">☕ Mate de Muña - S/ 2.00</button>
+    </div>
+  `;
+  document.getElementById('modal-custom').style.display = 'flex';
 }
 
 function abrirModalPizzeta() {
@@ -275,6 +410,17 @@ function cerrarModal() {
   document.getElementById('modal-custom').style.display = 'none';
 }
 
+// CAMBIO DINÁMICO DE CAMPOS SEGÚN DELIVERY O RECOJO
+function toggleTipoEntrega() {
+  const tipo = document.getElementById('cliente-tipo-entrega').value;
+  const container = document.getElementById('container-ubicacion-exacta');
+  if (tipo === 'Delivery') {
+    container.style.display = 'block';
+  } else {
+    container.style.display = 'none';
+  }
+}
+
 // CARRITO Y MODIFICACIÓN DE CANTIDADES
 function agregarPedido(nombre, precio) {
   const itemExistente = carrito.find(p => p.nombre === nombre);
@@ -340,7 +486,7 @@ function actualizarCarritoUI() {
   totalMonto.innerText = `S/ ${total}.00`;
 }
 
-// ENVÍO DE PEDIDO A WHATSAPP CON VALIDACIÓN ANTI-TROLLS Y CAPTURA YAPE
+// ENVÍO DE PEDIDO A WHATSAPP CON VALIDACIÓN ANTI-TROLLS, MODALIDAD Y UBICACIÓN EXACTA
 function enviarWhatsApp() {
   if (carrito.length === 0) {
     alert("Tu carrito está vacío. Agrega productos primero.");
@@ -349,8 +495,10 @@ function enviarWhatsApp() {
 
   const nombre = document.getElementById('cliente-nombre').value.trim();
   const telefono = document.getElementById('cliente-telefono').value.trim();
-  const metodoPago = document.getElementById('cliente-metodo-pago').value;
+  const tipoEntrega = document.getElementById('cliente-tipo-entrega').value;
   const direccion = document.getElementById('cliente-direccion').value.trim();
+  const referencia = document.getElementById('cliente-referencia').value.trim();
+  const metodoPago = document.getElementById('cliente-metodo-pago').value;
 
   if (!nombre || nombre.length < 3) {
     alert("🛡️ SEGURIDAD: Debes ingresar tu Nombre y Apellido completo.");
@@ -363,26 +511,43 @@ function enviarWhatsApp() {
     return;
   }
 
-  if (!direccion) {
-    alert("Ingresa tu dirección exacta de entrega.");
-    return;
+  if (tipoEntrega === 'Delivery') {
+    if (!direccion) {
+      alert("Por favor ingresa tu Dirección o Ubicación Exacta para el Delivery.");
+      return;
+    }
+    if (!referencia) {
+      alert("Por favor ingresa una Referencia de la ubicación.");
+      return;
+    }
   }
 
   if (metodoPago === 'Yape' || metodoPago === 'Plin') {
     alert("⚠️ ATENCIÓN OBLIGATORIA: Al abrir WhatsApp debes adjuntar la CAPTURA DE PANTALLA del comprobante de YAPE/PLIN para procesar tu pedido.");
   }
 
+  // Se activa el temporizador en la esquina tras confirmar pedido
   iniciarTemporizadorCocina();
 
   let mensaje = "🍕 *¡NUEVO PEDIDO - GOLDEN PIZZERIA & CAFE!* 🍕\n\n";
   mensaje += "🛡️ *DATOS DEL CLIENTE VERIFICADO:*\n";
   mensaje += `• *Nombre y Apellidos:* ${nombre}\n`;
   mensaje += `• *Teléfono:* ${telefono}\n`;
-  mensaje += `• *Dirección:* ${direccion}\n`;
+  mensaje += `• *Modalidad:* ${tipoEntrega}\n`;
+
+  if (tipoEntrega === 'Delivery') {
+    mensaje += `• *Ubicación Exacta:* ${direccion}\n`;
+    mensaje += `• *Referencia:* ${referencia}\n`;
+  } else {
+    mensaje += `• *Entrega:* Recojo en Local (Mariano Melgar)\n`;
+  }
+
   mensaje += `• *Método de Pago:* ${metodoPago}\n`;
 
   if (metodoPago === 'Yape' || metodoPago === 'Plin') {
     mensaje += `📌 *(Adjuntando captura de comprobante en la conversación)*\n`;
+  } else if (metodoPago === 'Efectivo en Local' || metodoPago === 'Tarjeta en Local') {
+    mensaje += `📌 *(Pago presencial al aproximarse al local)*\n`;
   }
 
   mensaje += "\n🛒 *DETALLE DEL PEDIDO:*\n";
@@ -498,20 +663,32 @@ function crearEstructuraModalesYCarrito() {
         <p style="color:#aaa; text-align:center; margin-top:20px;">Tu carrito está vacío.</p>
       </div>
 
-      <div style="border-top:1px solid #333; padding-top:12px; margin-top:10px; display:flex; flex-direction:column; gap:8px;">
-        <div style="font-size:0.8rem; color:#D4AF37; font-weight:bold;">🛡️ DATOS OBLIGATORIOS (ANTI-TROLLS):</div>
+      <div style="border-top:1px solid #333; padding-top:10px; margin-top:10px; display:flex; flex-direction:column; gap:8px;">
+        <div style="font-size:0.8rem; color:#D4AF37; font-weight:bold;">🛡️ DATOS DEL PEDIDO Y ENTREGA:</div>
         
         <input type="text" id="cliente-nombre" placeholder="Nombres y Apellidos *" class="input-form">
         <input type="tel" id="cliente-telefono" placeholder="Teléfono Perú (9XXXXXXXX) *" maxlength="9" class="input-form">
-        <input type="text" id="cliente-direccion" placeholder="Dirección de Entrega *" class="input-form">
         
+        <label style="font-size:0.78rem; color:#aaa; margin-top:2px;">Modalidad de Entrega:</label>
+        <select id="cliente-tipo-entrega" class="input-form" onchange="toggleTipoEntrega()">
+          <option value="Delivery">🛵 Delivery a domicilio</option>
+          <option value="Recojo en Local">🏃 Recojo en Local (Mariano Melgar)</option>
+        </select>
+
+        <div id="container-ubicacion-exacta" style="display:flex; flex-direction:column; gap:6px;">
+          <input type="text" id="cliente-direccion" placeholder="Ubicación Exacta (Calle / Nro) *" class="input-form">
+          <input type="text" id="cliente-referencia" placeholder="Referencia de la Ubicación *" class="input-form">
+        </div>
+
+        <label style="font-size:0.78rem; color:#aaa; margin-top:2px;">Método de Pago:</label>
         <select id="cliente-metodo-pago" class="input-form">
           <option value="Yape">Yape (Captura obligatoria)</option>
           <option value="Plin">Plin (Captura obligatoria)</option>
-          <option value="Efectivo">Efectivo contraentrega</option>
+          <option value="Efectivo en Local">💵 Efectivo en Local (Al aproximarse)</option>
+          <option value="Tarjeta en Local">💳 Tarjeta en Local (Al aproximarse)</option>
         </select>
 
-        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:1.1rem; margin:6px 0;">
+        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:1.1rem; margin:4px 0;">
           <span>Total:</span>
           <span id="carrito-total" style="color:#D4AF37;">S/ 0.00</span>
         </div>
