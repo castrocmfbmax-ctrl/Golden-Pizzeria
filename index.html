@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Golden Pizzeria & Cafe</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -13,11 +13,12 @@
     <h1 class="logo-title">Golden Pizzeria & Cafe</h1>
     <p class="tagline">Sabor artesanal en Mariano Melgar</p>
 
-    <!-- BARRA DE BÚSQUEDA Y FILTROS -->
+    <!-- BARRA DE BÚSQUEDA -->
     <div class="search-container">
-      <input type="text" id="search-input" placeholder="Buscar pizza, bebida, frappe..." onkeyup="buscarProducto()" />
+      <input type="text" id="search-input" placeholder="Buscar pizza, bebida, frappe..." onkeyup="buscarProducto()">
     </div>
 
+    <!-- FILTROS -->
     <div class="filter-bar">
       <button class="filter-btn active" onclick="filterCategory('todas')">Todas</button>
       <button class="filter-btn" onclick="filterCategory('clasicas')">Clásicas</button>
@@ -59,7 +60,6 @@
         <p>El balance perfecto entre queso mozzarella, jamón y trozos de piña en su jugo.</p>
         <p class="precios">Personal: S/ 16 | Mediana: S/ 28 | Familiar: S/ 39</p>
         <button class="btn-add" onclick="abrirModalPizza('Hawaina', 16, 28, 39)">AGREGAR +</button>
-
       </div>
 
       <div class="card clasicas">
@@ -105,7 +105,7 @@
         <button class="btn-add" onclick="abrirModalPizza('Continental', 18, 32, 44)">AGREGAR +</button>
       </div>
 
-      <!-- SECCIÓN KIDS (NUEVA) -->
+      <!-- SECCIÓN KIDS -->
       <div class="card kids">
         <h3>Combo Mini Mágica 👶</h3>
         <p>1 Pizza Personal (Jamón o Salchicha) + Jugo/Gaseosa + Sorpresa dulce.</p>
