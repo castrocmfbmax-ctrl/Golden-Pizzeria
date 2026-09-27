@@ -1,22 +1,23 @@
 // DICCIONARIO DE SEDES Y SUS TELÉFONOS
 const sedesTelefonos = {
-  "argentina": "51994710034",
-  "vallejo": "51932399922",
-  "grau": "51992911116"
+    "argentina": "51994710034",
+    "vallejo": "519932399922",
+    "grau": "51992911116"
 };
 
 // Carrito de compras
 let carrito = [];
 
 function agregarAlCarrito(producto) {
-  carrito.push(producto);
-  actualizarUI();
-  alert(`${producto.nombre} agregado al pedido.`);
+    carrito.push(producto);
+    actualizarUI();
+    alert(producto.nombre + " agregado al pedido.");
 }
 
 function obtenerTelefonoSede(idSede) {
-  return sedesTelefonos[idSede] || "51994710034"; // Sede por defecto si no selecciona
+    return sedesTelefonos[idSede] || "51994710034"; // Sede por defecto si no selecciona
 }
+
 
 // Función para enviar pedido de la carta por WhatsApp según el local
 function enviarPedidoWhatsApp() {
