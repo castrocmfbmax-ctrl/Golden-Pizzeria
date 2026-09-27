@@ -1,5 +1,5 @@
 /* =========================================================
-   GOLDEN PIZZERIA - CONFIGURACIÓN DE SEDES Y NÚMEROS
+   GOLDEN PIZZERIA - SISTEMA DE CARRITO CON + Y -
 ========================================================= */
 
 const CONFIG_SEDES = {
@@ -24,10 +24,32 @@ let carrito = [];
 let metodoPagoSeleccionado = "yape";
 let pizzaActual = "";
 
-/* --- AGREGAR Y MANEJAR PEDIDOS --- */
+/* --- AGREGAR Y MANEJAR CANTIDADES (+ / -) --- */
 function agregarPedido(nombre, precio) {
-    carrito.push({ nombre: nombre, precio: parseFloat(precio) });
+    const itemExistente = carrito.find(item => item.nombre === nombre);
+    if (itemExistente) {
+        itemExistente.cantidad++;
+    } else {
+        carrito.push({ nombre: nombre, precio: parseFloat(precio), cantidad: 1 });
+    }
     actualizarCarritoUI();
+}
+
+function cambiarCantidad(index, cambio) {
+    if (carrito[index]) {
+        carrito[index].cantidad += cambio;
+        if (carrito[index].cantidad <= 0) {
+            carrito.splice(index, 1);
+        }
+    }
+    actualizarCarritoUI();
+    renderizarListaModal();
+}
+
+function eliminarProducto(index) {
+    carrito.splice(index, 1);
+    actualizarCarritoUI();
+    renderizarListaModal();
 }
 
 function actualizarCarritoUI() {
@@ -35,13 +57,16 @@ function actualizarCarritoUI() {
     const cartCount = document.getElementById("cart-count");
     const cartTotal = document.getElementById("cart-total");
 
-    if (carrito.length > 0) {
+    const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+    const totalPrecio = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+
+    if (totalItems > 0) {
         if (cartBar) cartBar.classList.remove("hidden");
-        let total = carrito.reduce((sum, item) => sum + item.precio, 0);
-        if (cartCount) cartCount.innerText = carrito.length;
-        if (cartTotal) cartTotal.innerText = `S/ ${total.toFixed(2)}`;
+        if (cartCount) cartCount.innerText = totalItems;
+        if (cartTotal) cartTotal.innerText = `S/ ${totalPrecio.toFixed(2)}`;
     } else {
         if (cartBar) cartBar.classList.add("hidden");
+        cerrarPago();
     }
 }
 
@@ -81,7 +106,7 @@ function abrirModalPizza(nombre, pPersonal, pMediana, pFamiliar) {
 
     if (!modal || !container) return;
 
-    if (titulo) titulo.innerText = `Pizza ${nombre}`;
+    if (titulo) titulo.innerText = `🍕 Pizza ${nombre}`;
 
     let htmlButtons = "";
     if (pPersonal !== null && pPersonal !== undefined) {
@@ -124,11 +149,11 @@ function abrirModalFrappe(tipo) {
     let precio = 0;
 
     if (tipo === 'fruta') {
-        if (titulo) titulo.innerText = "Frappé de Fruta (S/ 10.00)";
+        if (titulo) titulo.innerText = "🍧 Frappé de Fruta (S/ 10.00)";
         sabores = ["Maracuyá", "Fresa", "Mango", "Lúcuma"];
         precio = 10;
     } else if (tipo === 'especial') {
-        if (titulo) titulo.innerText = "Frappé Especial (S/ 9.00)";
+        if (titulo) titulo.innerText = "☕ Frappé Especial (S/ 9.00)";
         sabores = ["Cappuccino", "Oreo"];
         precio = 9;
     }
@@ -167,29 +192,48 @@ function toggleDireccionField() {
     }
 }
 
+/* --- RENDERIZAR DETALLE CON BOTONES + Y - --- */
+function renderizarListaModal() {
+    const summaryList = document.getElementById("payment-summary-list");
+    const summaryTotal = document.getElementById("payment-total");
+
+    if (!summaryList) return;
+
+    let html = "";
+    let total = 0;
+
+    carrito.forEach((item, index) => {
+        const subtotal = item.precio * item.cantidad;
+        total += subtotal;
+
+        html += `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; background:rgba(35,20,12,0.6); padding:8px 10px; border-radius:8px; border:1px solid #444;">
+            <div style="flex:1;">
+                <div style="font-size:0.85rem; color:#f5e6d3; font-weight:bold;">${item.nombre}</div>
+                <div style="font-size:0.75rem; color:#D4AF37;">S/ ${item.precio.toFixed(2)} c/u</div>
+            </div>
+            
+            <div style="display:flex; align-items:center; gap:8px;">
+                <button type="button" onclick="cambiarCantidad(${index}, -1)" style="background:#d62828; color:white; border:none; width:26px; height:26px; border-radius:6px; font-weight:bold; cursor:pointer;">-</button>
+                <span style="font-size:0.9rem; font-weight:bold; color:white; min-width:18px; text-align:center;">${item.cantidad}</span>
+                <button type="button" onclick="cambiarCantidad(${index}, 1)" style="background:#25d366; color:white; border:none; width:26px; height:26px; border-radius:6px; font-weight:bold; cursor:pointer;">+</button>
+                <button type="button" onclick="eliminarProducto(${index})" style="background:transparent; color:#aaa; border:none; font-size:1.1rem; cursor:pointer; margin-left:5px;">🗑️</button>
+            </div>
+        </div>`;
+    });
+
+    summaryList.innerHTML = html;
+    if (summaryTotal) summaryTotal.innerText = `Total: S/ ${total.toFixed(2)}`;
+}
+
 /* --- MODAL DE PAGO --- */
 function abrirPago(e) {
     if (e) e.preventDefault();
     const overlay = document.getElementById("payment-overlay");
-    const summaryList = document.getElementById("payment-summary-list");
-    const summaryTotal = document.getElementById("payment-total");
 
     if (!overlay) return;
 
-    if (summaryList) {
-        let html = "";
-        let total = 0;
-        carrito.forEach((item) => {
-            html += `<div style="display:flex; justify-content:space-between; margin-bottom:5px; border-bottom:1px solid #222; padding-bottom:3px; font-size:0.85rem; color:#ccc;">
-                <span>• ${item.nombre}</span>
-                <span style="color:#D4AF37">S/ ${item.precio.toFixed(2)}</span>
-            </div>`;
-            total += item.precio;
-        });
-        summaryList.innerHTML = html;
-        if (summaryTotal) summaryTotal.innerText = `Total: S/ ${total.toFixed(2)}`;
-    }
-
+    renderizarListaModal();
     actualizarDatosSede();
     toggleDireccionField();
     overlay.classList.remove("hidden");
@@ -235,7 +279,7 @@ function mostrarNombreArchivo(input) {
     }
 }
 
-/* --- CONFIRMACIÓN Y ENVÍO A WHATSAPP DE LA SEDE CORRESPONDIENTE --- */
+/* --- CONFIRMACIÓN Y ENVÍO A WHATSAPP --- */
 function confirmarPedido() {
     if (carrito.length === 0) return;
 
@@ -254,8 +298,9 @@ function confirmarPedido() {
     let total = 0;
 
     carrito.forEach((item) => {
-        textoDetalle += `• ${item.nombre} - S/ ${item.precio.toFixed(2)}\n`;
-        total += item.precio;
+        const subtotal = item.precio * item.cantidad;
+        textoDetalle += `• (${item.cantidad}x) ${item.nombre} - S/ ${subtotal.toFixed(2)}\n`;
+        total += subtotal;
     });
 
     let mensaje = `*¡NUEVO PEDIDO - GOLDEN PIZZERIA!* 🍕\n\n`;
