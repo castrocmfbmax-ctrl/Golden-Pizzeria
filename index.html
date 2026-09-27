@@ -20,6 +20,7 @@
   <!-- NAVEGACIÓN Y FILTROS -->
   <nav class="categories">
     <button class="filter-btn active" onclick="filterCategory('todas')">🌟 Todas</button>
+    <button class="filter-btn" onclick="filterCategory('pizzetas')">🎯 Pizzetas</button>
     <button class="filter-btn" onclick="filterCategory('clasicas')">🍕 Clásicas</button>
     <button class="filter-btn" onclick="filterCategory('unicos')">✨ Sabores Únicos</button>
     <button class="filter-btn" onclick="filterCategory('casa')">🔥 Pizzas de Casa</button>
@@ -30,6 +31,18 @@
 
   <!-- CONTENEDOR DE PRODUCTOS -->
   <main class="menu-container">
+
+    <!-- 0. PIZZETAS (NUEVA SECCIÓN DE 3 SABORES) -->
+    <div class="card pizzetas">
+      <div class="card-info">
+        <h3>🍕🎯 Pizzetas Personales Especiales</h3>
+        <p>Pizzeta artesanal a la leña disponible en 3 sabrosas opciones: Americana, Hawaiana o Pepperoni.</p>
+        <div class="card-footer">
+          <span class="price">Desde S/ 5.00</span>
+          <button class="btn-add" onclick="abrirModalPizzetas()">Elegir Sabor 🍕🎯</button>
+        </div>
+      </div>
+    </div>
 
     <!-- 1. PIZZAS CLÁSICAS -->
     <div class="card clasicas">
@@ -491,21 +504,51 @@
     </div>
   </div>
 
-  <!-- MODAL SELECCIÓN TAMAÑO Y SABOR -->
+  <!-- MODAL SELECCIÓN TAMAÑO, SABOR Y EXTRAS -->
   <div id="pizza-modal" class="payment-overlay hidden">
     <div class="payment-box" style="text-align: center;">
       <h2 id="pizza-modal-title">🍕 Seleccionar Opción</h2>
-      <p style="color: #aaa; margin-bottom: 20px; font-size: 0.9rem;">Elige la opción que prefieras:</p>
+      <p style="color: #aaa; margin-bottom: 15px; font-size: 0.9rem;">Elige la opción que prefieras:</p>
+      
       <div id="pizza-modal-sizes" style="display: flex; flex-direction: column; gap: 10px;"></div>
-      <button type="button" class="btn-close-payment" onclick="cerrarModalPizza()" style="margin-top: 20px; width: 100%;">Cancelar</button>
+      
+      <!-- CONTENEDOR DE EXTRAS OPCIONALES -->
+      <div id="extra-options-container" style="display: none; margin-top: 15px; background: rgba(35, 20, 12, 0.8); border: 1px dashed #D4AF37; padding: 12px; border-radius: 8px; text-align: left;">
+        <span style="color: #D4AF37; font-weight: bold; font-size: 0.85rem; display: block; margin-bottom: 8px;">➕ Agregar Extras Opcionales:</span>
+        <label style="display: flex; align-items: center; gap: 8px; color: #fff; font-size: 0.85rem; margin-bottom: 6px; cursor: pointer;">
+          <input type="checkbox" id="chk-extra-queso" style="accent-color: #D4AF37; transform: scale(1.2);"> 🧀 Extra Queso (<span id="lbl-precio-queso">S/ 0.00</span>)
+        </label>
+        <label style="display: flex; align-items: center; gap: 8px; color: #fff; font-size: 0.85rem; cursor: pointer;">
+          <input type="checkbox" id="chk-extra-embutido" style="accent-color: #D4AF37; transform: scale(1.2);"> 🥓 Extra Embutido (<span id="lbl-precio-embutido">S/ 0.00</span>)
+        </label>
+      </div>
+
+      <div id="pizza-modal-confirm-btn" style="margin-top: 15px;"></div>
+
+      <button type="button" class="btn-close-payment" onclick="cerrarModalPizza()" style="margin-top: 15px; width: 100%;">Cancelar</button>
     </div>
   </div>
 
-  <!-- MODAL DE PAGO Y SEDES -->
+  <!-- MODAL DE PAGO, SEGURIDAD ANTI-TROLLS Y SEDES -->
   <div id="payment-overlay" class="payment-overlay hidden">
     <div class="payment-box">
       <h2>🔥 Confirmar Pedido 🔥</h2>
-      <p class="payment-subtitle" style="text-align: center; color: #aaa; margin-bottom: 15px; font-size: 0.85rem;">Selecciona tu sede, modalidad y medio de pago</p>
+      <p class="payment-subtitle" style="text-align: center; color: #aaa; margin-bottom: 15px; font-size: 0.85rem;">Ingresa tus datos y confirma tu orden</p>
+
+      <!-- SISTEMA ANTI-TROLLS OBLIGATORIO -->
+      <div style="background: rgba(40, 15, 10, 0.6); border: 1px solid #e76f51; padding: 12px; border-radius: 10px; margin-bottom: 15px;">
+        <span style="color: #f4a261; font-weight: bold; font-size: 0.85rem; display: block; margin-bottom: 8px;">🛡️ Verificación de Cliente (Obligatorio)</span>
+        
+        <div style="margin-bottom: 10px; text-align: left;">
+          <label for="input-nombre" style="display: block; color: #ddd; margin-bottom: 4px; font-size: 0.8rem;">👤 Nombres y Apellidos *</label>
+          <input type="text" id="input-nombre" placeholder="Ej: Juan Pérez" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #5c3a21; background: #120a06; color: #fff; font-size: 0.85rem; outline: none;">
+        </div>
+
+        <div style="text-align: left;">
+          <label for="input-telefono" style="display: block; color: #ddd; margin-bottom: 4px; font-size: 0.8rem;">📱 Número de Celular Perú (9 dígitos) *</label>
+          <input type="tel" id="input-telefono" maxlength="9" placeholder="Ej: 987654321" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #5c3a21; background: #120a06; color: #fff; font-size: 0.85rem; outline: none;">
+        </div>
+      </div>
 
       <!-- SELECCIÓN DE SEDE -->
       <div style="margin-bottom: 15px; text-align: left;">
