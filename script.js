@@ -6,20 +6,26 @@ let tiempoRestante = 15 * 60; // 15 minutos de preparación
 let tiempoTolerancia = 20 * 60; // 20 minutos de tolerancia
 let temporizadorIntervalo = null;
 
-// Cargar librerías y elementos al iniciar
 document.addEventListener("DOMContentLoaded", () => {
   crearEstructuraModalesYCarrito();
-  iniciarTemporizadorCocina();
 });
 
 // ==========================================
-// 1. TEMPORIZADOR DE PREPARACIÓN Y TOLERANCIA
+// 1. TEMPORIZADOR (INICIA TRAS EL PEDIDO)
 // ==========================================
 function iniciarTemporizadorCocina() {
+  if (temporizadorIntervalo) clearInterval(temporizadorIntervalo);
+  
+  const timerBanner = document.getElementById("timer-banner");
+  if (timerBanner) timerBanner.style.display = "flex";
+
   const timerElement = document.getElementById("timer-display");
   const statusElement = document.getElementById("timer-status");
 
   if (!timerElement) return;
+
+  tiempoRestante = 15 * 60;
+  tiempoTolerancia = 20 * 60;
 
   temporizadorIntervalo = setInterval(() => {
     if (tiempoRestante > 0) {
@@ -27,26 +33,26 @@ function iniciarTemporizadorCocina() {
       let minutos = Math.floor(tiempoRestante / 60);
       let segundos = tiempoRestante % 60;
       timerElement.innerText = `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
-      statusElement.innerText = "🔥 En horno / Preparación (15 min)";
-      statusElement.style.color = "#D4AF37";
+      statusElement.innerText = "🔥 En horno a la piedra (15 min)";
+      statusElement.style.color = "#ffca3a";
     } else if (tiempoTolerancia > 0) {
       tiempoTolerancia--;
       let minutos = Math.floor(tiempoTolerancia / 60);
       let segundos = tiempoTolerancia % 60;
       timerElement.innerText = `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
-      statusElement.innerText = "⏳ Tiempo de tolerancia (Máx 20 min antes de enfriar)";
-      statusElement.style.color = "#e74c3c";
+      statusElement.innerText = "⏳ Tiempo de tolerancia (Máx 20 min)";
+      statusElement.style.color = "#ff6b6b";
     } else {
       clearInterval(temporizadorIntervalo);
       timerElement.innerText = "00:00";
-      statusElement.innerText = "⚠️ La pizza puede estar perdiendo temperatura. ¡Servir o entregar ya!";
+      statusElement.innerText = "⚠️ Tiempo cumplido. ¡Servir o entregar ya!";
       statusElement.style.color = "#ff4444";
     }
   }, 1000);
 }
 
 // ==========================================
-// 2. FUNCIONALIDAD DE FILTROS Y BUSCADOR
+// 2. FILTROS Y BÚSQUEDA
 // ==========================================
 function filterCategory(categoria) {
   const botones = document.querySelectorAll('.filter-btn');
@@ -83,40 +89,96 @@ function buscarProducto() {
 }
 
 // ==========================================
-// 3. MODALES INTERACTIVOS (PIZZAS, KIDS Y BEBIDAS)
+// 3. MODALES INTERACTIVOS Y EXTRAS
 // ==========================================
 let pizzaSeleccionadaActual = {};
 
 function abrirModalPizza(nombre, precioPersonal, precioMediana, precioFamiliar) {
   pizzaSeleccionadaActual = { nombre, precioPersonal, precioMediana, precioFamiliar };
   
-  let opcionesHTML = '';
-  
-  if (precioPersonal !== null) {
-    opcionesHTML += `<button type="button" class="btn-modal-opcion" onclick="confirmarAgregarPizza('Personal', ${precioPersonal})">🍕 Personal - S/ ${precioPersonal}.00</button>`;
-  }
-  if (precioMediana !== null) {
-    opcionesHTML += `<button type="button" class="btn-modal-opcion" onclick="confirmarAgregarPizza('Mediana', ${precioMediana})">🍕 Mediana - S/ ${precioMediana}.00</button>`;
-  }
-  if (precioFamiliar !== null) {
-    opcionesHTML += `<button type="button" class="btn-modal-opcion" onclick="confirmarAgregarPizza('Familiar', ${precioFamiliar})">🍕 Familiar - S/ ${precioFamiliar}.00</button>`;
-  }
-
   document.getElementById('modal-title').innerText = `Pizza ${nombre}`;
   document.getElementById('modal-body').innerHTML = `
-    <p style="margin-bottom:15px; color:#ccc;">Selecciona el tamaño que deseas:</p>
-    <div style="display:flex; flex-direction:column; gap:10px;">
-      ${opcionesHTML}
+    <p style="margin-bottom:10px; color:#ccc;">1. Selecciona el tamaño:</p>
+    <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:15px;">
+      <button type="button" class="btn-modal-opcion" onclick="seleccionarTamanoPizza('Personal', ${precioPersonal})">🍕 Personal - S/ ${precioPersonal}.00</button>
+      <button type="button" class="btn-modal-opcion" onclick="seleccionarTamanoPizza('Mediana', ${precioMediana})">🍕 Mediana - S/ ${precioMediana}.00</button>
+      <button type="button" class="btn-modal-opcion" onclick="seleccionarTamanoPizza('Familiar', ${precioFamiliar})">🍕 Familiar - S/ ${precioFamiliar}.00</button>
     </div>
   `;
   
   document.getElementById('modal-custom').style.display = 'flex';
 }
 
-function confirmarAgregarPizza(tamano, precio) {
-  const nombreCompleto = `Pizza ${pizzaSeleccionadaActual.nombre} (${tamano})`;
-  agregarPedido(nombreCompleto, precio);
+function seleccionarTamanoPizza(tamano, precioBase) {
+  document.getElementById('modal-body').innerHTML = `
+    <h4 style="color:#D4AF37; margin-bottom:10px;">Tamaño: ${tamano} (S/ ${precioBase}.00)</h4>
+    <p style="margin-bottom:10px; color:#ccc;">2. ¿Deseas agregar adicionales? (+S/ 3.00 c/u)</p>
+    
+    <label style="display:block; margin-bottom:10px; cursor:pointer;">
+      <input type="checkbox" id="extra-queso" value="3"> Extra Queso Mozzarella (+S/ 3.00)
+    </label>
+    <label style="display:block; margin-bottom:15px; cursor:pointer;">
+      <input type="checkbox" id="extra-embutido" value="3"> Extra Embutido (+S/ 3.00)
+    </label>
+
+    <button class="btn-modal-opcion" style="text-align:center; background:#D4AF37; color:#000;" onclick="confirmarPizzaConExtras('${tamano}', ${precioBase})">
+      🛒 AGREGAR AL PEDIDO
+    </button>
+  `;
+}
+
+function confirmarPizzaConExtras(tamano, precioBase) {
+  const chkQueso = document.getElementById('extra-queso');
+  const chkEmbutido = document.getElementById('extra-embutido');
+
+  let extras = [];
+  let precioFinal = precioBase;
+
+  if (chkQueso && chkQueso.checked) {
+    extras.push("Extra Queso");
+    precioFinal += 3;
+  }
+  if (chkEmbutido && chkEmbutido.checked) {
+    extras.push("Extra Embutido");
+    precioFinal += 3;
+  }
+
+  let textoExtras = extras.length > 0 ? ` + [${extras.join(", ")}]` : '';
+  const nombreCompleto = `Pizza ${pizzaSeleccionadaActual.nombre} (${tamano})${textoExtras}`;
+
+  agregarPedido(nombreCompleto, precioFinal);
   cerrarModal();
+}
+
+function abrirModalPizzeta() {
+  document.getElementById('modal-title').innerText = 'Pizzeta Individual (S/ 8.00)';
+  document.getElementById('modal-body').innerHTML = `
+    <p style="margin-bottom:15px; color:#ccc;">Elige tu sabor:</p>
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Pizzeta Americana', 8)">🍕 Pizzeta Americana</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Pizzeta Mozzarella', 8)">🍕 Pizzeta Mozzarella</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Pizzeta Pepperoni', 8)">🍕 Pizzeta Pepperoni</button>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Pizzeta Hawaina', 8)">🍕 Pizzeta Hawaina</button>
+    </div>
+  `;
+  document.getElementById('modal-custom').style.display = 'flex';
+}
+
+function abrirModalCumpleanos(tipo) {
+  if (tipo === 'pack') {
+    document.getElementById('modal-title').innerText = 'Pack Cumpleañero (S/ 75.00)';
+    document.getElementById('modal-body').innerHTML = `
+      <p style="margin-bottom:15px; color:#ccc;">Incluye 2 Familiares + Gaseosa 1.5L + Sorpresa:</p>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Pack Cumpleañero Golden (2 Fam + Bebida)', 75)">🎉 Confirmar Pack Cumpleañero</button>
+    `;
+  } else if (tipo === 'especial') {
+    document.getElementById('modal-title').innerText = 'Promo Cumpleañero Especial (S/ 48.00)';
+    document.getElementById('modal-body').innerHTML = `
+      <p style="margin-bottom:15px; color:#ccc;">Incluye 1 Familiar + Pan al Ajo + Bebida + Regalo:</p>
+      <button class="btn-modal-opcion" onclick="confirmarAgregarGenerico('Promo Cumpleañero Especial', 48)">🎉 Confirmar Promo Especial</button>
+    `;
+  }
+  document.getElementById('modal-custom').style.display = 'flex';
 }
 
 function abrirModalKids(tipoCombo) {
@@ -180,7 +242,7 @@ function cerrarModal() {
 }
 
 // ==========================================
-// 4. GESTIÓN DEL CARRITO DE COMPRAS
+// 4. GESTIÓN DEL CARRITO
 // ==========================================
 function agregarPedido(nombre, precio) {
   const itemExistente = carrito.find(p => p.nombre === nombre);
@@ -242,6 +304,9 @@ function enviarWhatsApp() {
     return;
   }
 
+  // Activa el temporizador del horno solo tras realizar el pedido
+  iniciarTemporizadorCocina();
+
   let mensaje = "🍕 *¡NUEVO PEDIDO - GOLDEN PIZZERIA & CAFE!* 🍕\n\n";
   let total = 0;
 
@@ -252,7 +317,7 @@ function enviarWhatsApp() {
   });
 
   mensaje += `\n💰 *TOTAL A PAGAR:* S/ ${total}.00\n`;
-  mensaje += `📍 *Dirección de envío:* (Escribe tu dirección aquí en Arequipa)\n`;
+  mensaje += `📍 *Dirección de envío:* (Escribe tu dirección en Mariano Melgar / Arequipa)\n`;
   mensaje += `💳 *Método de pago:* Yape / Plin / Efectivo`;
 
   const numeroTelefono = "51979707173";
@@ -261,31 +326,12 @@ function enviarWhatsApp() {
 }
 
 // ==========================================
-// 5. INYECCIÓN DINÁMICA DE CRONÓMETRO Y MODALES
+// 5. INYECCIÓN DINÁMICA DE MODAL Y CARRITO
 // ==========================================
 function crearEstructuraModalesYCarrito() {
   const styles = `
-    .timer-banner {
-      background: #1a1e1b;
-      border: 1px solid #D4AF37;
-      border-radius: 10px;
-      padding: 10px 15px;
-      margin: 15px auto;
-      max-width: 500px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      color: white;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    }
-    .timer-clock {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #D4AF37;
-      font-family: monospace;
-    }
     .btn-modal-opcion {
-      background: #1a1e1b;
+      background: #1a120e;
       color: white;
       border: 1px solid #D4AF37;
       padding: 12px;
@@ -310,7 +356,7 @@ function crearEstructuraModalesYCarrito() {
       padding: 12px 20px;
       font-weight: bold;
       font-size: 1rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.8);
       cursor: pointer;
       z-index: 1000;
       display: flex;
@@ -323,14 +369,15 @@ function crearEstructuraModalesYCarrito() {
       right: -350px;
       width: 320px;
       height: 100vh;
-      background: #141816;
+      background: #120c0a;
       color: white;
-      box-shadow: -5px 0 15px rgba(0,0,0,0.7);
+      box-shadow: -5px 0 20px rgba(0,0,0,0.9);
       z-index: 1001;
       transition: right 0.3s ease;
       display: flex;
       flex-direction: column;
       padding: 20px;
+      border-left: 1px solid #D4AF37;
     }
     .drawer-carrito.open {
       right: 0;
@@ -341,25 +388,10 @@ function crearEstructuraModalesYCarrito() {
   styleSheet.innerText = styles;
   document.head.appendChild(styleSheet);
 
-  // Inyectar Barra de Tiempo de Preparación
-  const bannerTimerHTML = `
-    <div class="timer-banner">
-      <div style="display:flex; align-items:center; gap:10px;">
-        <span style="font-size:1.8rem;">⏱️</span>
-        <div>
-          <div style="font-weight:bold; font-size:0.9rem;">TIEMPO DE PREPARACIÓN</div>
-          <div id="timer-status" style="font-size:0.75rem; color:#ccc;">Horno en vivo</div>
-        </div>
-      </div>
-      <div id="timer-display" class="timer-clock">15:00</div>
-    </div>
-  `;
-  document.body.insertAdjacentHTML('afterbegin', bannerTimerHTML);
-
-  // Inyectar HTML para Modal Custom
+  // Inyectar Modal Custom
   const modalHTML = `
-    <div id="modal-custom" style="display:none; position:fixed; top:0; left:0; width:100%; height:100vh; background:rgba(0,0,0,0.8); z-index:2000; justify-content:center; align-items:center;">
-      <div style="background:#141816; color:white; padding:25px; border-radius:12px; border:1px solid #D4AF37; width:90%; max-width:400px; position:relative;">
+    <div id="modal-custom" style="display:none; position:fixed; top:0; left:0; width:100%; height:100vh; background:rgba(0,0,0,0.85); z-index:2000; justify-content:center; align-items:center;">
+      <div style="background:#140e0b; color:white; padding:25px; border-radius:12px; border:1px solid #D4AF37; width:90%; max-width:400px; position:relative; box-shadow:0 0 20px rgba(212,175,55,0.3);">
         <button onclick="cerrarModal()" style="position:absolute; top:10px; right:15px; background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">&times;</button>
         <h2 id="modal-title" style="color:#D4AF37; margin-bottom:15px;"></h2>
         <div id="modal-body"></div>
@@ -368,7 +400,7 @@ function crearEstructuraModalesYCarrito() {
   `;
   document.body.insertAdjacentHTML('beforeend', modalHTML);
 
-  // Inyectar Botón Flotante y Carrito
+  // Inyectar Botón Flotante y Carrito Drawer
   const carritoHTML = `
     <button class="carrito-float-btn" onclick="document.getElementById('drawer-carrito').classList.toggle('open')">
       🛒 Ver Pedido (<span id="carrito-count">0</span>)
