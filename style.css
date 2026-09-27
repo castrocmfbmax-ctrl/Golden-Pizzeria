@@ -11,37 +11,51 @@
   padding: 0;
 }
 
+/* FONDO EFECTO HORNO RÚSTICO Y TEXTURA DE PIEDRA CÁLIDA */
 body {
-  background-color: #0d110e;
+  background-color: #0c0908;
+  background-image: 
+    radial-gradient(circle at 50% 20%, rgba(212, 110, 20, 0.25) 0%, rgba(15, 10, 8, 0.95) 75%),
+    radial-gradient(circle at 20% 80%, rgba(180, 70, 10, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+  background-attachment: fixed;
   color: #e0e0e0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding-bottom: 80px;
 }
 
-/* HEADER Y TÍTULOS */
+/* HEADER Y EFECTOS ESPECIALES DE FUEGO ARTESANAL */
 .header {
   text-align: center;
-  padding: 25px 15px;
-  background: linear-gradient(180deg, #141816 0%, #0d110e 100%);
+  padding: 30px 15px 20px 15px;
+  background: linear-gradient(180deg, rgba(20, 12, 8, 0.95) 0%, rgba(12, 9, 8, 0.8) 100%);
   border-bottom: 2px solid #D4AF37;
+  box-shadow: 0 5px 25px rgba(212, 110, 20, 0.3);
 }
 
 .logo-title {
   font-family: 'Sweet Distance', 'Georgia', sans-serif !important;
   color: #D4AF37;
-  font-size: 2.8rem;
+  font-size: 3rem;
   letter-spacing: 1px;
   margin-bottom: 5px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.5), 2px 2px 4px rgba(0, 0, 0, 0.9);
+  animation: glowHorno 3s infinite alternate;
+}
+
+@keyframes glowHorno {
+  0% { text-shadow: 0 0 8px rgba(212, 175, 55, 0.4), 2px 2px 4px #000; }
+  100% { text-shadow: 0 0 18px rgba(255, 140, 0, 0.8), 2px 2px 8px #000; }
 }
 
 .tagline {
-  color: #aaa;
-  font-size: 1rem;
+  color: #d4a373;
+  font-size: 1.05rem;
   margin-bottom: 20px;
+  font-style: italic;
 }
 
-/* BUSCADOR */
+/* BARRA DE BÚSQUEDA */
 .search-container {
   max-width: 500px;
   margin: 0 auto 15px auto;
@@ -53,17 +67,20 @@ body {
   padding: 12px 20px;
   border-radius: 25px;
   border: 1px solid #D4AF37;
-  background: #1a1e1b;
+  background: rgba(26, 18, 14, 0.9);
   color: #fff;
   font-size: 1rem;
   outline: none;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
+  transition: all 0.3s ease;
 }
 
 #search-input:focus {
-  box-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+  border-color: #ff9d00;
+  box-shadow: 0 0 12px rgba(255, 157, 0, 0.6);
 }
 
-/* FILTROS DE CATEGORÍA */
+/* FILTROS */
 .filter-bar {
   display: flex;
   justify-content: center;
@@ -73,7 +90,7 @@ body {
 }
 
 .filter-btn {
-  background: #141816;
+  background: rgba(20, 14, 10, 0.85);
   color: #D4AF37;
   border: 1px solid #D4AF37;
   padding: 8px 16px;
@@ -81,41 +98,45 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 600;
+  backdrop-filter: blur(5px);
 }
 
 .filter-btn.active, .filter-btn:hover {
   background: #D4AF37;
   color: #000;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
 }
 
-/* GRILLA DE PRODUCTOS */
+/* TARJETAS RÚSTICAS DE PRODUCTOS */
 .container {
   max-width: 1100px;
-  margin: 20px auto;
+  margin: 25px auto;
   padding: 0 15px;
 }
 
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
+  gap: 22px;
 }
 
 .card {
-  background: #141816;
-  border: 1px solid #2a302c;
+  background: linear-gradient(145deg, rgba(22, 15, 12, 0.9), rgba(14, 10, 8, 0.95));
+  border: 1px solid rgba(212, 175, 55, 0.3);
   border-radius: 12px;
   padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  transition: transform 0.2s, border-color 0.2s;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(4px);
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  border-color: #D4AF37;
+  transform: translateY(-5px);
+  border-color: #ff9d00;
+  box-shadow: 0 8px 25px rgba(255, 120, 0, 0.3);
 }
 
 .card h3 {
@@ -123,10 +144,11 @@ body {
   color: #D4AF37;
   font-size: 1.6rem;
   margin-bottom: 10px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
 }
 
 .card p {
-  color: #ccc;
+  color: #cccccc;
   font-size: 0.95rem;
   line-height: 1.4;
   margin-bottom: 15px;
@@ -134,24 +156,50 @@ body {
 
 .card .precios {
   font-weight: bold;
-  color: #fff;
+  color: #ffca3a;
   font-size: 0.9rem;
   margin-bottom: 15px;
 }
 
+/* BOTONES DE AGREGAR CON EFECTO DE BRILLO */
 .btn-add {
-  background: transparent;
+  background: rgba(212, 175, 55, 0.08);
   color: #D4AF37;
   border: 1px solid #D4AF37;
   padding: 10px;
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s, color 0.3s;
+  transition: all 0.3s ease;
   width: 100%;
+  letter-spacing: 0.5px;
 }
 
 .btn-add:hover {
   background: #D4AF37;
   color: #000;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.8);
+}
+
+/* BANNER DE TEMPORIZADOR ESTILO FUEGO DE HORNO */
+.timer-banner {
+  background: linear-gradient(90deg, #1f120a 0%, #361705 50%, #1f120a 100%);
+  border: 1px solid #ff9d00;
+  border-radius: 12px;
+  padding: 12px 20px;
+  margin: 15px auto;
+  max-width: 550px;
+  display: none; /* Inicia oculto hasta realizar el pedido */
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  box-shadow: 0 4px 20px rgba(255, 120, 0, 0.4);
+}
+
+.timer-clock {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #ffca3a;
+  font-family: monospace;
+  text-shadow: 0 0 8px rgba(255, 202, 58, 0.6);
 }
