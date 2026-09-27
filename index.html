@@ -8,6 +8,18 @@
 </head>
 <body>
 
+  <!-- BANNER TEMPORIZADOR (SE ACTIVA AL PEDIR) -->
+  <div id="timer-banner" class="timer-banner">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <span style="font-size:1.8rem;">🔥</span>
+      <div>
+        <div style="font-weight:bold; font-size:0.9rem;">TIEMPO EN PREPARACIÓN</div>
+        <div id="timer-status" style="font-size:0.75rem; color:#ccc;">Pedido enviado al horno</div>
+      </div>
+    </div>
+    <div id="timer-display" class="timer-clock">15:00</div>
+  </div>
+
   <!-- HEADER -->
   <header class="header">
     <h1 class="logo-title">Golden Pizzeria & Cafe</h1>
@@ -23,7 +35,9 @@
       <button class="filter-btn active" onclick="filterCategory('todas')">Todas</button>
       <button class="filter-btn" onclick="filterCategory('clasicas')">Clásicas</button>
       <button class="filter-btn" onclick="filterCategory('especiales')">Especiales</button>
+      <button class="filter-btn" onclick="filterCategory('pizzetas')">🍕 Pizzetas</button>
       <button class="filter-btn" onclick="filterCategory('kids')">👶 Kids</button>
+      <button class="filter-btn" onclick="filterCategory('cumpleanos')">🎉 Cumpleaños</button>
       <button class="filter-btn" onclick="filterCategory('bebidas')">Bebidas</button>
       <button class="filter-btn" onclick="filterCategory('frappes')">Frappés</button>
     </div>
@@ -105,6 +119,14 @@
         <button class="btn-add" onclick="abrirModalPizza('Continental', 18, 32, 44)">AGREGAR +</button>
       </div>
 
+      <!-- SECCIÓN PIZZETAS -->
+      <div class="card pizzetas">
+        <h3>Pizzeta Individual</h3>
+        <p>Porción individual crujiente. Elige tu sabor: Americana, Mozzarella, Pepperoni o Hawaina.</p>
+        <p class="precios">Precio: S/ 8.00</p>
+        <button class="btn-add" onclick="abrirModalPizzeta()">AGREGAR +</button>
+      </div>
+
       <!-- SECCIÓN KIDS -->
       <div class="card kids">
         <h3>Combo Mini Mágica 👶</h3>
@@ -132,6 +154,21 @@
         <p>Pizza personal con salchicha frankfurter crujiente y queso fundido.</p>
         <p class="precios">Precio: S/ 16.00</p>
         <button class="btn-add" onclick="confirmarAgregarGenerico('Salchi-Pizza Golden (Infantil)', 16)">AGREGAR +</button>
+      </div>
+
+      <!-- SECCIÓN CUMPLEAÑOS -->
+      <div class="card cumpleanos">
+        <h3>Pack Cumpleañero Golden 🎉</h3>
+        <p>2 Pizzas Familiares a elección + 1 Gaseosa 1.5L + Detalle sorpresa de cumpleaños.</p>
+        <p class="precios">Precio Promo: S/ 75.00</p>
+        <button class="btn-add" onclick="abrirModalCumpleanos('pack')">AGREGAR +</button>
+      </div>
+
+      <div class="card cumpleanos">
+        <h3>Promo Cumpleañero Especial 🎉</h3>
+        <p>1 Pizza Familiar + 1 Porción de Pan al Ajo + 1 Bebida. ¡Postre/Mini pizzeta de regalo!</p>
+        <p class="precios">Precio Promo: S/ 48.00</p>
+        <button class="btn-add" onclick="abrirModalCumpleanos('especial')">AGREGAR +</button>
       </div>
 
       <!-- BEBIDAS -->
