@@ -1,5 +1,5 @@
 /* =========================================================
-   GOLDEN PIZZERIA - SISTEMA DE CARRITO CON + Y -
+   GOLDEN PIZZERIA - SISTEMA ANTI-TROLLS, EXTRAS Y PIZZETAS
 ========================================================= */
 
 const CONFIG_SEDES = {
@@ -23,14 +23,20 @@ const CONFIG_SEDES = {
 let carrito = [];
 let metodoPagoSeleccionado = "yape";
 let pizzaActual = "";
+let tamanoSeleccionadoTemp = null;
+let precioBaseTemp = 0;
+let costoExtraQuesoTemp = 0;
+let costoExtraEmbutidoTemp = 0;
 
 /* --- AGREGAR Y MANEJAR CANTIDADES (+ / -) --- */
-function agregarPedido(nombre, precio) {
-    const itemExistente = carrito.find(item => item.nombre === nombre);
+function agregarPedido(nombre, precio, detallesExtra = "") {
+    const nombreCompleto = detallesExtra ? `${nombre} (${detallesExtra})` : nombre;
+    const itemExistente = carrito.find(item => item.nombre === nombreCompleto);
+    
     if (itemExistente) {
         itemExistente.cantidad++;
     } else {
-        carrito.push({ nombre: nombre, precio: parseFloat(precio), cantidad: 1 });
+        carrito.push({ nombre: nombreCompleto, precio: parseFloat(precio), cantidad: 1 });
     }
     actualizarCarritoUI();
 }
@@ -96,36 +102,108 @@ function filterCategory(cat) {
     });
 }
 
-/* --- MODAL DE TAMAÑOS DE PIZZA --- */
-function abrirModalPizza(nombre, pPersonal, pMediana, pFamiliar) {
-    pizzaActual = nombre;
-
+/* --- MODAL DE PIZZETAS (3 SABORES) --- */
+function abrirModalPizzetas() {
+    pizzaActual = "Pizzeta";
     const modal = document.getElementById("pizza-modal");
     const titulo = document.getElementById("pizza-modal-title");
     const container = document.getElementById("pizza-modal-sizes");
+    const extraContainer = document.getElementById("extra-options-container");
+    const btnConfirmContainer = document.getElementById("pizza-modal-confirm-btn");
 
     if (!modal || !container) return;
 
-    if (titulo) titulo.innerText = `🍕 Pizza ${nombre}`;
+    if (titulo) titulo.innerText = "🍕🎯 Elegir Sabor de Pizzeta";
+    if (extraContainer) extraContainer.style.display = "none";
+    if (btnConfirmContainer) btnConfirmContainer.innerHTML = "";
 
-    let htmlButtons = "";
-    if (pPersonal !== null && pPersonal !== undefined) {
-        htmlButtons += `<button type="button" class="btn-size" style="padding:12px; background:#191e1b; border:1px solid #D4AF37; color:white; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="seleccionarTamanoPizza('Personal', ${pPersonal})">Personal - S/ ${parseFloat(pPersonal).toFixed(2)}</button>`;
-    }
-    if (pMediana !== null && pMediana !== undefined) {
-        htmlButtons += `<button type="button" class="btn-size" style="padding:12px; background:#191e1b; border:1px solid #D4AF37; color:white; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="seleccionarTamanoPizza('Mediana', ${pMediana})">Mediana - S/ ${parseFloat(pMediana).toFixed(2)}</button>`;
-    }
-    if (pFamiliar !== null && pFamiliar !== undefined) {
-        htmlButtons += `<button type="button" class="btn-size" style="padding:12px; background:#191e1b; border:1px solid #D4AF37; color:white; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="seleccionarTamanoPizza('Familiar', ${pFamiliar})">Familiar - S/ ${parseFloat(pFamiliar).toFixed(2)}</button>`;
-    }
+    let html = `
+        <button type="button" class="btn-size" style="padding:12px; background:#191e1b; border:1px solid #D4AF37; color:white; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="seleccionarPizzetaDirecta('Americana', 5)">Pizzeta Americana - S/ 5.00</button>
+        <button type="button" class="btn-size" style="padding:12px; background:#191e1b; border:1px solid #D4AF37; color:white; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="seleccionarPizzetaDirecta('Hawaiana', 6)">Pizzeta Hawaiana - S/ 6.00</button>
+        <button type="button" class="btn-size" style="padding:12px; background:#191e1b; border:1px solid #D4AF37; color:white; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="seleccionarPizzetaDirecta('Pepperoni', 7)">Pizzeta Pepperoni - S/ 7.00</button>
+    `;
 
-    container.innerHTML = htmlButtons;
+    container.innerHTML = html;
     modal.classList.remove("hidden");
     modal.style.display = "flex";
 }
 
-function seleccionarTamanoPizza(tamano, precio) {
-    agregarPedido(`Pizza ${pizzaActual} (${tamano})`, precio);
+function seleccionarPizzetaDirecta(sabor, precio) {
+    agregarPedido(`Pizzeta ${sabor}`, precio);
+    cerrarModalPizza();
+}
+
+/* --- MODAL DE TAMAÑOS DE PIZZA Y EXTRAS OPCIONALES --- */
+function abrirModalPizza(nombre, pPersonal, pMediana, pFamiliar) {
+    pizzaActual = nombre;
+    tamanoSeleccionadoTemp = null;
+
+    const modal = document.getElementById("pizza-modal");
+    const titulo = document.getElementById("pizza-modal-title");
+    const container = document.getElementById("pizza-modal-sizes");
+    const extraContainer = document.getElementById("extra-options-container");
+    const btnConfirmContainer = document.getElementById("pizza-modal-confirm-btn");
+
+    if (!modal || !container) return;
+
+    if (titulo) titulo.innerText = `🍕 Pizza ${nombre}`;
+    if (extraContainer) extraContainer.style.display = "none";
+
+    // Resetear checks
+    document.getElementById("chk-extra-queso").checked = false;
+    document.getElementById("chk-extra-embutido").checked = false;
+
+    let htmlButtons = "";
+    if (pPersonal !== null && pPersonal !== undefined) {
+        htmlButtons += `<button type="button" class="btn-size" style="padding:12px; background:#191e1b; border:1px solid #D4AF37; color:white; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="prepararTamanoPizza('Personal', ${pPersonal}, 2, 2)">Personal - S/ ${parseFloat(pPersonal).toFixed(2)}</button>`;
+    }
+    if (pMediana !== null && pMediana !== undefined) {
+        htmlButtons += `<button type="button" class="btn-size" style="padding:12px; background:#191e1b; border:1px solid #D4AF37; color:white; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="prepararTamanoPizza('Mediana', ${pMediana}, 3, 3)">Mediana - S/ ${parseFloat(pMediana).toFixed(2)}</button>`;
+    }
+    if (pFamiliar !== null && pFamiliar !== undefined) {
+        htmlButtons += `<button type="button" class="btn-size" style="padding:12px; background:#191e1b; border:1px solid #D4AF37; color:white; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="prepararTamanoPizza('Familiar', ${pFamiliar}, 4, 4)">Familiar - S/ ${parseFloat(pFamiliar).toFixed(2)}</button>`;
+    }
+
+    container.innerHTML = htmlButtons;
+    if (btnConfirmContainer) btnConfirmContainer.innerHTML = "";
+
+    modal.classList.remove("hidden");
+    modal.style.display = "flex";
+}
+
+function prepararTamanoPizza(tamano, precioBase, costoQueso, costoEmbutido) {
+    tamanoSeleccionadoTemp = tamano;
+    precioBaseTemp = precioBase;
+    costoExtraQuesoTemp = costoQueso;
+    costoExtraEmbutidoTemp = costoEmbutido;
+
+    document.getElementById("lbl-precio-queso").innerText = `+S/ ${costoQueso}.00`;
+    document.getElementById("lbl-precio-embutido").innerText = `+S/ ${costoEmbutido}.00`;
+
+    document.getElementById("extra-options-container").style.display = "block";
+
+    const btnConfirmContainer = document.getElementById("pizza-modal-confirm-btn");
+    btnConfirmContainer.innerHTML = `<button type="button" class="btn-add" style="width:100%; padding:12px;" onclick="confirmarAgregarPizzaConExtras()">+ Agregar Pizza ${tamano} al Pedido</button>`;
+}
+
+function confirmarAgregarPizzaConExtras() {
+    let precioFinal = precioBaseTemp;
+    let extrasTxt = [];
+
+    const quiereQueso = document.getElementById("chk-extra-queso").checked;
+    const quiereEmbutido = document.getElementById("chk-extra-embutido").checked;
+
+    if (quiereQueso) {
+        precioFinal += costoExtraQuesoTemp;
+        extrasTxt.push("Extra Queso");
+    }
+    if (quiereEmbutido) {
+        precioFinal += costoExtraEmbutidoTemp;
+        extrasTxt.push("Extra Embutido");
+    }
+
+    const detalleStr = extrasTxt.length > 0 ? extrasTxt.join(" + ") : "";
+    agregarPedido(`Pizza ${pizzaActual} (${tamanoSeleccionadoTemp})`, precioFinal, detalleStr);
     cerrarModalPizza();
 }
 
@@ -142,8 +220,13 @@ function abrirModalFrappe(tipo) {
     const modal = document.getElementById("pizza-modal");
     const titulo = document.getElementById("pizza-modal-title");
     const container = document.getElementById("pizza-modal-sizes");
+    const extraContainer = document.getElementById("extra-options-container");
+    const btnConfirmContainer = document.getElementById("pizza-modal-confirm-btn");
 
     if (!modal || !container) return;
+
+    if (extraContainer) extraContainer.style.display = "none";
+    if (btnConfirmContainer) btnConfirmContainer.innerHTML = "";
 
     let sabores = [];
     let precio = 0;
@@ -279,9 +362,27 @@ function mostrarNombreArchivo(input) {
     }
 }
 
-/* --- CONFIRMACIÓN Y ENVÍO A WHATSAPP --- */
+/* --- VALIDACIÓN ANTI-TROLLS Y ENVÍO A WHATSAPP --- */
 function confirmarPedido() {
     if (carrito.length === 0) return;
+
+    // VALIDACIÓN ANTI-TROLLS OBLIGATORIA
+    const nombreCliente = document.getElementById("input-nombre").value.trim();
+    const telefonoCliente = document.getElementById("input-telefono").value.trim();
+
+    if (nombreCliente === "") {
+        alert("🛡️ SEGURIDAD ANTI-TROLLS: Por favor ingresa tu Nombre y Apellido obligatoriamente para procesar el pedido.");
+        document.getElementById("input-nombre").focus();
+        return;
+    }
+
+    // Validar teléfono de Perú (9 dígitos comenzando con 9)
+    const regexTelefonoPeru = /^9\d{8}$/;
+    if (!regexTelefonoPeru.test(telefonoCliente)) {
+        alert("🛡️ SEGURIDAD ANTI-TROLLS: Debes ingresar un número de celular válido en Perú (9 dígitos, iniciando en 9). Ex: 987654321");
+        document.getElementById("input-telefono").focus();
+        return;
+    }
 
     const claveSede = document.getElementById("select-sede").value;
     const datosSede = CONFIG_SEDES[claveSede];
@@ -291,6 +392,7 @@ function confirmarPedido() {
 
     if (tipoEntrega === "Delivery" && direccionInput === "") {
         alert("Por favor, ingresa tu dirección para el envío por delivery.");
+        document.getElementById("input-direccion").focus();
         return;
     }
 
@@ -304,6 +406,8 @@ function confirmarPedido() {
     });
 
     let mensaje = `*¡NUEVO PEDIDO - GOLDEN PIZZERIA!* 🍕\n\n`;
+    mensaje += `👤 *CLIENTE:* ${nombreCliente}\n`;
+    mensaje += `📱 *CELULAR:* ${telefonoCliente}\n`;
     mensaje += `📍 *SEDE:* ${datosSede.nombre}\n`;
     mensaje += `🛵 *MODALIDAD:* ${tipoEntrega}\n`;
 
@@ -314,7 +418,7 @@ function confirmarPedido() {
     mensaje += `\n*Detalle del Pedido:*\n${textoDetalle}\n`;
     mensaje += `*TOTAL:* S/ ${total.toFixed(2)}\n`;
     mensaje += `*Método de Pago:* ${metodoPagoSeleccionado.toUpperCase()}\n\n`;
-    mensaje += `_Pedido generado desde la página web_`;
+    mensaje += `_Pedido autenticado desde la web_`;
 
     const url = `https://wa.me/${datosSede.telefonoWhatsapp}?text=${encodeURIComponent(mensaje)}`;
     window.open(url, "_blank");
